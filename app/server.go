@@ -54,6 +54,10 @@ import (
 	"github.com/mattermost/mattermost-server/v5/store/sqlstore"
 	"github.com/mattermost/mattermost-server/v5/store/timerlayer"
 	"github.com/mattermost/mattermost-server/v5/utils"
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
+	nrgorilla "github.com/newrelic/go-agent/v3/integrations/nrgorilla"
+        logrus "github.com/sirupsen/logrus"
+        nrlogrus "github.com/newrelic/go-agent/v3/integrations/nrlogrus"
 )
 
 var MaxNotificationsPerChannelDefault int64 = 1000000
@@ -168,11 +172,41 @@ type Server struct {
 
 	tracer                      *tracing.Tracer
 	timestampLastDiagnosticSent time.Time
+        nrapp                       *newrelic.Application
 }
 
 func NewServer(options ...Option) (*Server, error) {
 	rootRouter := mux.NewRouter()
 	localRouter := mux.NewRouter()
+
+        mlog.Info("Config", mlog.String("AppName", os.Getenv("NEW_RELIC_APP_NAME")), mlog.String("Key", os.Getenv("NEW_RELIC_LICENSE_KEY")))
+        rootApp, rootErr := newrelic.NewApplication(
+		newrelic.ConfigAppName(os.Getenv("NEW_RELIC_APP_NAME")),
+		newrelic.ConfigLicense(os.Getenv("NEW_RELIC_LICENSE_KEY")),
+		func(config *newrelic.Config) {
+     	             logrus.SetLevel(logrus.DebugLevel)
+                     config.Logger = nrlogrus.StandardLogger()
+                },
+	)
+        if rootErr != nil {
+        	mlog.Error(rootErr.Error())
+        }
+        
+          rootRouter.Use(nrgorilla.Middleware(rootApp))
+//
+//        localApp, localErr := newrelic.NewApplication(
+//		newrelic.ConfigAppName(os.Getenv("NEW_RELIC_APP_NAME")),
+//		newrelic.ConfigLicense(os.Getenv("NEW_RELIC_LICENSE_KEY")),
+//		func(config *newrelic.Config) {
+//     	             logrus.SetLevel(logrus.DebugLevel)
+//                     config.Logger = nrlogrus.StandardLogger()
+//                },
+//	)
+//        if localErr != nil {
+//        	mlog.Error(localErr.Error())
+//        }
+//        
+          localRouter.Use(nrgorilla.Middleware(rootApp))
 
 	s := &Server{
 		goroutineExitSignal: make(chan struct{}, 1),
@@ -181,6 +215,7 @@ func NewServer(options ...Option) (*Server, error) {
 		licenseListeners:    map[string]func(*model.License, *model.License){},
 		hashSeed:            maphash.MakeSeed(),
 	}
+        s.nrapp = rootApp
 
 	mlog.Info("Server is initializing...")
 	for _, option := range options {
@@ -222,6 +257,7 @@ func NewServer(options ...Option) (*Server, error) {
 	}
 
 	if *s.Config().ServiceSettings.EnableOpenTracing {
+                mlog.Info("Tracing Enabled")
 		tracer, err := tracing.New()
 		if err != nil {
 			return nil, err
@@ -377,7 +413,7 @@ func NewServer(options ...Option) (*Server, error) {
 		return nil, errors.Wrap(err, "failed to parse SiteURL subpath")
 	}
 	s.Router = s.RootRouter.PathPrefix(subpath).Subrouter()
-
+        //s.Router.Use(nrgorilla.Middleware(rootApp))
 	// FakeApp: remove this when we have the ServePluginRequest and ServePluginPublicRequest migrated in the server
 	pluginsRoute := s.Router.PathPrefix("/plugins/{plugin_id:[A-Za-z0-9\\_\\-\\.]+}").Subrouter()
 	pluginsRoute.HandleFunc("", fakeApp.ServePluginRequest)

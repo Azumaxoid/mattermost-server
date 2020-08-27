@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+	logtime "time"
 
 	"github.com/dyatlov/go-opengraph/opengraph"
 	"github.com/gorilla/websocket"
@@ -33,6 +34,7 @@ import (
 	"github.com/mattermost/mattermost-server/v5/services/timezones"
 	"github.com/mattermost/mattermost-server/v5/services/tracing"
 	"github.com/mattermost/mattermost-server/v5/store"
+	newrelic "github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/opentracing/opentracing-go/ext"
 	spanlog "github.com/opentracing/opentracing-go/log"
 )
@@ -74,10 +76,15 @@ type OpenTracingAppLayer struct {
 
 func (a *OpenTracingAppLayer) ActivateMfa(userId string, token string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ActivateMfa")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ActivateMfa")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ActivateMfa")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ActivateMfa")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -96,10 +103,15 @@ func (a *OpenTracingAppLayer) ActivateMfa(userId string, token string) *model.Ap
 
 func (a *OpenTracingAppLayer) AddChannelMember(userId string, channel *model.Channel, userRequestorId string, postRootId string) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddChannelMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddChannelMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddChannelMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddChannelMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -118,10 +130,15 @@ func (a *OpenTracingAppLayer) AddChannelMember(userId string, channel *model.Cha
 
 func (a *OpenTracingAppLayer) AddConfigListener(listener func(*model.Config, *model.Config)) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddConfigListener")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddConfigListener")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddConfigListener")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddConfigListener")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -135,10 +152,15 @@ func (a *OpenTracingAppLayer) AddConfigListener(listener func(*model.Config, *mo
 
 func (a *OpenTracingAppLayer) AddCursorIdsForPostList(originalList *model.PostList, afterPost string, beforePost string, since int64, page int, perPage int) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddCursorIdsForPostList")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddCursorIdsForPostList")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddCursorIdsForPostList")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddCursorIdsForPostList")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -150,10 +172,15 @@ func (a *OpenTracingAppLayer) AddCursorIdsForPostList(originalList *model.PostLi
 
 func (a *OpenTracingAppLayer) AddDirectChannels(teamId string, user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddDirectChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddDirectChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddDirectChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddDirectChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -172,10 +199,15 @@ func (a *OpenTracingAppLayer) AddDirectChannels(teamId string, user *model.User)
 
 func (a *OpenTracingAppLayer) AddPublicKey(name string, key io.Reader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddPublicKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddPublicKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddPublicKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddPublicKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -194,10 +226,15 @@ func (a *OpenTracingAppLayer) AddPublicKey(name string, key io.Reader) *model.Ap
 
 func (a *OpenTracingAppLayer) AddSamlIdpCertificate(fileData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddSamlIdpCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddSamlIdpCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddSamlIdpCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddSamlIdpCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -216,10 +253,15 @@ func (a *OpenTracingAppLayer) AddSamlIdpCertificate(fileData *multipart.FileHead
 
 func (a *OpenTracingAppLayer) AddSamlPrivateCertificate(fileData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddSamlPrivateCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddSamlPrivateCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddSamlPrivateCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddSamlPrivateCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -238,10 +280,15 @@ func (a *OpenTracingAppLayer) AddSamlPrivateCertificate(fileData *multipart.File
 
 func (a *OpenTracingAppLayer) AddSamlPublicCertificate(fileData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddSamlPublicCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddSamlPublicCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddSamlPublicCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddSamlPublicCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -260,10 +307,15 @@ func (a *OpenTracingAppLayer) AddSamlPublicCertificate(fileData *multipart.FileH
 
 func (a *OpenTracingAppLayer) AddSessionToCache(session *model.Session) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddSessionToCache")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddSessionToCache")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddSessionToCache")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddSessionToCache")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -275,10 +327,15 @@ func (a *OpenTracingAppLayer) AddSessionToCache(session *model.Session) {
 
 func (a *OpenTracingAppLayer) AddStatusCache(status *model.Status) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddStatusCache")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddStatusCache")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddStatusCache")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddStatusCache")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -290,10 +347,15 @@ func (a *OpenTracingAppLayer) AddStatusCache(status *model.Status) {
 
 func (a *OpenTracingAppLayer) AddStatusCacheSkipClusterSend(status *model.Status) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddStatusCacheSkipClusterSend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddStatusCacheSkipClusterSend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddStatusCacheSkipClusterSend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddStatusCacheSkipClusterSend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -305,10 +367,15 @@ func (a *OpenTracingAppLayer) AddStatusCacheSkipClusterSend(status *model.Status
 
 func (a *OpenTracingAppLayer) AddTeamMember(teamId string, userId string) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddTeamMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddTeamMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddTeamMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddTeamMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -327,10 +394,15 @@ func (a *OpenTracingAppLayer) AddTeamMember(teamId string, userId string) (*mode
 
 func (a *OpenTracingAppLayer) AddTeamMemberByInviteId(inviteId string, userId string) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddTeamMemberByInviteId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddTeamMemberByInviteId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddTeamMemberByInviteId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddTeamMemberByInviteId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -349,10 +421,15 @@ func (a *OpenTracingAppLayer) AddTeamMemberByInviteId(inviteId string, userId st
 
 func (a *OpenTracingAppLayer) AddTeamMemberByToken(userId string, tokenId string) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddTeamMemberByToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddTeamMemberByToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddTeamMemberByToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddTeamMemberByToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -371,10 +448,15 @@ func (a *OpenTracingAppLayer) AddTeamMemberByToken(userId string, tokenId string
 
 func (a *OpenTracingAppLayer) AddTeamMembers(teamId string, userIds []string, userRequestorId string, graceful bool) ([]*model.TeamMemberWithError, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddTeamMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddTeamMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddTeamMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddTeamMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -393,10 +475,15 @@ func (a *OpenTracingAppLayer) AddTeamMembers(teamId string, userIds []string, us
 
 func (a *OpenTracingAppLayer) AddUserToChannel(user *model.User, channel *model.Channel) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddUserToChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddUserToChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddUserToChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddUserToChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -415,10 +502,15 @@ func (a *OpenTracingAppLayer) AddUserToChannel(user *model.User, channel *model.
 
 func (a *OpenTracingAppLayer) AddUserToTeam(teamId string, userId string, userRequestorId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddUserToTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddUserToTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddUserToTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddUserToTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -437,10 +529,15 @@ func (a *OpenTracingAppLayer) AddUserToTeam(teamId string, userId string, userRe
 
 func (a *OpenTracingAppLayer) AddUserToTeamByInviteId(inviteId string, userId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddUserToTeamByInviteId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddUserToTeamByInviteId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddUserToTeamByInviteId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddUserToTeamByInviteId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -459,10 +556,15 @@ func (a *OpenTracingAppLayer) AddUserToTeamByInviteId(inviteId string, userId st
 
 func (a *OpenTracingAppLayer) AddUserToTeamByTeamId(teamId string, user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddUserToTeamByTeamId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddUserToTeamByTeamId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddUserToTeamByTeamId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddUserToTeamByTeamId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -481,10 +583,15 @@ func (a *OpenTracingAppLayer) AddUserToTeamByTeamId(teamId string, user *model.U
 
 func (a *OpenTracingAppLayer) AddUserToTeamByToken(userId string, tokenId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AddUserToTeamByToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AddUserToTeamByToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AddUserToTeamByToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AddUserToTeamByToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -503,10 +610,15 @@ func (a *OpenTracingAppLayer) AddUserToTeamByToken(userId string, tokenId string
 
 func (a *OpenTracingAppLayer) AdjustImage(file io.Reader) (*bytes.Buffer, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AdjustImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AdjustImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AdjustImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AdjustImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -525,10 +637,15 @@ func (a *OpenTracingAppLayer) AdjustImage(file io.Reader) (*bytes.Buffer, *model
 
 func (a *OpenTracingAppLayer) AllowOAuthAppAccessToUser(userId string, authRequest *model.AuthorizeRequest) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AllowOAuthAppAccessToUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AllowOAuthAppAccessToUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AllowOAuthAppAccessToUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AllowOAuthAppAccessToUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -547,10 +664,15 @@ func (a *OpenTracingAppLayer) AllowOAuthAppAccessToUser(userId string, authReque
 
 func (a *OpenTracingAppLayer) AsymmetricSigningKey() *ecdsa.PrivateKey {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AsymmetricSigningKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AsymmetricSigningKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AsymmetricSigningKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AsymmetricSigningKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -564,10 +686,15 @@ func (a *OpenTracingAppLayer) AsymmetricSigningKey() *ecdsa.PrivateKey {
 
 func (a *OpenTracingAppLayer) AttachDeviceId(sessionId string, deviceId string, expiresAt int64) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AttachDeviceId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AttachDeviceId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AttachDeviceId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AttachDeviceId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -586,10 +713,15 @@ func (a *OpenTracingAppLayer) AttachDeviceId(sessionId string, deviceId string, 
 
 func (a *OpenTracingAppLayer) AttachSessionCookies(w http.ResponseWriter, r *http.Request) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AttachSessionCookies")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AttachSessionCookies")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AttachSessionCookies")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AttachSessionCookies")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -601,10 +733,15 @@ func (a *OpenTracingAppLayer) AttachSessionCookies(w http.ResponseWriter, r *htt
 
 func (a *OpenTracingAppLayer) AuthenticateUserForLogin(id string, loginId string, password string, mfaToken string, ldapOnly bool) (user *model.User, err *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AuthenticateUserForLogin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AuthenticateUserForLogin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AuthenticateUserForLogin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AuthenticateUserForLogin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -623,10 +760,15 @@ func (a *OpenTracingAppLayer) AuthenticateUserForLogin(id string, loginId string
 
 func (a *OpenTracingAppLayer) AuthorizeOAuthUser(w http.ResponseWriter, r *http.Request, service string, code string, state string, redirectUri string) (io.ReadCloser, string, map[string]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AuthorizeOAuthUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AuthorizeOAuthUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AuthorizeOAuthUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AuthorizeOAuthUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -645,10 +787,15 @@ func (a *OpenTracingAppLayer) AuthorizeOAuthUser(w http.ResponseWriter, r *http.
 
 func (a *OpenTracingAppLayer) AutocompleteChannels(teamId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AutocompleteChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AutocompleteChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AutocompleteChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AutocompleteChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -667,10 +814,15 @@ func (a *OpenTracingAppLayer) AutocompleteChannels(teamId string, term string) (
 
 func (a *OpenTracingAppLayer) AutocompleteChannelsForSearch(teamId string, userId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AutocompleteChannelsForSearch")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AutocompleteChannelsForSearch")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AutocompleteChannelsForSearch")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AutocompleteChannelsForSearch")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -689,10 +841,15 @@ func (a *OpenTracingAppLayer) AutocompleteChannelsForSearch(teamId string, userI
 
 func (a *OpenTracingAppLayer) AutocompleteUsersInChannel(teamId string, channelId string, term string, options *model.UserSearchOptions) (*model.UserAutocompleteInChannel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AutocompleteUsersInChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AutocompleteUsersInChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AutocompleteUsersInChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AutocompleteUsersInChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -711,10 +868,15 @@ func (a *OpenTracingAppLayer) AutocompleteUsersInChannel(teamId string, channelI
 
 func (a *OpenTracingAppLayer) AutocompleteUsersInTeam(teamId string, term string, options *model.UserSearchOptions) (*model.UserAutocompleteInTeam, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.AutocompleteUsersInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.AutocompleteUsersInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.AutocompleteUsersInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.AutocompleteUsersInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -733,10 +895,15 @@ func (a *OpenTracingAppLayer) AutocompleteUsersInTeam(teamId string, term string
 
 func (a *OpenTracingAppLayer) BroadcastStatus(status *model.Status) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BroadcastStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BroadcastStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BroadcastStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BroadcastStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -748,10 +915,15 @@ func (a *OpenTracingAppLayer) BroadcastStatus(status *model.Status) {
 
 func (a *OpenTracingAppLayer) BuildPostReactions(postId string) (*[]app.ReactionImportData, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BuildPostReactions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BuildPostReactions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BuildPostReactions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BuildPostReactions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -770,10 +942,15 @@ func (a *OpenTracingAppLayer) BuildPostReactions(postId string) (*[]app.Reaction
 
 func (a *OpenTracingAppLayer) BuildPushNotificationMessage(contentsConfig string, post *model.Post, user *model.User, channel *model.Channel, channelName string, senderName string, explicitMention bool, channelWideMention bool, replyToThreadType string) (*model.PushNotification, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BuildPushNotificationMessage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BuildPushNotificationMessage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BuildPushNotificationMessage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BuildPushNotificationMessage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -792,10 +969,15 @@ func (a *OpenTracingAppLayer) BuildPushNotificationMessage(contentsConfig string
 
 func (a *OpenTracingAppLayer) BuildSamlMetadataObject(idpMetadata []byte) (*model.SamlMetadataResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BuildSamlMetadataObject")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BuildSamlMetadataObject")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BuildSamlMetadataObject")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BuildSamlMetadataObject")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -814,10 +996,15 @@ func (a *OpenTracingAppLayer) BuildSamlMetadataObject(idpMetadata []byte) (*mode
 
 func (a *OpenTracingAppLayer) BulkExport(writer io.Writer, file string, pathToEmojiDir string, dirNameToExportEmoji string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BulkExport")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BulkExport")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BulkExport")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BulkExport")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -836,10 +1023,15 @@ func (a *OpenTracingAppLayer) BulkExport(writer io.Writer, file string, pathToEm
 
 func (a *OpenTracingAppLayer) BulkImport(fileReader io.Reader, dryRun bool, workers int) (*model.AppError, int) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.BulkImport")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.BulkImport")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.BulkImport")
+	segment := newrelic.StartSegment(nrtx, "nr.app.BulkImport")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -858,10 +1050,15 @@ func (a *OpenTracingAppLayer) BulkImport(fileReader io.Reader, dryRun bool, work
 
 func (a *OpenTracingAppLayer) CancelJob(jobId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CancelJob")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CancelJob")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CancelJob")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CancelJob")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -880,10 +1077,15 @@ func (a *OpenTracingAppLayer) CancelJob(jobId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) ChannelMembersMinusGroupMembers(channelID string, groupIDs []string, page int, perPage int) ([]*model.UserWithGroups, int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ChannelMembersMinusGroupMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ChannelMembersMinusGroupMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ChannelMembersMinusGroupMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ChannelMembersMinusGroupMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -902,10 +1104,15 @@ func (a *OpenTracingAppLayer) ChannelMembersMinusGroupMembers(channelID string, 
 
 func (a *OpenTracingAppLayer) ChannelMembersToAdd(since int64, channelID *string) ([]*model.UserChannelIDPair, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ChannelMembersToAdd")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ChannelMembersToAdd")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ChannelMembersToAdd")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ChannelMembersToAdd")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -924,10 +1131,15 @@ func (a *OpenTracingAppLayer) ChannelMembersToAdd(since int64, channelID *string
 
 func (a *OpenTracingAppLayer) ChannelMembersToRemove(teamID *string) ([]*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ChannelMembersToRemove")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ChannelMembersToRemove")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ChannelMembersToRemove")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ChannelMembersToRemove")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -946,10 +1158,15 @@ func (a *OpenTracingAppLayer) ChannelMembersToRemove(teamID *string) ([]*model.C
 
 func (a *OpenTracingAppLayer) CheckForClientSideCert(r *http.Request) (string, string, string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckForClientSideCert")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckForClientSideCert")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckForClientSideCert")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckForClientSideCert")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -963,10 +1180,15 @@ func (a *OpenTracingAppLayer) CheckForClientSideCert(r *http.Request) (string, s
 
 func (a *OpenTracingAppLayer) CheckPasswordAndAllCriteria(user *model.User, password string, mfaToken string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckPasswordAndAllCriteria")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckPasswordAndAllCriteria")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckPasswordAndAllCriteria")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckPasswordAndAllCriteria")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -985,10 +1207,15 @@ func (a *OpenTracingAppLayer) CheckPasswordAndAllCriteria(user *model.User, pass
 
 func (a *OpenTracingAppLayer) CheckRolesExist(roleNames []string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckRolesExist")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckRolesExist")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckRolesExist")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckRolesExist")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1007,10 +1234,15 @@ func (a *OpenTracingAppLayer) CheckRolesExist(roleNames []string) *model.AppErro
 
 func (a *OpenTracingAppLayer) CheckUserAllAuthenticationCriteria(user *model.User, mfaToken string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckUserAllAuthenticationCriteria")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckUserAllAuthenticationCriteria")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckUserAllAuthenticationCriteria")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckUserAllAuthenticationCriteria")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1029,10 +1261,15 @@ func (a *OpenTracingAppLayer) CheckUserAllAuthenticationCriteria(user *model.Use
 
 func (a *OpenTracingAppLayer) CheckUserMfa(user *model.User, token string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckUserMfa")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckUserMfa")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckUserMfa")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckUserMfa")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1051,10 +1288,15 @@ func (a *OpenTracingAppLayer) CheckUserMfa(user *model.User, token string) *mode
 
 func (a *OpenTracingAppLayer) CheckUserPostflightAuthenticationCriteria(user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckUserPostflightAuthenticationCriteria")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckUserPostflightAuthenticationCriteria")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckUserPostflightAuthenticationCriteria")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckUserPostflightAuthenticationCriteria")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1073,10 +1315,15 @@ func (a *OpenTracingAppLayer) CheckUserPostflightAuthenticationCriteria(user *mo
 
 func (a *OpenTracingAppLayer) CheckUserPreflightAuthenticationCriteria(user *model.User, mfaToken string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckUserPreflightAuthenticationCriteria")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckUserPreflightAuthenticationCriteria")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckUserPreflightAuthenticationCriteria")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckUserPreflightAuthenticationCriteria")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1095,10 +1342,15 @@ func (a *OpenTracingAppLayer) CheckUserPreflightAuthenticationCriteria(user *mod
 
 func (a *OpenTracingAppLayer) CheckValidDomains(team *model.Team) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CheckValidDomains")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CheckValidDomains")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CheckValidDomains")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CheckValidDomains")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1117,10 +1369,15 @@ func (a *OpenTracingAppLayer) CheckValidDomains(team *model.Team) *model.AppErro
 
 func (a *OpenTracingAppLayer) ClearChannelMembersCache(channelID string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearChannelMembersCache")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearChannelMembersCache")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearChannelMembersCache")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearChannelMembersCache")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1132,10 +1389,15 @@ func (a *OpenTracingAppLayer) ClearChannelMembersCache(channelID string) {
 
 func (a *OpenTracingAppLayer) ClearSessionCacheForAllUsers() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearSessionCacheForAllUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearSessionCacheForAllUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearSessionCacheForAllUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearSessionCacheForAllUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1147,10 +1409,15 @@ func (a *OpenTracingAppLayer) ClearSessionCacheForAllUsers() {
 
 func (a *OpenTracingAppLayer) ClearSessionCacheForAllUsersSkipClusterSend() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearSessionCacheForAllUsersSkipClusterSend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearSessionCacheForAllUsersSkipClusterSend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearSessionCacheForAllUsersSkipClusterSend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearSessionCacheForAllUsersSkipClusterSend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1162,10 +1429,15 @@ func (a *OpenTracingAppLayer) ClearSessionCacheForAllUsersSkipClusterSend() {
 
 func (a *OpenTracingAppLayer) ClearSessionCacheForUser(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearSessionCacheForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearSessionCacheForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearSessionCacheForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearSessionCacheForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1177,10 +1449,15 @@ func (a *OpenTracingAppLayer) ClearSessionCacheForUser(userId string) {
 
 func (a *OpenTracingAppLayer) ClearSessionCacheForUserSkipClusterSend(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearSessionCacheForUserSkipClusterSend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearSessionCacheForUserSkipClusterSend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearSessionCacheForUserSkipClusterSend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearSessionCacheForUserSkipClusterSend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1192,10 +1469,15 @@ func (a *OpenTracingAppLayer) ClearSessionCacheForUserSkipClusterSend(userId str
 
 func (a *OpenTracingAppLayer) ClearTeamMembersCache(teamID string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClearTeamMembersCache")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClearTeamMembersCache")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClearTeamMembersCache")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClearTeamMembersCache")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1207,10 +1489,15 @@ func (a *OpenTracingAppLayer) ClearTeamMembersCache(teamID string) {
 
 func (a *OpenTracingAppLayer) ClientConfig() map[string]string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClientConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClientConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClientConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClientConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1224,10 +1511,15 @@ func (a *OpenTracingAppLayer) ClientConfig() map[string]string {
 
 func (a *OpenTracingAppLayer) ClientConfigHash() string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClientConfigHash")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClientConfigHash")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClientConfigHash")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClientConfigHash")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1241,10 +1533,15 @@ func (a *OpenTracingAppLayer) ClientConfigHash() string {
 
 func (a *OpenTracingAppLayer) ClientConfigWithComputed() map[string]string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ClientConfigWithComputed")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ClientConfigWithComputed")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ClientConfigWithComputed")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ClientConfigWithComputed")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1258,10 +1555,15 @@ func (a *OpenTracingAppLayer) ClientConfigWithComputed() map[string]string {
 
 func (a *OpenTracingAppLayer) CompareAndDeletePluginKey(pluginId string, key string, oldValue []byte) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CompareAndDeletePluginKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CompareAndDeletePluginKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CompareAndDeletePluginKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CompareAndDeletePluginKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1280,10 +1582,15 @@ func (a *OpenTracingAppLayer) CompareAndDeletePluginKey(pluginId string, key str
 
 func (a *OpenTracingAppLayer) CompareAndSetPluginKey(pluginId string, key string, oldValue []byte, newValue []byte) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CompareAndSetPluginKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CompareAndSetPluginKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CompareAndSetPluginKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CompareAndSetPluginKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1302,10 +1609,15 @@ func (a *OpenTracingAppLayer) CompareAndSetPluginKey(pluginId string, key string
 
 func (a *OpenTracingAppLayer) CompleteOAuth(service string, body io.ReadCloser, teamId string, props map[string]string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CompleteOAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CompleteOAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CompleteOAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CompleteOAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1324,10 +1636,15 @@ func (a *OpenTracingAppLayer) CompleteOAuth(service string, body io.ReadCloser, 
 
 func (a *OpenTracingAppLayer) CompleteSwitchWithOAuth(service string, userData io.Reader, email string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CompleteSwitchWithOAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CompleteSwitchWithOAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CompleteSwitchWithOAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CompleteSwitchWithOAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1346,10 +1663,15 @@ func (a *OpenTracingAppLayer) CompleteSwitchWithOAuth(service string, userData i
 
 func (a *OpenTracingAppLayer) Config() *model.Config {
 	origCtx := a.ctx
+	a.log.Info("nr.app.Config")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.Config")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.Config")
+	segment := newrelic.StartSegment(nrtx, "nr.app.Config")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1363,10 +1685,15 @@ func (a *OpenTracingAppLayer) Config() *model.Config {
 
 func (a *OpenTracingAppLayer) ConvertBotToUser(bot *model.Bot, userPatch *model.UserPatch, sysadmin bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ConvertBotToUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ConvertBotToUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ConvertBotToUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ConvertBotToUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1385,10 +1712,15 @@ func (a *OpenTracingAppLayer) ConvertBotToUser(bot *model.Bot, userPatch *model.
 
 func (a *OpenTracingAppLayer) ConvertUserToBot(user *model.User) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ConvertUserToBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ConvertUserToBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ConvertUserToBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ConvertUserToBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1407,10 +1739,15 @@ func (a *OpenTracingAppLayer) ConvertUserToBot(user *model.User) (*model.Bot, *m
 
 func (a *OpenTracingAppLayer) CopyFileInfos(userId string, fileIds []string) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CopyFileInfos")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CopyFileInfos")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CopyFileInfos")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CopyFileInfos")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1429,10 +1766,15 @@ func (a *OpenTracingAppLayer) CopyFileInfos(userId string, fileIds []string) ([]
 
 func (a *OpenTracingAppLayer) CreateBot(bot *model.Bot) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1451,10 +1793,15 @@ func (a *OpenTracingAppLayer) CreateBot(bot *model.Bot) (*model.Bot, *model.AppE
 
 func (a *OpenTracingAppLayer) CreateChannel(channel *model.Channel, addMember bool) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1473,10 +1820,15 @@ func (a *OpenTracingAppLayer) CreateChannel(channel *model.Channel, addMember bo
 
 func (a *OpenTracingAppLayer) CreateChannelScheme(channel *model.Channel) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateChannelScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateChannelScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateChannelScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateChannelScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1495,10 +1847,15 @@ func (a *OpenTracingAppLayer) CreateChannelScheme(channel *model.Channel) (*mode
 
 func (a *OpenTracingAppLayer) CreateChannelWithUser(channel *model.Channel, userId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateChannelWithUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateChannelWithUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateChannelWithUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateChannelWithUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1517,10 +1874,15 @@ func (a *OpenTracingAppLayer) CreateChannelWithUser(channel *model.Channel, user
 
 func (a *OpenTracingAppLayer) CreateCommand(cmd *model.Command) (*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1539,10 +1901,15 @@ func (a *OpenTracingAppLayer) CreateCommand(cmd *model.Command) (*model.Command,
 
 func (a *OpenTracingAppLayer) CreateCommandPost(post *model.Post, teamId string, response *model.CommandResponse, skipSlackParsing bool) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateCommandPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateCommandPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateCommandPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateCommandPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1565,10 +1932,15 @@ func (a *OpenTracingAppLayer) CreateCommandPost(post *model.Post, teamId string,
 
 func (a *OpenTracingAppLayer) CreateCommandWebhook(commandId string, args *model.CommandArgs) (*model.CommandWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateCommandWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateCommandWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateCommandWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateCommandWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1587,10 +1959,15 @@ func (a *OpenTracingAppLayer) CreateCommandWebhook(commandId string, args *model
 
 func (a *OpenTracingAppLayer) CreateDefaultChannels(teamID string) ([]*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateDefaultChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateDefaultChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateDefaultChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateDefaultChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1609,10 +1986,15 @@ func (a *OpenTracingAppLayer) CreateDefaultChannels(teamID string) ([]*model.Cha
 
 func (a *OpenTracingAppLayer) CreateDefaultMemberships(since int64) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateDefaultMemberships")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateDefaultMemberships")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateDefaultMemberships")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateDefaultMemberships")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1631,10 +2013,15 @@ func (a *OpenTracingAppLayer) CreateDefaultMemberships(since int64) error {
 
 func (a *OpenTracingAppLayer) CreateEmoji(sessionUserId string, emoji *model.Emoji, multiPartImageData *multipart.Form) (*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateEmoji")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateEmoji")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateEmoji")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateEmoji")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1653,10 +2040,15 @@ func (a *OpenTracingAppLayer) CreateEmoji(sessionUserId string, emoji *model.Emo
 
 func (a *OpenTracingAppLayer) CreateGroup(group *model.Group) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1675,10 +2067,15 @@ func (a *OpenTracingAppLayer) CreateGroup(group *model.Group) (*model.Group, *mo
 
 func (a *OpenTracingAppLayer) CreateGroupChannel(userIds []string, creatorId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateGroupChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateGroupChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateGroupChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateGroupChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1697,10 +2094,15 @@ func (a *OpenTracingAppLayer) CreateGroupChannel(userIds []string, creatorId str
 
 func (a *OpenTracingAppLayer) CreateGuest(user *model.User) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateGuest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateGuest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateGuest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateGuest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1719,10 +2121,15 @@ func (a *OpenTracingAppLayer) CreateGuest(user *model.User) (*model.User, *model
 
 func (a *OpenTracingAppLayer) CreateIncomingWebhookForChannel(creatorId string, channel *model.Channel, hook *model.IncomingWebhook) (*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateIncomingWebhookForChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateIncomingWebhookForChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateIncomingWebhookForChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateIncomingWebhookForChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1741,10 +2148,15 @@ func (a *OpenTracingAppLayer) CreateIncomingWebhookForChannel(creatorId string, 
 
 func (a *OpenTracingAppLayer) CreateJob(job *model.Job) (*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateJob")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateJob")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateJob")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateJob")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1763,10 +2175,15 @@ func (a *OpenTracingAppLayer) CreateJob(job *model.Job) (*model.Job, *model.AppE
 
 func (a *OpenTracingAppLayer) CreateOAuthApp(app *model.OAuthApp) (*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateOAuthApp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateOAuthApp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateOAuthApp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateOAuthApp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1785,10 +2202,15 @@ func (a *OpenTracingAppLayer) CreateOAuthApp(app *model.OAuthApp) (*model.OAuthA
 
 func (a *OpenTracingAppLayer) CreateOAuthStateToken(extra string) (*model.Token, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateOAuthStateToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateOAuthStateToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateOAuthStateToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateOAuthStateToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1807,10 +2229,15 @@ func (a *OpenTracingAppLayer) CreateOAuthStateToken(extra string) (*model.Token,
 
 func (a *OpenTracingAppLayer) CreateOAuthUser(service string, userData io.Reader, teamId string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateOAuthUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateOAuthUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateOAuthUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateOAuthUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1829,10 +2256,15 @@ func (a *OpenTracingAppLayer) CreateOAuthUser(service string, userData io.Reader
 
 func (a *OpenTracingAppLayer) CreateOutgoingWebhook(hook *model.OutgoingWebhook) (*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateOutgoingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateOutgoingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateOutgoingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateOutgoingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1851,10 +2283,15 @@ func (a *OpenTracingAppLayer) CreateOutgoingWebhook(hook *model.OutgoingWebhook)
 
 func (a *OpenTracingAppLayer) CreatePasswordRecoveryToken(userId string, email string) (*model.Token, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreatePasswordRecoveryToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreatePasswordRecoveryToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreatePasswordRecoveryToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreatePasswordRecoveryToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1873,10 +2310,15 @@ func (a *OpenTracingAppLayer) CreatePasswordRecoveryToken(userId string, email s
 
 func (a *OpenTracingAppLayer) CreatePost(post *model.Post, channel *model.Channel, triggerWebhooks bool, setOnline bool) (savedPost *model.Post, err *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreatePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreatePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreatePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreatePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1895,10 +2337,15 @@ func (a *OpenTracingAppLayer) CreatePost(post *model.Post, channel *model.Channe
 
 func (a *OpenTracingAppLayer) CreatePostAsUser(post *model.Post, currentSessionId string, setOnline bool) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreatePostAsUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreatePostAsUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreatePostAsUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreatePostAsUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1917,10 +2364,15 @@ func (a *OpenTracingAppLayer) CreatePostAsUser(post *model.Post, currentSessionI
 
 func (a *OpenTracingAppLayer) CreatePostMissingChannel(post *model.Post, triggerWebhooks bool) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreatePostMissingChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreatePostMissingChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreatePostMissingChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreatePostMissingChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1939,10 +2391,15 @@ func (a *OpenTracingAppLayer) CreatePostMissingChannel(post *model.Post, trigger
 
 func (a *OpenTracingAppLayer) CreateRole(role *model.Role) (*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateRole")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateRole")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateRole")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateRole")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1961,10 +2418,15 @@ func (a *OpenTracingAppLayer) CreateRole(role *model.Role) (*model.Role, *model.
 
 func (a *OpenTracingAppLayer) CreateScheme(scheme *model.Scheme) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -1983,10 +2445,15 @@ func (a *OpenTracingAppLayer) CreateScheme(scheme *model.Scheme) (*model.Scheme,
 
 func (a *OpenTracingAppLayer) CreateSession(session *model.Session) (*model.Session, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateSession")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateSession")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateSession")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateSession")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2005,10 +2472,15 @@ func (a *OpenTracingAppLayer) CreateSession(session *model.Session) (*model.Sess
 
 func (a *OpenTracingAppLayer) CreateSidebarCategory(userId string, teamId string, newCategory *model.SidebarCategoryWithChannels) (*model.SidebarCategoryWithChannels, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateSidebarCategory")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateSidebarCategory")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateSidebarCategory")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateSidebarCategory")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2027,10 +2499,15 @@ func (a *OpenTracingAppLayer) CreateSidebarCategory(userId string, teamId string
 
 func (a *OpenTracingAppLayer) CreateTeam(team *model.Team) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2049,10 +2526,15 @@ func (a *OpenTracingAppLayer) CreateTeam(team *model.Team) (*model.Team, *model.
 
 func (a *OpenTracingAppLayer) CreateTeamWithUser(team *model.Team, userId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateTeamWithUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateTeamWithUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateTeamWithUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateTeamWithUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2071,10 +2553,15 @@ func (a *OpenTracingAppLayer) CreateTeamWithUser(team *model.Team, userId string
 
 func (a *OpenTracingAppLayer) CreateTermsOfService(text string, userId string) (*model.TermsOfService, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateTermsOfService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateTermsOfService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateTermsOfService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateTermsOfService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2093,10 +2580,15 @@ func (a *OpenTracingAppLayer) CreateTermsOfService(text string, userId string) (
 
 func (a *OpenTracingAppLayer) CreateUser(user *model.User) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2115,10 +2607,15 @@ func (a *OpenTracingAppLayer) CreateUser(user *model.User) (*model.User, *model.
 
 func (a *OpenTracingAppLayer) CreateUserAccessToken(token *model.UserAccessToken) (*model.UserAccessToken, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUserAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUserAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUserAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUserAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2137,10 +2634,15 @@ func (a *OpenTracingAppLayer) CreateUserAccessToken(token *model.UserAccessToken
 
 func (a *OpenTracingAppLayer) CreateUserAsAdmin(user *model.User, redirect string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUserAsAdmin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUserAsAdmin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUserAsAdmin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUserAsAdmin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2159,10 +2661,15 @@ func (a *OpenTracingAppLayer) CreateUserAsAdmin(user *model.User, redirect strin
 
 func (a *OpenTracingAppLayer) CreateUserFromSignup(user *model.User, redirect string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUserFromSignup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUserFromSignup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUserFromSignup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUserFromSignup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2181,10 +2688,15 @@ func (a *OpenTracingAppLayer) CreateUserFromSignup(user *model.User, redirect st
 
 func (a *OpenTracingAppLayer) CreateUserWithInviteId(user *model.User, inviteId string, redirect string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUserWithInviteId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUserWithInviteId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUserWithInviteId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUserWithInviteId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2203,10 +2715,15 @@ func (a *OpenTracingAppLayer) CreateUserWithInviteId(user *model.User, inviteId 
 
 func (a *OpenTracingAppLayer) CreateUserWithToken(user *model.User, token *model.Token) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateUserWithToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateUserWithToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateUserWithToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateUserWithToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2225,10 +2742,15 @@ func (a *OpenTracingAppLayer) CreateUserWithToken(user *model.User, token *model
 
 func (a *OpenTracingAppLayer) CreateWebhookPost(userId string, channel *model.Channel, text string, overrideUsername string, overrideIconUrl string, overrideIconEmoji string, props model.StringInterface, postType string, postRootId string) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.CreateWebhookPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.CreateWebhookPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.CreateWebhookPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.CreateWebhookPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2247,10 +2769,15 @@ func (a *OpenTracingAppLayer) CreateWebhookPost(userId string, channel *model.Ch
 
 func (a *OpenTracingAppLayer) DeactivateGuests() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeactivateGuests")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeactivateGuests")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeactivateGuests")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeactivateGuests")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2269,10 +2796,15 @@ func (a *OpenTracingAppLayer) DeactivateGuests() *model.AppError {
 
 func (a *OpenTracingAppLayer) DeactivateMfa(userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeactivateMfa")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeactivateMfa")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeactivateMfa")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeactivateMfa")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2291,10 +2823,15 @@ func (a *OpenTracingAppLayer) DeactivateMfa(userId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) DeauthorizeOAuthAppForUser(userId string, appId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeauthorizeOAuthAppForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeauthorizeOAuthAppForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeauthorizeOAuthAppForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeauthorizeOAuthAppForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2313,10 +2850,15 @@ func (a *OpenTracingAppLayer) DeauthorizeOAuthAppForUser(userId string, appId st
 
 func (a *OpenTracingAppLayer) DefaultChannelNames() []string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DefaultChannelNames")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DefaultChannelNames")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DefaultChannelNames")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DefaultChannelNames")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2330,10 +2872,15 @@ func (a *OpenTracingAppLayer) DefaultChannelNames() []string {
 
 func (a *OpenTracingAppLayer) DeleteAllExpiredPluginKeys() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteAllExpiredPluginKeys")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteAllExpiredPluginKeys")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteAllExpiredPluginKeys")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteAllExpiredPluginKeys")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2352,10 +2899,15 @@ func (a *OpenTracingAppLayer) DeleteAllExpiredPluginKeys() *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteAllKeysForPlugin(pluginId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteAllKeysForPlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteAllKeysForPlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteAllKeysForPlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteAllKeysForPlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2374,10 +2926,15 @@ func (a *OpenTracingAppLayer) DeleteAllKeysForPlugin(pluginId string) *model.App
 
 func (a *OpenTracingAppLayer) DeleteBotIconImage(botUserId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteBotIconImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteBotIconImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteBotIconImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteBotIconImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2396,10 +2953,15 @@ func (a *OpenTracingAppLayer) DeleteBotIconImage(botUserId string) *model.AppErr
 
 func (a *OpenTracingAppLayer) DeleteBrandImage() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteBrandImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteBrandImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteBrandImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteBrandImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2418,10 +2980,15 @@ func (a *OpenTracingAppLayer) DeleteBrandImage() *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteChannel(channel *model.Channel, userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2440,10 +3007,15 @@ func (a *OpenTracingAppLayer) DeleteChannel(channel *model.Channel, userId strin
 
 func (a *OpenTracingAppLayer) DeleteChannelScheme(channel *model.Channel) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteChannelScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteChannelScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteChannelScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteChannelScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2462,10 +3034,15 @@ func (a *OpenTracingAppLayer) DeleteChannelScheme(channel *model.Channel) (*mode
 
 func (a *OpenTracingAppLayer) DeleteCommand(commandId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2484,10 +3061,15 @@ func (a *OpenTracingAppLayer) DeleteCommand(commandId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteEmoji(emoji *model.Emoji) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteEmoji")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteEmoji")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteEmoji")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteEmoji")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2506,10 +3088,15 @@ func (a *OpenTracingAppLayer) DeleteEmoji(emoji *model.Emoji) *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteEphemeralPost(userId string, postId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteEphemeralPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteEphemeralPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteEphemeralPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteEphemeralPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2521,10 +3108,15 @@ func (a *OpenTracingAppLayer) DeleteEphemeralPost(userId string, postId string) 
 
 func (a *OpenTracingAppLayer) DeleteFlaggedPosts(postId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteFlaggedPosts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteFlaggedPosts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteFlaggedPosts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteFlaggedPosts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2536,10 +3128,15 @@ func (a *OpenTracingAppLayer) DeleteFlaggedPosts(postId string) {
 
 func (a *OpenTracingAppLayer) DeleteGroup(groupID string) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2558,10 +3155,15 @@ func (a *OpenTracingAppLayer) DeleteGroup(groupID string) (*model.Group, *model.
 
 func (a *OpenTracingAppLayer) DeleteGroupConstrainedMemberships() error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteGroupConstrainedMemberships")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteGroupConstrainedMemberships")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteGroupConstrainedMemberships")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteGroupConstrainedMemberships")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2580,10 +3182,15 @@ func (a *OpenTracingAppLayer) DeleteGroupConstrainedMemberships() error {
 
 func (a *OpenTracingAppLayer) DeleteGroupMember(groupID string, userID string) (*model.GroupMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteGroupMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteGroupMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteGroupMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteGroupMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2602,10 +3209,15 @@ func (a *OpenTracingAppLayer) DeleteGroupMember(groupID string, userID string) (
 
 func (a *OpenTracingAppLayer) DeleteGroupSyncable(groupID string, syncableID string, syncableType model.GroupSyncableType) (*model.GroupSyncable, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteGroupSyncable")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteGroupSyncable")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteGroupSyncable")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteGroupSyncable")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2624,10 +3236,15 @@ func (a *OpenTracingAppLayer) DeleteGroupSyncable(groupID string, syncableID str
 
 func (a *OpenTracingAppLayer) DeleteIncomingWebhook(hookId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteIncomingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteIncomingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteIncomingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteIncomingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2646,10 +3263,15 @@ func (a *OpenTracingAppLayer) DeleteIncomingWebhook(hookId string) *model.AppErr
 
 func (a *OpenTracingAppLayer) DeleteOAuthApp(appId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteOAuthApp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteOAuthApp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteOAuthApp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteOAuthApp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2668,10 +3290,15 @@ func (a *OpenTracingAppLayer) DeleteOAuthApp(appId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteOutgoingWebhook(hookId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteOutgoingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteOutgoingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteOutgoingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteOutgoingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2690,10 +3317,15 @@ func (a *OpenTracingAppLayer) DeleteOutgoingWebhook(hookId string) *model.AppErr
 
 func (a *OpenTracingAppLayer) DeletePluginKey(pluginId string, key string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeletePluginKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeletePluginKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeletePluginKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeletePluginKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2712,10 +3344,15 @@ func (a *OpenTracingAppLayer) DeletePluginKey(pluginId string, key string) *mode
 
 func (a *OpenTracingAppLayer) DeletePost(postId string, deleteByID string) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeletePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeletePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeletePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeletePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2734,10 +3371,15 @@ func (a *OpenTracingAppLayer) DeletePost(postId string, deleteByID string) (*mod
 
 func (a *OpenTracingAppLayer) DeletePostFiles(post *model.Post) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeletePostFiles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeletePostFiles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeletePostFiles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeletePostFiles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2749,10 +3391,15 @@ func (a *OpenTracingAppLayer) DeletePostFiles(post *model.Post) {
 
 func (a *OpenTracingAppLayer) DeletePreferences(userId string, preferences model.Preferences) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeletePreferences")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeletePreferences")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeletePreferences")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeletePreferences")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2771,10 +3418,15 @@ func (a *OpenTracingAppLayer) DeletePreferences(userId string, preferences model
 
 func (a *OpenTracingAppLayer) DeletePublicKey(name string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeletePublicKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeletePublicKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeletePublicKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeletePublicKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2793,10 +3445,15 @@ func (a *OpenTracingAppLayer) DeletePublicKey(name string) *model.AppError {
 
 func (a *OpenTracingAppLayer) DeleteReactionForPost(reaction *model.Reaction) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteReactionForPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteReactionForPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteReactionForPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteReactionForPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2815,10 +3472,15 @@ func (a *OpenTracingAppLayer) DeleteReactionForPost(reaction *model.Reaction) *m
 
 func (a *OpenTracingAppLayer) DeleteScheme(schemeId string) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2837,10 +3499,15 @@ func (a *OpenTracingAppLayer) DeleteScheme(schemeId string) (*model.Scheme, *mod
 
 func (a *OpenTracingAppLayer) DeleteSidebarCategory(userId string, teamId string, categoryId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteSidebarCategory")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteSidebarCategory")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteSidebarCategory")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteSidebarCategory")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2859,10 +3526,15 @@ func (a *OpenTracingAppLayer) DeleteSidebarCategory(userId string, teamId string
 
 func (a *OpenTracingAppLayer) DeleteToken(token *model.Token) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DeleteToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DeleteToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DeleteToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DeleteToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2881,10 +3553,15 @@ func (a *OpenTracingAppLayer) DeleteToken(token *model.Token) *model.AppError {
 
 func (a *OpenTracingAppLayer) DemoteUserToGuest(user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DemoteUserToGuest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DemoteUserToGuest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DemoteUserToGuest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DemoteUserToGuest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2903,10 +3580,15 @@ func (a *OpenTracingAppLayer) DemoteUserToGuest(user *model.User) *model.AppErro
 
 func (a *OpenTracingAppLayer) DiagnosticId() string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DiagnosticId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DiagnosticId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DiagnosticId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DiagnosticId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2920,10 +3602,15 @@ func (a *OpenTracingAppLayer) DiagnosticId() string {
 
 func (a *OpenTracingAppLayer) DisableAutoResponder(userId string, asAdmin bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DisableAutoResponder")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DisableAutoResponder")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DisableAutoResponder")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DisableAutoResponder")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2942,10 +3629,15 @@ func (a *OpenTracingAppLayer) DisableAutoResponder(userId string, asAdmin bool) 
 
 func (a *OpenTracingAppLayer) DisablePlugin(id string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DisablePlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DisablePlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DisablePlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DisablePlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2964,10 +3656,15 @@ func (a *OpenTracingAppLayer) DisablePlugin(id string) *model.AppError {
 
 func (a *OpenTracingAppLayer) DisableUserAccessToken(token *model.UserAccessToken) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DisableUserAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DisableUserAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DisableUserAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DisableUserAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -2986,10 +3683,15 @@ func (a *OpenTracingAppLayer) DisableUserAccessToken(token *model.UserAccessToke
 
 func (a *OpenTracingAppLayer) DoActionRequest(rawURL string, body []byte) (*http.Response, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoActionRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoActionRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoActionRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoActionRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3008,10 +3710,15 @@ func (a *OpenTracingAppLayer) DoActionRequest(rawURL string, body []byte) (*http
 
 func (a *OpenTracingAppLayer) DoAdvancedPermissionsMigration() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoAdvancedPermissionsMigration")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoAdvancedPermissionsMigration")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoAdvancedPermissionsMigration")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoAdvancedPermissionsMigration")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3023,10 +3730,15 @@ func (a *OpenTracingAppLayer) DoAdvancedPermissionsMigration() {
 
 func (a *OpenTracingAppLayer) DoAppMigrations() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoAppMigrations")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoAppMigrations")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoAppMigrations")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoAppMigrations")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3038,10 +3750,15 @@ func (a *OpenTracingAppLayer) DoAppMigrations() {
 
 func (a *OpenTracingAppLayer) DoCommandRequest(cmd *model.Command, p url.Values) (*model.Command, *model.CommandResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoCommandRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoCommandRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoCommandRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoCommandRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3060,10 +3777,15 @@ func (a *OpenTracingAppLayer) DoCommandRequest(cmd *model.Command, p url.Values)
 
 func (a *OpenTracingAppLayer) DoEmojisPermissionsMigration() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoEmojisPermissionsMigration")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoEmojisPermissionsMigration")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoEmojisPermissionsMigration")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoEmojisPermissionsMigration")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3075,10 +3797,15 @@ func (a *OpenTracingAppLayer) DoEmojisPermissionsMigration() {
 
 func (a *OpenTracingAppLayer) DoGuestRolesCreationMigration() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoGuestRolesCreationMigration")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoGuestRolesCreationMigration")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoGuestRolesCreationMigration")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoGuestRolesCreationMigration")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3090,10 +3817,15 @@ func (a *OpenTracingAppLayer) DoGuestRolesCreationMigration() {
 
 func (a *OpenTracingAppLayer) DoLocalRequest(rawURL string, body []byte) (*http.Response, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoLocalRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoLocalRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoLocalRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoLocalRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3112,10 +3844,15 @@ func (a *OpenTracingAppLayer) DoLocalRequest(rawURL string, body []byte) (*http.
 
 func (a *OpenTracingAppLayer) DoLogin(w http.ResponseWriter, r *http.Request, user *model.User, deviceId string, isMobile bool, isOAuthUser bool, isSaml bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoLogin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoLogin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoLogin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoLogin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3134,10 +3871,15 @@ func (a *OpenTracingAppLayer) DoLogin(w http.ResponseWriter, r *http.Request, us
 
 func (a *OpenTracingAppLayer) DoPermissionsMigrations() error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoPermissionsMigrations")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoPermissionsMigrations")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoPermissionsMigrations")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoPermissionsMigrations")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3156,10 +3898,15 @@ func (a *OpenTracingAppLayer) DoPermissionsMigrations() error {
 
 func (a *OpenTracingAppLayer) DoPostAction(postId string, actionId string, userId string, selectedOption string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoPostAction")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoPostAction")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoPostAction")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoPostAction")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3178,10 +3925,15 @@ func (a *OpenTracingAppLayer) DoPostAction(postId string, actionId string, userI
 
 func (a *OpenTracingAppLayer) DoPostActionWithCookie(postId string, actionId string, userId string, selectedOption string, cookie *model.PostActionCookie) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoPostActionWithCookie")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoPostActionWithCookie")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoPostActionWithCookie")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoPostActionWithCookie")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3200,10 +3952,15 @@ func (a *OpenTracingAppLayer) DoPostActionWithCookie(postId string, actionId str
 
 func (a *OpenTracingAppLayer) DoSystemConsoleRolesCreationMigration() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoSystemConsoleRolesCreationMigration")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoSystemConsoleRolesCreationMigration")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoSystemConsoleRolesCreationMigration")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoSystemConsoleRolesCreationMigration")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3215,10 +3972,15 @@ func (a *OpenTracingAppLayer) DoSystemConsoleRolesCreationMigration() {
 
 func (a *OpenTracingAppLayer) DoUploadFile(now time.Time, rawTeamId string, rawChannelId string, rawUserId string, rawFilename string, data []byte) (*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoUploadFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoUploadFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoUploadFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoUploadFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3237,10 +3999,15 @@ func (a *OpenTracingAppLayer) DoUploadFile(now time.Time, rawTeamId string, rawC
 
 func (a *OpenTracingAppLayer) DoUploadFileExpectModification(now time.Time, rawTeamId string, rawChannelId string, rawUserId string, rawFilename string, data []byte) (*model.FileInfo, []byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoUploadFileExpectModification")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoUploadFileExpectModification")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoUploadFileExpectModification")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoUploadFileExpectModification")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3259,10 +4026,15 @@ func (a *OpenTracingAppLayer) DoUploadFileExpectModification(now time.Time, rawT
 
 func (a *OpenTracingAppLayer) DoubleCheckPassword(user *model.User, password string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DoubleCheckPassword")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DoubleCheckPassword")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DoubleCheckPassword")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DoubleCheckPassword")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3281,10 +4053,15 @@ func (a *OpenTracingAppLayer) DoubleCheckPassword(user *model.User, password str
 
 func (a *OpenTracingAppLayer) DownloadFromURL(downloadURL string) ([]byte, error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.DownloadFromURL")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.DownloadFromURL")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.DownloadFromURL")
+	segment := newrelic.StartSegment(nrtx, "nr.app.DownloadFromURL")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3303,10 +4080,15 @@ func (a *OpenTracingAppLayer) DownloadFromURL(downloadURL string) ([]byte, error
 
 func (a *OpenTracingAppLayer) EnablePlugin(id string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.EnablePlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.EnablePlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.EnablePlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.EnablePlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3325,10 +4107,15 @@ func (a *OpenTracingAppLayer) EnablePlugin(id string) *model.AppError {
 
 func (a *OpenTracingAppLayer) EnableUserAccessToken(token *model.UserAccessToken) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.EnableUserAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.EnableUserAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.EnableUserAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.EnableUserAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3347,10 +4134,15 @@ func (a *OpenTracingAppLayer) EnableUserAccessToken(token *model.UserAccessToken
 
 func (a *OpenTracingAppLayer) EnvironmentConfig() map[string]interface{} {
 	origCtx := a.ctx
+	a.log.Info("nr.app.EnvironmentConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.EnvironmentConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.EnvironmentConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.EnvironmentConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3364,10 +4156,15 @@ func (a *OpenTracingAppLayer) EnvironmentConfig() map[string]interface{} {
 
 func (a *OpenTracingAppLayer) ExecuteCommand(args *model.CommandArgs) (*model.CommandResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ExecuteCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ExecuteCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ExecuteCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ExecuteCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3388,10 +4185,15 @@ func (a *OpenTracingAppLayer) ExecuteCommand(args *model.CommandArgs) (*model.Co
 
 func (a *OpenTracingAppLayer) ExportPermissions(w io.Writer) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ExportPermissions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ExportPermissions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ExportPermissions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ExportPermissions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3410,10 +4212,15 @@ func (a *OpenTracingAppLayer) ExportPermissions(w io.Writer) error {
 
 func (a *OpenTracingAppLayer) ExtendSessionExpiryIfNeeded(session *model.Session) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ExtendSessionExpiryIfNeeded")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ExtendSessionExpiryIfNeeded")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ExtendSessionExpiryIfNeeded")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ExtendSessionExpiryIfNeeded")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3427,10 +4234,15 @@ func (a *OpenTracingAppLayer) ExtendSessionExpiryIfNeeded(session *model.Session
 
 func (a *OpenTracingAppLayer) FetchSamlMetadataFromIdp(url string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FetchSamlMetadataFromIdp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FetchSamlMetadataFromIdp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FetchSamlMetadataFromIdp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FetchSamlMetadataFromIdp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3449,10 +4261,15 @@ func (a *OpenTracingAppLayer) FetchSamlMetadataFromIdp(url string) ([]byte, *mod
 
 func (a *OpenTracingAppLayer) FileBackend() (filesstore.FileBackend, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FileBackend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FileBackend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FileBackend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FileBackend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3471,10 +4288,15 @@ func (a *OpenTracingAppLayer) FileBackend() (filesstore.FileBackend, *model.AppE
 
 func (a *OpenTracingAppLayer) FileExists(path string) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FileExists")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FileExists")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FileExists")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FileExists")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3493,10 +4315,15 @@ func (a *OpenTracingAppLayer) FileExists(path string) (bool, *model.AppError) {
 
 func (a *OpenTracingAppLayer) FileReader(path string) (filesstore.ReadCloseSeeker, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FileReader")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FileReader")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FileReader")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FileReader")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3515,10 +4342,15 @@ func (a *OpenTracingAppLayer) FileReader(path string) (filesstore.ReadCloseSeeke
 
 func (a *OpenTracingAppLayer) FillInChannelProps(channel *model.Channel) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FillInChannelProps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FillInChannelProps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FillInChannelProps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FillInChannelProps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3537,10 +4369,15 @@ func (a *OpenTracingAppLayer) FillInChannelProps(channel *model.Channel) *model.
 
 func (a *OpenTracingAppLayer) FillInChannelsProps(channelList *model.ChannelList) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FillInChannelsProps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FillInChannelsProps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FillInChannelsProps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FillInChannelsProps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3559,10 +4396,15 @@ func (a *OpenTracingAppLayer) FillInChannelsProps(channelList *model.ChannelList
 
 func (a *OpenTracingAppLayer) FillInPostProps(post *model.Post, channel *model.Channel) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FillInPostProps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FillInPostProps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FillInPostProps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FillInPostProps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3581,10 +4423,15 @@ func (a *OpenTracingAppLayer) FillInPostProps(post *model.Post, channel *model.C
 
 func (a *OpenTracingAppLayer) FilterNonGroupChannelMembers(userIds []string, channel *model.Channel) ([]string, error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FilterNonGroupChannelMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FilterNonGroupChannelMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FilterNonGroupChannelMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FilterNonGroupChannelMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3603,10 +4450,15 @@ func (a *OpenTracingAppLayer) FilterNonGroupChannelMembers(userIds []string, cha
 
 func (a *OpenTracingAppLayer) FilterNonGroupTeamMembers(userIds []string, team *model.Team) ([]string, error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FilterNonGroupTeamMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FilterNonGroupTeamMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FilterNonGroupTeamMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FilterNonGroupTeamMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3625,10 +4477,15 @@ func (a *OpenTracingAppLayer) FilterNonGroupTeamMembers(userIds []string, team *
 
 func (a *OpenTracingAppLayer) FilterUsersByVisible(viewer *model.User, otherUsers []*model.User) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FilterUsersByVisible")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FilterUsersByVisible")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FilterUsersByVisible")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FilterUsersByVisible")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3647,10 +4504,15 @@ func (a *OpenTracingAppLayer) FilterUsersByVisible(viewer *model.User, otherUser
 
 func (a *OpenTracingAppLayer) FindTeamByName(name string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.FindTeamByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.FindTeamByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.FindTeamByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.FindTeamByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3664,10 +4526,15 @@ func (a *OpenTracingAppLayer) FindTeamByName(name string) bool {
 
 func (a *OpenTracingAppLayer) GenerateMfaSecret(userId string) (*model.MfaSecret, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GenerateMfaSecret")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GenerateMfaSecret")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GenerateMfaSecret")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GenerateMfaSecret")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3686,10 +4553,15 @@ func (a *OpenTracingAppLayer) GenerateMfaSecret(userId string) (*model.MfaSecret
 
 func (a *OpenTracingAppLayer) GeneratePublicLink(siteURL string, info *model.FileInfo) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GeneratePublicLink")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GeneratePublicLink")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GeneratePublicLink")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GeneratePublicLink")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3703,10 +4575,15 @@ func (a *OpenTracingAppLayer) GeneratePublicLink(siteURL string, info *model.Fil
 
 func (a *OpenTracingAppLayer) GetActivePluginManifests() ([]*model.Manifest, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetActivePluginManifests")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetActivePluginManifests")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetActivePluginManifests")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetActivePluginManifests")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3725,10 +4602,15 @@ func (a *OpenTracingAppLayer) GetActivePluginManifests() ([]*model.Manifest, *mo
 
 func (a *OpenTracingAppLayer) GetAllChannels(page int, perPage int, opts model.ChannelSearchOpts) (*model.ChannelListWithTeamData, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3747,10 +4629,15 @@ func (a *OpenTracingAppLayer) GetAllChannels(page int, perPage int, opts model.C
 
 func (a *OpenTracingAppLayer) GetAllChannelsCount(opts model.ChannelSearchOpts) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllChannelsCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllChannelsCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllChannelsCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllChannelsCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3769,10 +4656,15 @@ func (a *OpenTracingAppLayer) GetAllChannelsCount(opts model.ChannelSearchOpts) 
 
 func (a *OpenTracingAppLayer) GetAllLdapGroupsPage(page int, perPage int, opts model.LdapGroupSearchOpts) ([]*model.Group, int, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllLdapGroupsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllLdapGroupsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllLdapGroupsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllLdapGroupsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3791,10 +4683,15 @@ func (a *OpenTracingAppLayer) GetAllLdapGroupsPage(page int, perPage int, opts m
 
 func (a *OpenTracingAppLayer) GetAllPrivateTeams() ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPrivateTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPrivateTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPrivateTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPrivateTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3813,10 +4710,15 @@ func (a *OpenTracingAppLayer) GetAllPrivateTeams() ([]*model.Team, *model.AppErr
 
 func (a *OpenTracingAppLayer) GetAllPrivateTeamsPage(offset int, limit int) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPrivateTeamsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPrivateTeamsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPrivateTeamsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPrivateTeamsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3835,10 +4737,15 @@ func (a *OpenTracingAppLayer) GetAllPrivateTeamsPage(offset int, limit int) ([]*
 
 func (a *OpenTracingAppLayer) GetAllPrivateTeamsPageWithCount(offset int, limit int) (*model.TeamsWithCount, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPrivateTeamsPageWithCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPrivateTeamsPageWithCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPrivateTeamsPageWithCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPrivateTeamsPageWithCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3857,10 +4764,15 @@ func (a *OpenTracingAppLayer) GetAllPrivateTeamsPageWithCount(offset int, limit 
 
 func (a *OpenTracingAppLayer) GetAllPublicTeams() ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPublicTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPublicTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPublicTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPublicTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3879,10 +4791,15 @@ func (a *OpenTracingAppLayer) GetAllPublicTeams() ([]*model.Team, *model.AppErro
 
 func (a *OpenTracingAppLayer) GetAllPublicTeamsPage(offset int, limit int) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPublicTeamsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPublicTeamsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPublicTeamsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPublicTeamsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3901,10 +4818,15 @@ func (a *OpenTracingAppLayer) GetAllPublicTeamsPage(offset int, limit int) ([]*m
 
 func (a *OpenTracingAppLayer) GetAllPublicTeamsPageWithCount(offset int, limit int) (*model.TeamsWithCount, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllPublicTeamsPageWithCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllPublicTeamsPageWithCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllPublicTeamsPageWithCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllPublicTeamsPageWithCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3923,10 +4845,15 @@ func (a *OpenTracingAppLayer) GetAllPublicTeamsPageWithCount(offset int, limit i
 
 func (a *OpenTracingAppLayer) GetAllRoles() ([]*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3945,10 +4872,15 @@ func (a *OpenTracingAppLayer) GetAllRoles() ([]*model.Role, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetAllStatuses() map[string]*model.Status {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllStatuses")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllStatuses")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllStatuses")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllStatuses")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3962,10 +4894,15 @@ func (a *OpenTracingAppLayer) GetAllStatuses() map[string]*model.Status {
 
 func (a *OpenTracingAppLayer) GetAllTeams() ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -3984,10 +4921,15 @@ func (a *OpenTracingAppLayer) GetAllTeams() ([]*model.Team, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetAllTeamsPage(offset int, limit int) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllTeamsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllTeamsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllTeamsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllTeamsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4006,10 +4948,15 @@ func (a *OpenTracingAppLayer) GetAllTeamsPage(offset int, limit int) ([]*model.T
 
 func (a *OpenTracingAppLayer) GetAllTeamsPageWithCount(offset int, limit int) (*model.TeamsWithCount, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAllTeamsPageWithCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAllTeamsPageWithCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAllTeamsPageWithCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAllTeamsPageWithCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4028,10 +4975,15 @@ func (a *OpenTracingAppLayer) GetAllTeamsPageWithCount(offset int, limit int) (*
 
 func (a *OpenTracingAppLayer) GetAnalytics(name string, teamId string) (model.AnalyticsRows, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAnalytics")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAnalytics")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAnalytics")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAnalytics")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4050,10 +5002,15 @@ func (a *OpenTracingAppLayer) GetAnalytics(name string, teamId string) (model.An
 
 func (a *OpenTracingAppLayer) GetAudits(userId string, limit int) (model.Audits, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAudits")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAudits")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAudits")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAudits")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4072,10 +5029,15 @@ func (a *OpenTracingAppLayer) GetAudits(userId string, limit int) (model.Audits,
 
 func (a *OpenTracingAppLayer) GetAuditsPage(userId string, page int, perPage int) (model.Audits, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAuditsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAuditsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAuditsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAuditsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4094,10 +5056,15 @@ func (a *OpenTracingAppLayer) GetAuditsPage(userId string, page int, perPage int
 
 func (a *OpenTracingAppLayer) GetAuthorizationCode(w http.ResponseWriter, r *http.Request, service string, props map[string]string, loginHint string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAuthorizationCode")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAuthorizationCode")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAuthorizationCode")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAuthorizationCode")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4116,10 +5083,15 @@ func (a *OpenTracingAppLayer) GetAuthorizationCode(w http.ResponseWriter, r *htt
 
 func (a *OpenTracingAppLayer) GetAuthorizedAppsForUser(userId string, page int, perPage int) ([]*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetAuthorizedAppsForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetAuthorizedAppsForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetAuthorizedAppsForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetAuthorizedAppsForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4138,10 +5110,15 @@ func (a *OpenTracingAppLayer) GetAuthorizedAppsForUser(userId string, page int, 
 
 func (a *OpenTracingAppLayer) GetBot(botUserId string, includeDeleted bool) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4160,10 +5137,15 @@ func (a *OpenTracingAppLayer) GetBot(botUserId string, includeDeleted bool) (*mo
 
 func (a *OpenTracingAppLayer) GetBotIconImage(botUserId string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetBotIconImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetBotIconImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetBotIconImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetBotIconImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4182,10 +5164,15 @@ func (a *OpenTracingAppLayer) GetBotIconImage(botUserId string) ([]byte, *model.
 
 func (a *OpenTracingAppLayer) GetBots(options *model.BotGetOptions) (model.BotList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetBots")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetBots")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetBots")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetBots")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4204,10 +5191,15 @@ func (a *OpenTracingAppLayer) GetBots(options *model.BotGetOptions) (model.BotLi
 
 func (a *OpenTracingAppLayer) GetBrandImage() ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetBrandImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetBrandImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetBrandImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetBrandImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4226,10 +5218,15 @@ func (a *OpenTracingAppLayer) GetBrandImage() ([]byte, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetBulkReactionsForPosts(postIds []string) (map[string][]*model.Reaction, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetBulkReactionsForPosts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetBulkReactionsForPosts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetBulkReactionsForPosts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetBulkReactionsForPosts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4248,10 +5245,15 @@ func (a *OpenTracingAppLayer) GetBulkReactionsForPosts(postIds []string) (map[st
 
 func (a *OpenTracingAppLayer) GetChannel(channelId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4270,10 +5272,15 @@ func (a *OpenTracingAppLayer) GetChannel(channelId string) (*model.Channel, *mod
 
 func (a *OpenTracingAppLayer) GetChannelByName(channelName string, teamId string, includeDeleted bool) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4292,10 +5299,15 @@ func (a *OpenTracingAppLayer) GetChannelByName(channelName string, teamId string
 
 func (a *OpenTracingAppLayer) GetChannelByNameForTeamName(channelName string, teamName string, includeDeleted bool) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelByNameForTeamName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelByNameForTeamName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelByNameForTeamName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelByNameForTeamName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4314,10 +5326,15 @@ func (a *OpenTracingAppLayer) GetChannelByNameForTeamName(channelName string, te
 
 func (a *OpenTracingAppLayer) GetChannelCounts(teamId string, userId string) (*model.ChannelCounts, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelCounts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelCounts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelCounts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelCounts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4336,10 +5353,15 @@ func (a *OpenTracingAppLayer) GetChannelCounts(teamId string, userId string) (*m
 
 func (a *OpenTracingAppLayer) GetChannelGroupUsers(channelID string) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelGroupUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelGroupUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelGroupUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelGroupUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4358,10 +5380,15 @@ func (a *OpenTracingAppLayer) GetChannelGroupUsers(channelID string) ([]*model.U
 
 func (a *OpenTracingAppLayer) GetChannelGuestCount(channelId string) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelGuestCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelGuestCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelGuestCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelGuestCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4380,10 +5407,15 @@ func (a *OpenTracingAppLayer) GetChannelGuestCount(channelId string) (int64, *mo
 
 func (a *OpenTracingAppLayer) GetChannelMember(channelId string, userId string) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4402,10 +5434,15 @@ func (a *OpenTracingAppLayer) GetChannelMember(channelId string, userId string) 
 
 func (a *OpenTracingAppLayer) GetChannelMemberCount(channelId string) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMemberCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMemberCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMemberCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMemberCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4424,10 +5461,15 @@ func (a *OpenTracingAppLayer) GetChannelMemberCount(channelId string) (int64, *m
 
 func (a *OpenTracingAppLayer) GetChannelMembersByIds(channelId string, userIds []string) (*model.ChannelMembers, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMembersByIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMembersByIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMembersByIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMembersByIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4446,10 +5488,15 @@ func (a *OpenTracingAppLayer) GetChannelMembersByIds(channelId string, userIds [
 
 func (a *OpenTracingAppLayer) GetChannelMembersForUser(teamId string, userId string) (*model.ChannelMembers, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMembersForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMembersForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMembersForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMembersForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4468,10 +5515,15 @@ func (a *OpenTracingAppLayer) GetChannelMembersForUser(teamId string, userId str
 
 func (a *OpenTracingAppLayer) GetChannelMembersForUserWithPagination(teamId string, userId string, page int, perPage int) ([]*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMembersForUserWithPagination")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMembersForUserWithPagination")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMembersForUserWithPagination")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMembersForUserWithPagination")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4490,10 +5542,15 @@ func (a *OpenTracingAppLayer) GetChannelMembersForUserWithPagination(teamId stri
 
 func (a *OpenTracingAppLayer) GetChannelMembersPage(channelId string, page int, perPage int) (*model.ChannelMembers, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMembersPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMembersPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMembersPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMembersPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4512,10 +5569,15 @@ func (a *OpenTracingAppLayer) GetChannelMembersPage(channelId string, page int, 
 
 func (a *OpenTracingAppLayer) GetChannelMembersTimezones(channelId string) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelMembersTimezones")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelMembersTimezones")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelMembersTimezones")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelMembersTimezones")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4534,10 +5596,15 @@ func (a *OpenTracingAppLayer) GetChannelMembersTimezones(channelId string) ([]st
 
 func (a *OpenTracingAppLayer) GetChannelModerationsForChannel(channel *model.Channel) ([]*model.ChannelModeration, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelModerationsForChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelModerationsForChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelModerationsForChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelModerationsForChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4556,10 +5623,15 @@ func (a *OpenTracingAppLayer) GetChannelModerationsForChannel(channel *model.Cha
 
 func (a *OpenTracingAppLayer) GetChannelPinnedPostCount(channelId string) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelPinnedPostCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelPinnedPostCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelPinnedPostCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelPinnedPostCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4578,10 +5650,15 @@ func (a *OpenTracingAppLayer) GetChannelPinnedPostCount(channelId string) (int64
 
 func (a *OpenTracingAppLayer) GetChannelUnread(channelId string, userId string) (*model.ChannelUnread, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelUnread")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelUnread")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelUnread")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelUnread")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4600,10 +5677,15 @@ func (a *OpenTracingAppLayer) GetChannelUnread(channelId string, userId string) 
 
 func (a *OpenTracingAppLayer) GetChannelsByNames(channelNames []string, teamId string) ([]*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelsByNames")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelsByNames")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelsByNames")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelsByNames")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4622,10 +5704,15 @@ func (a *OpenTracingAppLayer) GetChannelsByNames(channelNames []string, teamId s
 
 func (a *OpenTracingAppLayer) GetChannelsForScheme(scheme *model.Scheme, offset int, limit int) (model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelsForScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelsForScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelsForScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelsForScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4644,10 +5731,15 @@ func (a *OpenTracingAppLayer) GetChannelsForScheme(scheme *model.Scheme, offset 
 
 func (a *OpenTracingAppLayer) GetChannelsForSchemePage(scheme *model.Scheme, page int, perPage int) (model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelsForSchemePage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelsForSchemePage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelsForSchemePage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelsForSchemePage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4666,10 +5758,15 @@ func (a *OpenTracingAppLayer) GetChannelsForSchemePage(scheme *model.Scheme, pag
 
 func (a *OpenTracingAppLayer) GetChannelsForUser(teamId string, userId string, includeDeleted bool, lastDeleteAt int) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelsForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelsForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelsForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelsForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4688,10 +5785,15 @@ func (a *OpenTracingAppLayer) GetChannelsForUser(teamId string, userId string, i
 
 func (a *OpenTracingAppLayer) GetChannelsUserNotIn(teamId string, userId string, offset int, limit int) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetChannelsUserNotIn")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetChannelsUserNotIn")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetChannelsUserNotIn")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetChannelsUserNotIn")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4710,10 +5812,15 @@ func (a *OpenTracingAppLayer) GetChannelsUserNotIn(teamId string, userId string,
 
 func (a *OpenTracingAppLayer) GetClusterId() string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetClusterId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetClusterId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetClusterId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetClusterId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4727,10 +5834,15 @@ func (a *OpenTracingAppLayer) GetClusterId() string {
 
 func (a *OpenTracingAppLayer) GetClusterPluginStatuses() (model.PluginStatuses, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetClusterPluginStatuses")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetClusterPluginStatuses")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetClusterPluginStatuses")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetClusterPluginStatuses")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4749,10 +5861,15 @@ func (a *OpenTracingAppLayer) GetClusterPluginStatuses() (model.PluginStatuses, 
 
 func (a *OpenTracingAppLayer) GetClusterStatus() []*model.ClusterInfo {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetClusterStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetClusterStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetClusterStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetClusterStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4766,10 +5883,15 @@ func (a *OpenTracingAppLayer) GetClusterStatus() []*model.ClusterInfo {
 
 func (a *OpenTracingAppLayer) GetCommand(commandId string) (*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4788,10 +5910,15 @@ func (a *OpenTracingAppLayer) GetCommand(commandId string) (*model.Command, *mod
 
 func (a *OpenTracingAppLayer) GetComplianceFile(job *model.Compliance) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetComplianceFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetComplianceFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetComplianceFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetComplianceFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4810,10 +5937,15 @@ func (a *OpenTracingAppLayer) GetComplianceFile(job *model.Compliance) ([]byte, 
 
 func (a *OpenTracingAppLayer) GetComplianceReport(reportId string) (*model.Compliance, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetComplianceReport")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetComplianceReport")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetComplianceReport")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetComplianceReport")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4832,10 +5964,15 @@ func (a *OpenTracingAppLayer) GetComplianceReport(reportId string) (*model.Compl
 
 func (a *OpenTracingAppLayer) GetComplianceReports(page int, perPage int) (model.Compliances, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetComplianceReports")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetComplianceReports")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetComplianceReports")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetComplianceReports")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4854,10 +5991,15 @@ func (a *OpenTracingAppLayer) GetComplianceReports(page int, perPage int) (model
 
 func (a *OpenTracingAppLayer) GetConfigFile(name string) ([]byte, error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetConfigFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetConfigFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetConfigFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetConfigFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4876,10 +6018,15 @@ func (a *OpenTracingAppLayer) GetConfigFile(name string) ([]byte, error) {
 
 func (a *OpenTracingAppLayer) GetCookieDomain() string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetCookieDomain")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetCookieDomain")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetCookieDomain")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetCookieDomain")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4893,10 +6040,15 @@ func (a *OpenTracingAppLayer) GetCookieDomain() string {
 
 func (a *OpenTracingAppLayer) GetDataRetentionPolicy() (*model.DataRetentionPolicy, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetDataRetentionPolicy")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetDataRetentionPolicy")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetDataRetentionPolicy")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetDataRetentionPolicy")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4915,10 +6067,15 @@ func (a *OpenTracingAppLayer) GetDataRetentionPolicy() (*model.DataRetentionPoli
 
 func (a *OpenTracingAppLayer) GetDefaultProfileImage(user *model.User) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetDefaultProfileImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetDefaultProfileImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetDefaultProfileImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetDefaultProfileImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4937,10 +6094,15 @@ func (a *OpenTracingAppLayer) GetDefaultProfileImage(user *model.User) ([]byte, 
 
 func (a *OpenTracingAppLayer) GetDeletedChannels(teamId string, offset int, limit int, userId string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetDeletedChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetDeletedChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetDeletedChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetDeletedChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4959,10 +6121,15 @@ func (a *OpenTracingAppLayer) GetDeletedChannels(teamId string, offset int, limi
 
 func (a *OpenTracingAppLayer) GetEmoji(emojiId string) (*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEmoji")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEmoji")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEmoji")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEmoji")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -4981,10 +6148,15 @@ func (a *OpenTracingAppLayer) GetEmoji(emojiId string) (*model.Emoji, *model.App
 
 func (a *OpenTracingAppLayer) GetEmojiByName(emojiName string) (*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEmojiByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEmojiByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEmojiByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEmojiByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5003,10 +6175,15 @@ func (a *OpenTracingAppLayer) GetEmojiByName(emojiName string) (*model.Emoji, *m
 
 func (a *OpenTracingAppLayer) GetEmojiImage(emojiId string) ([]byte, string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEmojiImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEmojiImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEmojiImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEmojiImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5025,10 +6202,15 @@ func (a *OpenTracingAppLayer) GetEmojiImage(emojiId string) ([]byte, string, *mo
 
 func (a *OpenTracingAppLayer) GetEmojiList(page int, perPage int, sort string) ([]*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEmojiList")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEmojiList")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEmojiList")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEmojiList")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5047,10 +6229,15 @@ func (a *OpenTracingAppLayer) GetEmojiList(page int, perPage int, sort string) (
 
 func (a *OpenTracingAppLayer) GetEmojiStaticUrl(emojiName string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEmojiStaticUrl")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEmojiStaticUrl")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEmojiStaticUrl")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEmojiStaticUrl")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5069,10 +6256,15 @@ func (a *OpenTracingAppLayer) GetEmojiStaticUrl(emojiName string) (string, *mode
 
 func (a *OpenTracingAppLayer) GetEnvironmentConfig() map[string]interface{} {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetEnvironmentConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetEnvironmentConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetEnvironmentConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetEnvironmentConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5086,10 +6278,15 @@ func (a *OpenTracingAppLayer) GetEnvironmentConfig() map[string]interface{} {
 
 func (a *OpenTracingAppLayer) GetErrorListForEmailsOverLimit(emailList []string, cloudUserLimit int64) ([]string, []*model.EmailInviteWithError, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetErrorListForEmailsOverLimit")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetErrorListForEmailsOverLimit")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetErrorListForEmailsOverLimit")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetErrorListForEmailsOverLimit")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5108,10 +6305,15 @@ func (a *OpenTracingAppLayer) GetErrorListForEmailsOverLimit(emailList []string,
 
 func (a *OpenTracingAppLayer) GetFile(fileId string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5130,10 +6332,15 @@ func (a *OpenTracingAppLayer) GetFile(fileId string) ([]byte, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetFileInfo(fileId string) (*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFileInfo")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFileInfo")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFileInfo")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFileInfo")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5152,10 +6359,15 @@ func (a *OpenTracingAppLayer) GetFileInfo(fileId string) (*model.FileInfo, *mode
 
 func (a *OpenTracingAppLayer) GetFileInfos(page int, perPage int, opt *model.GetFileInfosOptions) ([]*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFileInfos")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFileInfos")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFileInfos")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFileInfos")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5174,10 +6386,15 @@ func (a *OpenTracingAppLayer) GetFileInfos(page int, perPage int, opt *model.Get
 
 func (a *OpenTracingAppLayer) GetFileInfosForPost(postId string, fromMaster bool) ([]*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFileInfosForPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFileInfosForPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFileInfosForPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFileInfosForPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5196,10 +6413,15 @@ func (a *OpenTracingAppLayer) GetFileInfosForPost(postId string, fromMaster bool
 
 func (a *OpenTracingAppLayer) GetFileInfosForPostWithMigration(postId string) ([]*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFileInfosForPostWithMigration")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFileInfosForPostWithMigration")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFileInfosForPostWithMigration")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFileInfosForPostWithMigration")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5218,10 +6440,15 @@ func (a *OpenTracingAppLayer) GetFileInfosForPostWithMigration(postId string) ([
 
 func (a *OpenTracingAppLayer) GetFilteredUsersStats(options *model.UserCountOptions) (*model.UsersStats, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFilteredUsersStats")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFilteredUsersStats")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFilteredUsersStats")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFilteredUsersStats")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5240,10 +6467,15 @@ func (a *OpenTracingAppLayer) GetFilteredUsersStats(options *model.UserCountOpti
 
 func (a *OpenTracingAppLayer) GetFlaggedPosts(userId string, offset int, limit int) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFlaggedPosts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFlaggedPosts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFlaggedPosts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFlaggedPosts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5262,10 +6494,15 @@ func (a *OpenTracingAppLayer) GetFlaggedPosts(userId string, offset int, limit i
 
 func (a *OpenTracingAppLayer) GetFlaggedPostsForChannel(userId string, channelId string, offset int, limit int) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFlaggedPostsForChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFlaggedPostsForChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFlaggedPostsForChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFlaggedPostsForChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5284,10 +6521,15 @@ func (a *OpenTracingAppLayer) GetFlaggedPostsForChannel(userId string, channelId
 
 func (a *OpenTracingAppLayer) GetFlaggedPostsForTeam(userId string, teamId string, offset int, limit int) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetFlaggedPostsForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetFlaggedPostsForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetFlaggedPostsForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetFlaggedPostsForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5306,10 +6548,15 @@ func (a *OpenTracingAppLayer) GetFlaggedPostsForTeam(userId string, teamId strin
 
 func (a *OpenTracingAppLayer) GetGroup(id string) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5328,10 +6575,15 @@ func (a *OpenTracingAppLayer) GetGroup(id string) (*model.Group, *model.AppError
 
 func (a *OpenTracingAppLayer) GetGroupByName(name string, opts model.GroupSearchOpts) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5350,10 +6602,15 @@ func (a *OpenTracingAppLayer) GetGroupByName(name string, opts model.GroupSearch
 
 func (a *OpenTracingAppLayer) GetGroupByRemoteID(remoteID string, groupSource model.GroupSource) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupByRemoteID")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupByRemoteID")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupByRemoteID")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupByRemoteID")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5372,10 +6629,15 @@ func (a *OpenTracingAppLayer) GetGroupByRemoteID(remoteID string, groupSource mo
 
 func (a *OpenTracingAppLayer) GetGroupChannel(userIds []string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5394,10 +6656,15 @@ func (a *OpenTracingAppLayer) GetGroupChannel(userIds []string) (*model.Channel,
 
 func (a *OpenTracingAppLayer) GetGroupMemberCount(groupID string) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupMemberCount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupMemberCount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupMemberCount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupMemberCount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5416,10 +6683,15 @@ func (a *OpenTracingAppLayer) GetGroupMemberCount(groupID string) (int64, *model
 
 func (a *OpenTracingAppLayer) GetGroupMemberUsers(groupID string) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupMemberUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupMemberUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupMemberUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupMemberUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5438,10 +6710,15 @@ func (a *OpenTracingAppLayer) GetGroupMemberUsers(groupID string) ([]*model.User
 
 func (a *OpenTracingAppLayer) GetGroupMemberUsersPage(groupID string, page int, perPage int) ([]*model.User, int, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupMemberUsersPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupMemberUsersPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupMemberUsersPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupMemberUsersPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5460,10 +6737,15 @@ func (a *OpenTracingAppLayer) GetGroupMemberUsersPage(groupID string, page int, 
 
 func (a *OpenTracingAppLayer) GetGroupSyncable(groupID string, syncableID string, syncableType model.GroupSyncableType) (*model.GroupSyncable, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupSyncable")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupSyncable")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupSyncable")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupSyncable")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5482,10 +6764,15 @@ func (a *OpenTracingAppLayer) GetGroupSyncable(groupID string, syncableID string
 
 func (a *OpenTracingAppLayer) GetGroupSyncables(groupID string, syncableType model.GroupSyncableType) ([]*model.GroupSyncable, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupSyncables")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupSyncables")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupSyncables")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupSyncables")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5504,10 +6791,15 @@ func (a *OpenTracingAppLayer) GetGroupSyncables(groupID string, syncableType mod
 
 func (a *OpenTracingAppLayer) GetGroups(page int, perPage int, opts model.GroupSearchOpts) ([]*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroups")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroups")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroups")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroups")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5526,10 +6818,15 @@ func (a *OpenTracingAppLayer) GetGroups(page int, perPage int, opts model.GroupS
 
 func (a *OpenTracingAppLayer) GetGroupsAssociatedToChannelsByTeam(teamId string, opts model.GroupSearchOpts) (map[string][]*model.GroupWithSchemeAdmin, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsAssociatedToChannelsByTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsAssociatedToChannelsByTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsAssociatedToChannelsByTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsAssociatedToChannelsByTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5548,10 +6845,15 @@ func (a *OpenTracingAppLayer) GetGroupsAssociatedToChannelsByTeam(teamId string,
 
 func (a *OpenTracingAppLayer) GetGroupsByChannel(channelId string, opts model.GroupSearchOpts) ([]*model.GroupWithSchemeAdmin, int, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsByChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsByChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsByChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsByChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5570,10 +6872,15 @@ func (a *OpenTracingAppLayer) GetGroupsByChannel(channelId string, opts model.Gr
 
 func (a *OpenTracingAppLayer) GetGroupsByIDs(groupIDs []string) ([]*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsByIDs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsByIDs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsByIDs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsByIDs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5592,10 +6899,15 @@ func (a *OpenTracingAppLayer) GetGroupsByIDs(groupIDs []string) ([]*model.Group,
 
 func (a *OpenTracingAppLayer) GetGroupsBySource(groupSource model.GroupSource) ([]*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsBySource")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsBySource")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsBySource")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsBySource")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5614,10 +6926,15 @@ func (a *OpenTracingAppLayer) GetGroupsBySource(groupSource model.GroupSource) (
 
 func (a *OpenTracingAppLayer) GetGroupsByTeam(teamId string, opts model.GroupSearchOpts) ([]*model.GroupWithSchemeAdmin, int, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsByTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsByTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsByTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsByTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5636,10 +6953,15 @@ func (a *OpenTracingAppLayer) GetGroupsByTeam(teamId string, opts model.GroupSea
 
 func (a *OpenTracingAppLayer) GetGroupsByUserId(userId string) ([]*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetGroupsByUserId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetGroupsByUserId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetGroupsByUserId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetGroupsByUserId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5658,10 +6980,15 @@ func (a *OpenTracingAppLayer) GetGroupsByUserId(userId string) ([]*model.Group, 
 
 func (a *OpenTracingAppLayer) GetHubForUserId(userId string) *app.Hub {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetHubForUserId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetHubForUserId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetHubForUserId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetHubForUserId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5675,10 +7002,15 @@ func (a *OpenTracingAppLayer) GetHubForUserId(userId string) *app.Hub {
 
 func (a *OpenTracingAppLayer) GetIncomingWebhook(hookId string) (*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetIncomingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetIncomingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetIncomingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetIncomingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5697,10 +7029,15 @@ func (a *OpenTracingAppLayer) GetIncomingWebhook(hookId string) (*model.Incoming
 
 func (a *OpenTracingAppLayer) GetIncomingWebhooksForTeamPage(teamId string, page int, perPage int) ([]*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetIncomingWebhooksForTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetIncomingWebhooksForTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetIncomingWebhooksForTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetIncomingWebhooksForTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5719,10 +7056,15 @@ func (a *OpenTracingAppLayer) GetIncomingWebhooksForTeamPage(teamId string, page
 
 func (a *OpenTracingAppLayer) GetIncomingWebhooksForTeamPageByUser(teamId string, userId string, page int, perPage int) ([]*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetIncomingWebhooksForTeamPageByUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetIncomingWebhooksForTeamPageByUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetIncomingWebhooksForTeamPageByUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetIncomingWebhooksForTeamPageByUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5741,10 +7083,15 @@ func (a *OpenTracingAppLayer) GetIncomingWebhooksForTeamPageByUser(teamId string
 
 func (a *OpenTracingAppLayer) GetIncomingWebhooksPage(page int, perPage int) ([]*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetIncomingWebhooksPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetIncomingWebhooksPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetIncomingWebhooksPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetIncomingWebhooksPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5763,10 +7110,15 @@ func (a *OpenTracingAppLayer) GetIncomingWebhooksPage(page int, perPage int) ([]
 
 func (a *OpenTracingAppLayer) GetIncomingWebhooksPageByUser(userId string, page int, perPage int) ([]*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetIncomingWebhooksPageByUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetIncomingWebhooksPageByUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetIncomingWebhooksPageByUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetIncomingWebhooksPageByUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5785,10 +7137,15 @@ func (a *OpenTracingAppLayer) GetIncomingWebhooksPageByUser(userId string, page 
 
 func (a *OpenTracingAppLayer) GetJob(id string) (*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetJob")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetJob")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetJob")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetJob")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5807,10 +7164,15 @@ func (a *OpenTracingAppLayer) GetJob(id string) (*model.Job, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetJobs(offset int, limit int) ([]*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetJobs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetJobs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetJobs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetJobs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5829,10 +7191,15 @@ func (a *OpenTracingAppLayer) GetJobs(offset int, limit int) ([]*model.Job, *mod
 
 func (a *OpenTracingAppLayer) GetJobsByType(jobType string, offset int, limit int) ([]*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetJobsByType")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetJobsByType")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetJobsByType")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetJobsByType")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5851,10 +7218,15 @@ func (a *OpenTracingAppLayer) GetJobsByType(jobType string, offset int, limit in
 
 func (a *OpenTracingAppLayer) GetJobsByTypePage(jobType string, page int, perPage int) ([]*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetJobsByTypePage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetJobsByTypePage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetJobsByTypePage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetJobsByTypePage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5873,10 +7245,15 @@ func (a *OpenTracingAppLayer) GetJobsByTypePage(jobType string, page int, perPag
 
 func (a *OpenTracingAppLayer) GetJobsPage(page int, perPage int) ([]*model.Job, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetJobsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetJobsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetJobsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetJobsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5895,10 +7272,15 @@ func (a *OpenTracingAppLayer) GetJobsPage(page int, perPage int) ([]*model.Job, 
 
 func (a *OpenTracingAppLayer) GetKnownUsers(userID string) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetKnownUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetKnownUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetKnownUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetKnownUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5917,10 +7299,15 @@ func (a *OpenTracingAppLayer) GetKnownUsers(userID string) ([]string, *model.App
 
 func (a *OpenTracingAppLayer) GetLatestTermsOfService() (*model.TermsOfService, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetLatestTermsOfService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetLatestTermsOfService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetLatestTermsOfService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetLatestTermsOfService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5939,10 +7326,15 @@ func (a *OpenTracingAppLayer) GetLatestTermsOfService() (*model.TermsOfService, 
 
 func (a *OpenTracingAppLayer) GetLdapGroup(ldapGroupID string) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetLdapGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetLdapGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetLdapGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetLdapGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5961,10 +7353,15 @@ func (a *OpenTracingAppLayer) GetLdapGroup(ldapGroupID string) (*model.Group, *m
 
 func (a *OpenTracingAppLayer) GetLogs(page int, perPage int) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetLogs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetLogs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetLogs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetLogs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -5983,10 +7380,15 @@ func (a *OpenTracingAppLayer) GetLogs(page int, perPage int) ([]string, *model.A
 
 func (a *OpenTracingAppLayer) GetLogsSkipSend(page int, perPage int) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetLogsSkipSend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetLogsSkipSend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetLogsSkipSend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetLogsSkipSend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6005,10 +7407,15 @@ func (a *OpenTracingAppLayer) GetLogsSkipSend(page int, perPage int) ([]string, 
 
 func (a *OpenTracingAppLayer) GetMarketplacePlugins(filter *model.MarketplacePluginFilter) ([]*model.MarketplacePlugin, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetMarketplacePlugins")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetMarketplacePlugins")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetMarketplacePlugins")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetMarketplacePlugins")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6027,10 +7434,15 @@ func (a *OpenTracingAppLayer) GetMarketplacePlugins(filter *model.MarketplacePlu
 
 func (a *OpenTracingAppLayer) GetMessageForNotification(post *model.Post, translateFunc i18n.TranslateFunc) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetMessageForNotification")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetMessageForNotification")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetMessageForNotification")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetMessageForNotification")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6044,10 +7456,15 @@ func (a *OpenTracingAppLayer) GetMessageForNotification(post *model.Post, transl
 
 func (a *OpenTracingAppLayer) GetMultipleEmojiByName(names []string) ([]*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetMultipleEmojiByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetMultipleEmojiByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetMultipleEmojiByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetMultipleEmojiByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6066,10 +7483,15 @@ func (a *OpenTracingAppLayer) GetMultipleEmojiByName(names []string) ([]*model.E
 
 func (a *OpenTracingAppLayer) GetNewUsersForTeamPage(teamId string, page int, perPage int, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetNewUsersForTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetNewUsersForTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetNewUsersForTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetNewUsersForTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6088,10 +7510,15 @@ func (a *OpenTracingAppLayer) GetNewUsersForTeamPage(teamId string, page int, pe
 
 func (a *OpenTracingAppLayer) GetNextPostIdFromPostList(postList *model.PostList) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetNextPostIdFromPostList")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetNextPostIdFromPostList")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetNextPostIdFromPostList")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetNextPostIdFromPostList")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6105,10 +7532,15 @@ func (a *OpenTracingAppLayer) GetNextPostIdFromPostList(postList *model.PostList
 
 func (a *OpenTracingAppLayer) GetNotificationNameFormat(user *model.User) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetNotificationNameFormat")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetNotificationNameFormat")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetNotificationNameFormat")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetNotificationNameFormat")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6122,10 +7554,15 @@ func (a *OpenTracingAppLayer) GetNotificationNameFormat(user *model.User) string
 
 func (a *OpenTracingAppLayer) GetNumberOfChannelsOnTeam(teamId string) (int, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetNumberOfChannelsOnTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetNumberOfChannelsOnTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetNumberOfChannelsOnTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetNumberOfChannelsOnTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6144,10 +7581,15 @@ func (a *OpenTracingAppLayer) GetNumberOfChannelsOnTeam(teamId string) (int, *mo
 
 func (a *OpenTracingAppLayer) GetOAuthAccessTokenForCodeFlow(clientId string, grantType string, redirectUri string, code string, secret string, refreshToken string) (*model.AccessResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthAccessTokenForCodeFlow")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthAccessTokenForCodeFlow")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthAccessTokenForCodeFlow")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthAccessTokenForCodeFlow")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6166,10 +7608,15 @@ func (a *OpenTracingAppLayer) GetOAuthAccessTokenForCodeFlow(clientId string, gr
 
 func (a *OpenTracingAppLayer) GetOAuthAccessTokenForImplicitFlow(userId string, authRequest *model.AuthorizeRequest) (*model.Session, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthAccessTokenForImplicitFlow")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthAccessTokenForImplicitFlow")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthAccessTokenForImplicitFlow")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthAccessTokenForImplicitFlow")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6188,10 +7635,15 @@ func (a *OpenTracingAppLayer) GetOAuthAccessTokenForImplicitFlow(userId string, 
 
 func (a *OpenTracingAppLayer) GetOAuthApp(appId string) (*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthApp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthApp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthApp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthApp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6210,10 +7662,15 @@ func (a *OpenTracingAppLayer) GetOAuthApp(appId string) (*model.OAuthApp, *model
 
 func (a *OpenTracingAppLayer) GetOAuthApps(page int, perPage int) ([]*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthApps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthApps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthApps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthApps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6232,10 +7689,15 @@ func (a *OpenTracingAppLayer) GetOAuthApps(page int, perPage int) ([]*model.OAut
 
 func (a *OpenTracingAppLayer) GetOAuthAppsByCreator(userId string, page int, perPage int) ([]*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthAppsByCreator")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthAppsByCreator")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthAppsByCreator")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthAppsByCreator")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6254,10 +7716,15 @@ func (a *OpenTracingAppLayer) GetOAuthAppsByCreator(userId string, page int, per
 
 func (a *OpenTracingAppLayer) GetOAuthCodeRedirect(userId string, authRequest *model.AuthorizeRequest) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthCodeRedirect")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthCodeRedirect")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthCodeRedirect")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthCodeRedirect")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6276,10 +7743,15 @@ func (a *OpenTracingAppLayer) GetOAuthCodeRedirect(userId string, authRequest *m
 
 func (a *OpenTracingAppLayer) GetOAuthImplicitRedirect(userId string, authRequest *model.AuthorizeRequest) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthImplicitRedirect")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthImplicitRedirect")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthImplicitRedirect")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthImplicitRedirect")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6298,10 +7770,15 @@ func (a *OpenTracingAppLayer) GetOAuthImplicitRedirect(userId string, authReques
 
 func (a *OpenTracingAppLayer) GetOAuthLoginEndpoint(w http.ResponseWriter, r *http.Request, service string, teamId string, action string, redirectTo string, loginHint string, isMobile bool) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthLoginEndpoint")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthLoginEndpoint")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthLoginEndpoint")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthLoginEndpoint")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6320,10 +7797,15 @@ func (a *OpenTracingAppLayer) GetOAuthLoginEndpoint(w http.ResponseWriter, r *ht
 
 func (a *OpenTracingAppLayer) GetOAuthSignupEndpoint(w http.ResponseWriter, r *http.Request, service string, teamId string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthSignupEndpoint")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthSignupEndpoint")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthSignupEndpoint")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthSignupEndpoint")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6342,10 +7824,15 @@ func (a *OpenTracingAppLayer) GetOAuthSignupEndpoint(w http.ResponseWriter, r *h
 
 func (a *OpenTracingAppLayer) GetOAuthStateToken(token string) (*model.Token, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOAuthStateToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOAuthStateToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOAuthStateToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOAuthStateToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6364,10 +7851,15 @@ func (a *OpenTracingAppLayer) GetOAuthStateToken(token string) (*model.Token, *m
 
 func (a *OpenTracingAppLayer) GetOpenGraphMetadata(requestURL string) *opengraph.OpenGraph {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOpenGraphMetadata")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOpenGraphMetadata")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOpenGraphMetadata")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOpenGraphMetadata")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6381,10 +7873,15 @@ func (a *OpenTracingAppLayer) GetOpenGraphMetadata(requestURL string) *opengraph
 
 func (a *OpenTracingAppLayer) GetOrCreateDirectChannel(userId string, otherUserId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOrCreateDirectChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOrCreateDirectChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOrCreateDirectChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOrCreateDirectChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6403,10 +7900,15 @@ func (a *OpenTracingAppLayer) GetOrCreateDirectChannel(userId string, otherUserI
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhook(hookId string) (*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6425,10 +7927,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhook(hookId string) (*model.Outgoing
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhooksForChannelPageByUser(channelId string, userId string, page int, perPage int) ([]*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhooksForChannelPageByUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhooksForChannelPageByUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhooksForChannelPageByUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhooksForChannelPageByUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6447,10 +7954,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhooksForChannelPageByUser(channelId 
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhooksForTeamPage(teamId string, page int, perPage int) ([]*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhooksForTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhooksForTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhooksForTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhooksForTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6469,10 +7981,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhooksForTeamPage(teamId string, page
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhooksForTeamPageByUser(teamId string, userId string, page int, perPage int) ([]*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhooksForTeamPageByUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhooksForTeamPageByUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhooksForTeamPageByUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhooksForTeamPageByUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6491,10 +8008,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhooksForTeamPageByUser(teamId string
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhooksPage(page int, perPage int) ([]*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhooksPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhooksPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhooksPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhooksPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6513,10 +8035,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhooksPage(page int, perPage int) ([]
 
 func (a *OpenTracingAppLayer) GetOutgoingWebhooksPageByUser(userId string, page int, perPage int) ([]*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetOutgoingWebhooksPageByUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetOutgoingWebhooksPageByUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetOutgoingWebhooksPageByUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetOutgoingWebhooksPageByUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6535,10 +8062,15 @@ func (a *OpenTracingAppLayer) GetOutgoingWebhooksPageByUser(userId string, page 
 
 func (a *OpenTracingAppLayer) GetPasswordRecoveryToken(token string) (*model.Token, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPasswordRecoveryToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPasswordRecoveryToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPasswordRecoveryToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPasswordRecoveryToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6557,10 +8089,15 @@ func (a *OpenTracingAppLayer) GetPasswordRecoveryToken(token string) (*model.Tok
 
 func (a *OpenTracingAppLayer) GetPermalinkPost(postId string, userId string) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPermalinkPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPermalinkPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPermalinkPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPermalinkPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6579,10 +8116,15 @@ func (a *OpenTracingAppLayer) GetPermalinkPost(postId string, userId string) (*m
 
 func (a *OpenTracingAppLayer) GetPinnedPosts(channelId string) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPinnedPosts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPinnedPosts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPinnedPosts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPinnedPosts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6601,10 +8143,15 @@ func (a *OpenTracingAppLayer) GetPinnedPosts(channelId string) (*model.PostList,
 
 func (a *OpenTracingAppLayer) GetPluginKey(pluginId string, key string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPluginKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPluginKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPluginKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPluginKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6623,10 +8170,15 @@ func (a *OpenTracingAppLayer) GetPluginKey(pluginId string, key string) ([]byte,
 
 func (a *OpenTracingAppLayer) GetPluginPublicKeyFiles() ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPluginPublicKeyFiles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPluginPublicKeyFiles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPluginPublicKeyFiles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPluginPublicKeyFiles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6645,10 +8197,15 @@ func (a *OpenTracingAppLayer) GetPluginPublicKeyFiles() ([]string, *model.AppErr
 
 func (a *OpenTracingAppLayer) GetPluginStatus(id string) (*model.PluginStatus, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPluginStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPluginStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPluginStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPluginStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6667,10 +8224,15 @@ func (a *OpenTracingAppLayer) GetPluginStatus(id string) (*model.PluginStatus, *
 
 func (a *OpenTracingAppLayer) GetPluginStatuses() (model.PluginStatuses, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPluginStatuses")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPluginStatuses")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPluginStatuses")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPluginStatuses")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6689,10 +8251,15 @@ func (a *OpenTracingAppLayer) GetPluginStatuses() (model.PluginStatuses, *model.
 
 func (a *OpenTracingAppLayer) GetPlugins() (*model.PluginsResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPlugins")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPlugins")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPlugins")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPlugins")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6711,10 +8278,15 @@ func (a *OpenTracingAppLayer) GetPlugins() (*model.PluginsResponse, *model.AppEr
 
 func (a *OpenTracingAppLayer) GetPluginsEnvironment() *plugin.Environment {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPluginsEnvironment")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPluginsEnvironment")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPluginsEnvironment")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPluginsEnvironment")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6728,10 +8300,15 @@ func (a *OpenTracingAppLayer) GetPluginsEnvironment() *plugin.Environment {
 
 func (a *OpenTracingAppLayer) GetPostAfterTime(channelId string, time int64) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostAfterTime")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostAfterTime")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostAfterTime")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostAfterTime")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6750,10 +8327,15 @@ func (a *OpenTracingAppLayer) GetPostAfterTime(channelId string, time int64) (*m
 
 func (a *OpenTracingAppLayer) GetPostIdAfterTime(channelId string, time int64) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostIdAfterTime")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostIdAfterTime")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostIdAfterTime")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostIdAfterTime")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6772,10 +8354,15 @@ func (a *OpenTracingAppLayer) GetPostIdAfterTime(channelId string, time int64) (
 
 func (a *OpenTracingAppLayer) GetPostIdBeforeTime(channelId string, time int64) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostIdBeforeTime")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostIdBeforeTime")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostIdBeforeTime")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostIdBeforeTime")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6794,10 +8381,15 @@ func (a *OpenTracingAppLayer) GetPostIdBeforeTime(channelId string, time int64) 
 
 func (a *OpenTracingAppLayer) GetPostThread(postId string, skipFetchThreads bool) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostThread")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostThread")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostThread")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostThread")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6816,10 +8408,15 @@ func (a *OpenTracingAppLayer) GetPostThread(postId string, skipFetchThreads bool
 
 func (a *OpenTracingAppLayer) GetPosts(channelId string, offset int, limit int) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPosts")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPosts")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPosts")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPosts")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6838,10 +8435,15 @@ func (a *OpenTracingAppLayer) GetPosts(channelId string, offset int, limit int) 
 
 func (a *OpenTracingAppLayer) GetPostsAfterPost(options model.GetPostsOptions) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsAfterPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsAfterPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsAfterPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsAfterPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6860,10 +8462,15 @@ func (a *OpenTracingAppLayer) GetPostsAfterPost(options model.GetPostsOptions) (
 
 func (a *OpenTracingAppLayer) GetPostsAroundPost(before bool, options model.GetPostsOptions) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsAroundPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsAroundPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsAroundPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsAroundPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6882,10 +8489,15 @@ func (a *OpenTracingAppLayer) GetPostsAroundPost(before bool, options model.GetP
 
 func (a *OpenTracingAppLayer) GetPostsBeforePost(options model.GetPostsOptions) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsBeforePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsBeforePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsBeforePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsBeforePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6904,10 +8516,15 @@ func (a *OpenTracingAppLayer) GetPostsBeforePost(options model.GetPostsOptions) 
 
 func (a *OpenTracingAppLayer) GetPostsEtag(channelId string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsEtag")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsEtag")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsEtag")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsEtag")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6921,10 +8538,15 @@ func (a *OpenTracingAppLayer) GetPostsEtag(channelId string) string {
 
 func (a *OpenTracingAppLayer) GetPostsForChannelAroundLastUnread(channelId string, userId string, limitBefore int, limitAfter int, skipFetchThreads bool) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsForChannelAroundLastUnread")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsForChannelAroundLastUnread")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsForChannelAroundLastUnread")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsForChannelAroundLastUnread")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6943,10 +8565,15 @@ func (a *OpenTracingAppLayer) GetPostsForChannelAroundLastUnread(channelId strin
 
 func (a *OpenTracingAppLayer) GetPostsPage(options model.GetPostsOptions) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6965,10 +8592,15 @@ func (a *OpenTracingAppLayer) GetPostsPage(options model.GetPostsOptions) (*mode
 
 func (a *OpenTracingAppLayer) GetPostsSince(options model.GetPostsSinceOptions) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPostsSince")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPostsSince")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPostsSince")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPostsSince")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -6987,10 +8619,15 @@ func (a *OpenTracingAppLayer) GetPostsSince(options model.GetPostsSinceOptions) 
 
 func (a *OpenTracingAppLayer) GetPreferenceByCategoryAndNameForUser(userId string, category string, preferenceName string) (*model.Preference, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPreferenceByCategoryAndNameForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPreferenceByCategoryAndNameForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPreferenceByCategoryAndNameForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPreferenceByCategoryAndNameForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7009,10 +8646,15 @@ func (a *OpenTracingAppLayer) GetPreferenceByCategoryAndNameForUser(userId strin
 
 func (a *OpenTracingAppLayer) GetPreferenceByCategoryForUser(userId string, category string) (model.Preferences, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPreferenceByCategoryForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPreferenceByCategoryForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPreferenceByCategoryForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPreferenceByCategoryForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7031,10 +8673,15 @@ func (a *OpenTracingAppLayer) GetPreferenceByCategoryForUser(userId string, cate
 
 func (a *OpenTracingAppLayer) GetPreferencesForUser(userId string) (model.Preferences, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPreferencesForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPreferencesForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPreferencesForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPreferencesForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7053,10 +8700,15 @@ func (a *OpenTracingAppLayer) GetPreferencesForUser(userId string) (model.Prefer
 
 func (a *OpenTracingAppLayer) GetPrevPostIdFromPostList(postList *model.PostList) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPrevPostIdFromPostList")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPrevPostIdFromPostList")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPrevPostIdFromPostList")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPrevPostIdFromPostList")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7070,10 +8722,15 @@ func (a *OpenTracingAppLayer) GetPrevPostIdFromPostList(postList *model.PostList
 
 func (a *OpenTracingAppLayer) GetPrivateChannelsForTeam(teamId string, offset int, limit int) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPrivateChannelsForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPrivateChannelsForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPrivateChannelsForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPrivateChannelsForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7092,10 +8749,15 @@ func (a *OpenTracingAppLayer) GetPrivateChannelsForTeam(teamId string, offset in
 
 func (a *OpenTracingAppLayer) GetProfileImage(user *model.User) ([]byte, bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetProfileImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetProfileImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetProfileImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetProfileImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7114,10 +8776,15 @@ func (a *OpenTracingAppLayer) GetProfileImage(user *model.User) ([]byte, bool, *
 
 func (a *OpenTracingAppLayer) GetPublicChannelsByIdsForTeam(teamId string, channelIds []string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPublicChannelsByIdsForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPublicChannelsByIdsForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPublicChannelsByIdsForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPublicChannelsByIdsForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7136,10 +8803,15 @@ func (a *OpenTracingAppLayer) GetPublicChannelsByIdsForTeam(teamId string, chann
 
 func (a *OpenTracingAppLayer) GetPublicChannelsForTeam(teamId string, offset int, limit int) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPublicChannelsForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPublicChannelsForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPublicChannelsForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPublicChannelsForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7158,10 +8830,15 @@ func (a *OpenTracingAppLayer) GetPublicChannelsForTeam(teamId string, offset int
 
 func (a *OpenTracingAppLayer) GetPublicKey(name string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetPublicKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetPublicKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetPublicKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetPublicKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7180,10 +8857,15 @@ func (a *OpenTracingAppLayer) GetPublicKey(name string) ([]byte, *model.AppError
 
 func (a *OpenTracingAppLayer) GetReactionsForPost(postId string) ([]*model.Reaction, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetReactionsForPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetReactionsForPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetReactionsForPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetReactionsForPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7202,10 +8884,15 @@ func (a *OpenTracingAppLayer) GetReactionsForPost(postId string) ([]*model.React
 
 func (a *OpenTracingAppLayer) GetRecentlyActiveUsersForTeam(teamId string) (map[string]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetRecentlyActiveUsersForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetRecentlyActiveUsersForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetRecentlyActiveUsersForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetRecentlyActiveUsersForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7224,10 +8911,15 @@ func (a *OpenTracingAppLayer) GetRecentlyActiveUsersForTeam(teamId string) (map[
 
 func (a *OpenTracingAppLayer) GetRecentlyActiveUsersForTeamPage(teamId string, page int, perPage int, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetRecentlyActiveUsersForTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetRecentlyActiveUsersForTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetRecentlyActiveUsersForTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetRecentlyActiveUsersForTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7246,10 +8938,15 @@ func (a *OpenTracingAppLayer) GetRecentlyActiveUsersForTeamPage(teamId string, p
 
 func (a *OpenTracingAppLayer) GetRole(id string) (*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetRole")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetRole")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetRole")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetRole")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7268,10 +8965,15 @@ func (a *OpenTracingAppLayer) GetRole(id string) (*model.Role, *model.AppError) 
 
 func (a *OpenTracingAppLayer) GetRoleByName(name string) (*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetRoleByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetRoleByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetRoleByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetRoleByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7290,10 +8992,15 @@ func (a *OpenTracingAppLayer) GetRoleByName(name string) (*model.Role, *model.Ap
 
 func (a *OpenTracingAppLayer) GetRolesByNames(names []string) ([]*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetRolesByNames")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetRolesByNames")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetRolesByNames")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetRolesByNames")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7312,10 +9019,15 @@ func (a *OpenTracingAppLayer) GetRolesByNames(names []string) ([]*model.Role, *m
 
 func (a *OpenTracingAppLayer) GetSamlCertificateStatus() *model.SamlCertificateStatus {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSamlCertificateStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSamlCertificateStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSamlCertificateStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSamlCertificateStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7329,10 +9041,15 @@ func (a *OpenTracingAppLayer) GetSamlCertificateStatus() *model.SamlCertificateS
 
 func (a *OpenTracingAppLayer) GetSamlMetadata() (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSamlMetadata")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSamlMetadata")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSamlMetadata")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSamlMetadata")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7351,10 +9068,15 @@ func (a *OpenTracingAppLayer) GetSamlMetadata() (string, *model.AppError) {
 
 func (a *OpenTracingAppLayer) GetSamlMetadataFromIdp(idpMetadataUrl string) (*model.SamlMetadataResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSamlMetadataFromIdp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSamlMetadataFromIdp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSamlMetadataFromIdp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSamlMetadataFromIdp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7373,10 +9095,15 @@ func (a *OpenTracingAppLayer) GetSamlMetadataFromIdp(idpMetadataUrl string) (*mo
 
 func (a *OpenTracingAppLayer) GetSanitizeOptions(asAdmin bool) map[string]bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSanitizeOptions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSanitizeOptions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSanitizeOptions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSanitizeOptions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7390,10 +9117,15 @@ func (a *OpenTracingAppLayer) GetSanitizeOptions(asAdmin bool) map[string]bool {
 
 func (a *OpenTracingAppLayer) GetSanitizedConfig() *model.Config {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSanitizedConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSanitizedConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSanitizedConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSanitizedConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7407,10 +9139,15 @@ func (a *OpenTracingAppLayer) GetSanitizedConfig() *model.Config {
 
 func (a *OpenTracingAppLayer) GetScheme(id string) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7429,10 +9166,15 @@ func (a *OpenTracingAppLayer) GetScheme(id string) (*model.Scheme, *model.AppErr
 
 func (a *OpenTracingAppLayer) GetSchemeByName(name string) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSchemeByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSchemeByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSchemeByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSchemeByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7451,10 +9193,15 @@ func (a *OpenTracingAppLayer) GetSchemeByName(name string) (*model.Scheme, *mode
 
 func (a *OpenTracingAppLayer) GetSchemeRolesForChannel(channelId string) (guestRoleName string, userRoleName string, adminRoleName string, err *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSchemeRolesForChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSchemeRolesForChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSchemeRolesForChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSchemeRolesForChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7473,10 +9220,15 @@ func (a *OpenTracingAppLayer) GetSchemeRolesForChannel(channelId string) (guestR
 
 func (a *OpenTracingAppLayer) GetSchemeRolesForTeam(teamId string) (string, string, string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSchemeRolesForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSchemeRolesForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSchemeRolesForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSchemeRolesForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7495,10 +9247,15 @@ func (a *OpenTracingAppLayer) GetSchemeRolesForTeam(teamId string) (string, stri
 
 func (a *OpenTracingAppLayer) GetSchemes(scope string, offset int, limit int) ([]*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSchemes")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSchemes")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSchemes")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSchemes")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7517,10 +9274,15 @@ func (a *OpenTracingAppLayer) GetSchemes(scope string, offset int, limit int) ([
 
 func (a *OpenTracingAppLayer) GetSchemesPage(scope string, page int, perPage int) ([]*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSchemesPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSchemesPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSchemesPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSchemesPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7539,10 +9301,15 @@ func (a *OpenTracingAppLayer) GetSchemesPage(scope string, page int, perPage int
 
 func (a *OpenTracingAppLayer) GetSession(token string) (*model.Session, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSession")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSession")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSession")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSession")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7561,10 +9328,15 @@ func (a *OpenTracingAppLayer) GetSession(token string) (*model.Session, *model.A
 
 func (a *OpenTracingAppLayer) GetSessionById(sessionId string) (*model.Session, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSessionById")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSessionById")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSessionById")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSessionById")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7583,10 +9355,15 @@ func (a *OpenTracingAppLayer) GetSessionById(sessionId string) (*model.Session, 
 
 func (a *OpenTracingAppLayer) GetSessionLengthInMillis(session *model.Session) int64 {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSessionLengthInMillis")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSessionLengthInMillis")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSessionLengthInMillis")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSessionLengthInMillis")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7600,10 +9377,15 @@ func (a *OpenTracingAppLayer) GetSessionLengthInMillis(session *model.Session) i
 
 func (a *OpenTracingAppLayer) GetSessions(userId string) ([]*model.Session, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSessions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSessions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSessions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSessions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7622,10 +9404,15 @@ func (a *OpenTracingAppLayer) GetSessions(userId string) ([]*model.Session, *mod
 
 func (a *OpenTracingAppLayer) GetSidebarCategories(userId string, teamId string) (*model.OrderedSidebarCategories, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSidebarCategories")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSidebarCategories")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSidebarCategories")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSidebarCategories")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7644,10 +9431,15 @@ func (a *OpenTracingAppLayer) GetSidebarCategories(userId string, teamId string)
 
 func (a *OpenTracingAppLayer) GetSidebarCategory(categoryId string) (*model.SidebarCategoryWithChannels, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSidebarCategory")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSidebarCategory")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSidebarCategory")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSidebarCategory")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7666,10 +9458,15 @@ func (a *OpenTracingAppLayer) GetSidebarCategory(categoryId string) (*model.Side
 
 func (a *OpenTracingAppLayer) GetSidebarCategoryOrder(userId string, teamId string) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSidebarCategoryOrder")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSidebarCategoryOrder")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSidebarCategoryOrder")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSidebarCategoryOrder")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7688,10 +9485,15 @@ func (a *OpenTracingAppLayer) GetSidebarCategoryOrder(userId string, teamId stri
 
 func (a *OpenTracingAppLayer) GetSinglePost(postId string) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSinglePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSinglePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSinglePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSinglePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7710,10 +9512,15 @@ func (a *OpenTracingAppLayer) GetSinglePost(postId string) (*model.Post, *model.
 
 func (a *OpenTracingAppLayer) GetSiteURL() string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSiteURL")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSiteURL")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSiteURL")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSiteURL")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7727,10 +9534,15 @@ func (a *OpenTracingAppLayer) GetSiteURL() string {
 
 func (a *OpenTracingAppLayer) GetStatus(userId string) (*model.Status, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7749,10 +9561,15 @@ func (a *OpenTracingAppLayer) GetStatus(userId string) (*model.Status, *model.Ap
 
 func (a *OpenTracingAppLayer) GetStatusFromCache(userId string) *model.Status {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetStatusFromCache")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetStatusFromCache")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetStatusFromCache")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetStatusFromCache")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7766,10 +9583,15 @@ func (a *OpenTracingAppLayer) GetStatusFromCache(userId string) *model.Status {
 
 func (a *OpenTracingAppLayer) GetStatusesByIds(userIds []string) (map[string]interface{}, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetStatusesByIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetStatusesByIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetStatusesByIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetStatusesByIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7788,10 +9610,15 @@ func (a *OpenTracingAppLayer) GetStatusesByIds(userIds []string) (map[string]int
 
 func (a *OpenTracingAppLayer) GetSuggestions(commandArgs *model.CommandArgs, commands []*model.Command, roleID string) []model.AutocompleteSuggestion {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetSuggestions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetSuggestions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetSuggestions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetSuggestions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7805,10 +9632,15 @@ func (a *OpenTracingAppLayer) GetSuggestions(commandArgs *model.CommandArgs, com
 
 func (a *OpenTracingAppLayer) GetTeam(teamId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7827,10 +9659,15 @@ func (a *OpenTracingAppLayer) GetTeam(teamId string) (*model.Team, *model.AppErr
 
 func (a *OpenTracingAppLayer) GetTeamByInviteId(inviteId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamByInviteId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamByInviteId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamByInviteId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamByInviteId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7849,10 +9686,15 @@ func (a *OpenTracingAppLayer) GetTeamByInviteId(inviteId string) (*model.Team, *
 
 func (a *OpenTracingAppLayer) GetTeamByName(name string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamByName")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamByName")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamByName")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamByName")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7871,10 +9713,15 @@ func (a *OpenTracingAppLayer) GetTeamByName(name string) (*model.Team, *model.Ap
 
 func (a *OpenTracingAppLayer) GetTeamGroupUsers(teamID string) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamGroupUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamGroupUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamGroupUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamGroupUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7893,10 +9740,15 @@ func (a *OpenTracingAppLayer) GetTeamGroupUsers(teamID string) ([]*model.User, *
 
 func (a *OpenTracingAppLayer) GetTeamIcon(team *model.Team) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamIcon")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamIcon")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamIcon")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamIcon")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7915,10 +9767,15 @@ func (a *OpenTracingAppLayer) GetTeamIcon(team *model.Team) ([]byte, *model.AppE
 
 func (a *OpenTracingAppLayer) GetTeamIdFromQuery(query url.Values) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamIdFromQuery")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamIdFromQuery")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamIdFromQuery")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamIdFromQuery")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7937,10 +9794,15 @@ func (a *OpenTracingAppLayer) GetTeamIdFromQuery(query url.Values) (string, *mod
 
 func (a *OpenTracingAppLayer) GetTeamMember(teamId string, userId string) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7959,10 +9821,15 @@ func (a *OpenTracingAppLayer) GetTeamMember(teamId string, userId string) (*mode
 
 func (a *OpenTracingAppLayer) GetTeamMembers(teamId string, offset int, limit int, teamMembersGetOptions *model.TeamMembersGetOptions) ([]*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -7981,10 +9848,15 @@ func (a *OpenTracingAppLayer) GetTeamMembers(teamId string, offset int, limit in
 
 func (a *OpenTracingAppLayer) GetTeamMembersByIds(teamId string, userIds []string, restrictions *model.ViewUsersRestrictions) ([]*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamMembersByIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamMembersByIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamMembersByIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamMembersByIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8003,10 +9875,15 @@ func (a *OpenTracingAppLayer) GetTeamMembersByIds(teamId string, userIds []strin
 
 func (a *OpenTracingAppLayer) GetTeamMembersForUser(userId string) ([]*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamMembersForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamMembersForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamMembersForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamMembersForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8025,10 +9902,15 @@ func (a *OpenTracingAppLayer) GetTeamMembersForUser(userId string) ([]*model.Tea
 
 func (a *OpenTracingAppLayer) GetTeamMembersForUserWithPagination(userId string, page int, perPage int) ([]*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamMembersForUserWithPagination")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamMembersForUserWithPagination")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamMembersForUserWithPagination")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamMembersForUserWithPagination")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8047,10 +9929,15 @@ func (a *OpenTracingAppLayer) GetTeamMembersForUserWithPagination(userId string,
 
 func (a *OpenTracingAppLayer) GetTeamSchemeChannelRoles(teamId string) (guestRoleName string, userRoleName string, adminRoleName string, err *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamSchemeChannelRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamSchemeChannelRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamSchemeChannelRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamSchemeChannelRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8069,10 +9956,15 @@ func (a *OpenTracingAppLayer) GetTeamSchemeChannelRoles(teamId string) (guestRol
 
 func (a *OpenTracingAppLayer) GetTeamStats(teamId string, restrictions *model.ViewUsersRestrictions) (*model.TeamStats, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamStats")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamStats")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamStats")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamStats")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8091,10 +9983,15 @@ func (a *OpenTracingAppLayer) GetTeamStats(teamId string, restrictions *model.Vi
 
 func (a *OpenTracingAppLayer) GetTeamUnread(teamId string, userId string) (*model.TeamUnread, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamUnread")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamUnread")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamUnread")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamUnread")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8113,10 +10010,15 @@ func (a *OpenTracingAppLayer) GetTeamUnread(teamId string, userId string) (*mode
 
 func (a *OpenTracingAppLayer) GetTeamsForScheme(scheme *model.Scheme, offset int, limit int) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamsForScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamsForScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamsForScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamsForScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8135,10 +10037,15 @@ func (a *OpenTracingAppLayer) GetTeamsForScheme(scheme *model.Scheme, offset int
 
 func (a *OpenTracingAppLayer) GetTeamsForSchemePage(scheme *model.Scheme, page int, perPage int) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamsForSchemePage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamsForSchemePage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamsForSchemePage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamsForSchemePage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8157,10 +10064,15 @@ func (a *OpenTracingAppLayer) GetTeamsForSchemePage(scheme *model.Scheme, page i
 
 func (a *OpenTracingAppLayer) GetTeamsForUser(userId string) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamsForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamsForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamsForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamsForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8179,10 +10091,15 @@ func (a *OpenTracingAppLayer) GetTeamsForUser(userId string) ([]*model.Team, *mo
 
 func (a *OpenTracingAppLayer) GetTeamsUnreadForUser(excludeTeamId string, userId string) ([]*model.TeamUnread, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTeamsUnreadForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTeamsUnreadForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTeamsUnreadForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTeamsUnreadForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8201,10 +10118,15 @@ func (a *OpenTracingAppLayer) GetTeamsUnreadForUser(excludeTeamId string, userId
 
 func (a *OpenTracingAppLayer) GetTermsOfService(id string) (*model.TermsOfService, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTermsOfService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTermsOfService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTermsOfService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTermsOfService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8223,10 +10145,15 @@ func (a *OpenTracingAppLayer) GetTermsOfService(id string) (*model.TermsOfServic
 
 func (a *OpenTracingAppLayer) GetTotalUsersStats(viewRestrictions *model.ViewUsersRestrictions) (*model.UsersStats, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetTotalUsersStats")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetTotalUsersStats")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetTotalUsersStats")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetTotalUsersStats")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8245,10 +10172,15 @@ func (a *OpenTracingAppLayer) GetTotalUsersStats(viewRestrictions *model.ViewUse
 
 func (a *OpenTracingAppLayer) GetUser(userId string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8267,10 +10199,15 @@ func (a *OpenTracingAppLayer) GetUser(userId string) (*model.User, *model.AppErr
 
 func (a *OpenTracingAppLayer) GetUserAccessToken(tokenId string, sanitize bool) (*model.UserAccessToken, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8289,10 +10226,15 @@ func (a *OpenTracingAppLayer) GetUserAccessToken(tokenId string, sanitize bool) 
 
 func (a *OpenTracingAppLayer) GetUserAccessTokens(page int, perPage int) ([]*model.UserAccessToken, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserAccessTokens")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserAccessTokens")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserAccessTokens")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserAccessTokens")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8311,10 +10253,15 @@ func (a *OpenTracingAppLayer) GetUserAccessTokens(page int, perPage int) ([]*mod
 
 func (a *OpenTracingAppLayer) GetUserAccessTokensForUser(userId string, page int, perPage int) ([]*model.UserAccessToken, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserAccessTokensForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserAccessTokensForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserAccessTokensForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserAccessTokensForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8333,10 +10280,15 @@ func (a *OpenTracingAppLayer) GetUserAccessTokensForUser(userId string, page int
 
 func (a *OpenTracingAppLayer) GetUserByAuth(authData *string, authService string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserByAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserByAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserByAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserByAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8355,10 +10307,15 @@ func (a *OpenTracingAppLayer) GetUserByAuth(authData *string, authService string
 
 func (a *OpenTracingAppLayer) GetUserByEmail(email string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserByEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserByEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserByEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserByEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8377,10 +10334,15 @@ func (a *OpenTracingAppLayer) GetUserByEmail(email string) (*model.User, *model.
 
 func (a *OpenTracingAppLayer) GetUserByUsername(username string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserByUsername")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserByUsername")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserByUsername")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserByUsername")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8399,10 +10361,15 @@ func (a *OpenTracingAppLayer) GetUserByUsername(username string) (*model.User, *
 
 func (a *OpenTracingAppLayer) GetUserForLogin(id string, loginId string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserForLogin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserForLogin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserForLogin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserForLogin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8421,10 +10388,15 @@ func (a *OpenTracingAppLayer) GetUserForLogin(id string, loginId string) (*model
 
 func (a *OpenTracingAppLayer) GetUserStatusesByIds(userIds []string) ([]*model.Status, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserStatusesByIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserStatusesByIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserStatusesByIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserStatusesByIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8443,10 +10415,15 @@ func (a *OpenTracingAppLayer) GetUserStatusesByIds(userIds []string) ([]*model.S
 
 func (a *OpenTracingAppLayer) GetUserTermsOfService(userId string) (*model.UserTermsOfService, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUserTermsOfService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUserTermsOfService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUserTermsOfService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUserTermsOfService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8465,10 +10442,15 @@ func (a *OpenTracingAppLayer) GetUserTermsOfService(userId string) (*model.UserT
 
 func (a *OpenTracingAppLayer) GetUsers(options *model.UserGetOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8487,10 +10469,15 @@ func (a *OpenTracingAppLayer) GetUsers(options *model.UserGetOptions) ([]*model.
 
 func (a *OpenTracingAppLayer) GetUsersByGroupChannelIds(channelIds []string, asAdmin bool) (map[string][]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersByGroupChannelIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersByGroupChannelIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersByGroupChannelIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersByGroupChannelIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8509,10 +10496,15 @@ func (a *OpenTracingAppLayer) GetUsersByGroupChannelIds(channelIds []string, asA
 
 func (a *OpenTracingAppLayer) GetUsersByIds(userIds []string, options *store.UserGetByIdsOpts) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersByIds")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersByIds")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersByIds")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersByIds")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8531,10 +10523,15 @@ func (a *OpenTracingAppLayer) GetUsersByIds(userIds []string, options *store.Use
 
 func (a *OpenTracingAppLayer) GetUsersByUsernames(usernames []string, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersByUsernames")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersByUsernames")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersByUsernames")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersByUsernames")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8553,10 +10550,15 @@ func (a *OpenTracingAppLayer) GetUsersByUsernames(usernames []string, asAdmin bo
 
 func (a *OpenTracingAppLayer) GetUsersEtag(restrictionsHash string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersEtag")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersEtag")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersEtag")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersEtag")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8570,10 +10572,15 @@ func (a *OpenTracingAppLayer) GetUsersEtag(restrictionsHash string) string {
 
 func (a *OpenTracingAppLayer) GetUsersInChannel(channelId string, offset int, limit int) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8592,10 +10599,15 @@ func (a *OpenTracingAppLayer) GetUsersInChannel(channelId string, offset int, li
 
 func (a *OpenTracingAppLayer) GetUsersInChannelByStatus(channelId string, offset int, limit int) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInChannelByStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInChannelByStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInChannelByStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInChannelByStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8614,10 +10626,15 @@ func (a *OpenTracingAppLayer) GetUsersInChannelByStatus(channelId string, offset
 
 func (a *OpenTracingAppLayer) GetUsersInChannelMap(channelId string, offset int, limit int, asAdmin bool) (map[string]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInChannelMap")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInChannelMap")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInChannelMap")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInChannelMap")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8636,10 +10653,15 @@ func (a *OpenTracingAppLayer) GetUsersInChannelMap(channelId string, offset int,
 
 func (a *OpenTracingAppLayer) GetUsersInChannelPage(channelId string, page int, perPage int, asAdmin bool) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInChannelPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInChannelPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInChannelPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInChannelPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8658,10 +10680,15 @@ func (a *OpenTracingAppLayer) GetUsersInChannelPage(channelId string, page int, 
 
 func (a *OpenTracingAppLayer) GetUsersInChannelPageByStatus(channelId string, page int, perPage int, asAdmin bool) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInChannelPageByStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInChannelPageByStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInChannelPageByStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInChannelPageByStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8680,10 +10707,15 @@ func (a *OpenTracingAppLayer) GetUsersInChannelPageByStatus(channelId string, pa
 
 func (a *OpenTracingAppLayer) GetUsersInTeam(options *model.UserGetOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8702,10 +10734,15 @@ func (a *OpenTracingAppLayer) GetUsersInTeam(options *model.UserGetOptions) ([]*
 
 func (a *OpenTracingAppLayer) GetUsersInTeamEtag(teamId string, restrictionsHash string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInTeamEtag")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInTeamEtag")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInTeamEtag")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInTeamEtag")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8719,10 +10756,15 @@ func (a *OpenTracingAppLayer) GetUsersInTeamEtag(teamId string, restrictionsHash
 
 func (a *OpenTracingAppLayer) GetUsersInTeamPage(options *model.UserGetOptions, asAdmin bool) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersInTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersInTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersInTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersInTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8741,10 +10783,15 @@ func (a *OpenTracingAppLayer) GetUsersInTeamPage(options *model.UserGetOptions, 
 
 func (a *OpenTracingAppLayer) GetUsersNotInChannel(teamId string, channelId string, groupConstrained bool, offset int, limit int, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8763,10 +10810,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInChannel(teamId string, channelId stri
 
 func (a *OpenTracingAppLayer) GetUsersNotInChannelMap(teamId string, channelId string, groupConstrained bool, offset int, limit int, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) (map[string]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInChannelMap")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInChannelMap")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInChannelMap")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInChannelMap")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8785,10 +10837,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInChannelMap(teamId string, channelId s
 
 func (a *OpenTracingAppLayer) GetUsersNotInChannelPage(teamId string, channelId string, groupConstrained bool, page int, perPage int, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInChannelPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInChannelPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInChannelPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInChannelPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8807,10 +10864,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInChannelPage(teamId string, channelId 
 
 func (a *OpenTracingAppLayer) GetUsersNotInTeam(teamId string, groupConstrained bool, offset int, limit int, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8829,10 +10891,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInTeam(teamId string, groupConstrained 
 
 func (a *OpenTracingAppLayer) GetUsersNotInTeamEtag(teamId string, restrictionsHash string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInTeamEtag")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInTeamEtag")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInTeamEtag")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInTeamEtag")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8846,10 +10913,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInTeamEtag(teamId string, restrictionsH
 
 func (a *OpenTracingAppLayer) GetUsersNotInTeamPage(teamId string, groupConstrained bool, page int, perPage int, asAdmin bool, viewRestrictions *model.ViewUsersRestrictions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersNotInTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersNotInTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersNotInTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersNotInTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8868,10 +10940,15 @@ func (a *OpenTracingAppLayer) GetUsersNotInTeamPage(teamId string, groupConstrai
 
 func (a *OpenTracingAppLayer) GetUsersPage(options *model.UserGetOptions, asAdmin bool) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8890,10 +10967,15 @@ func (a *OpenTracingAppLayer) GetUsersPage(options *model.UserGetOptions, asAdmi
 
 func (a *OpenTracingAppLayer) GetUsersWithoutTeam(options *model.UserGetOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersWithoutTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersWithoutTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersWithoutTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersWithoutTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8912,10 +10994,15 @@ func (a *OpenTracingAppLayer) GetUsersWithoutTeam(options *model.UserGetOptions)
 
 func (a *OpenTracingAppLayer) GetUsersWithoutTeamPage(options *model.UserGetOptions, asAdmin bool) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetUsersWithoutTeamPage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetUsersWithoutTeamPage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetUsersWithoutTeamPage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetUsersWithoutTeamPage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8934,10 +11021,15 @@ func (a *OpenTracingAppLayer) GetUsersWithoutTeamPage(options *model.UserGetOpti
 
 func (a *OpenTracingAppLayer) GetVerifyEmailToken(token string) (*model.Token, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetVerifyEmailToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetVerifyEmailToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetVerifyEmailToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetVerifyEmailToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8956,10 +11048,15 @@ func (a *OpenTracingAppLayer) GetVerifyEmailToken(token string) (*model.Token, *
 
 func (a *OpenTracingAppLayer) GetViewUsersRestrictions(userId string) (*model.ViewUsersRestrictions, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetViewUsersRestrictions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetViewUsersRestrictions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetViewUsersRestrictions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetViewUsersRestrictions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -8978,10 +11075,15 @@ func (a *OpenTracingAppLayer) GetViewUsersRestrictions(userId string) (*model.Vi
 
 func (a *OpenTracingAppLayer) GetWarnMetricsStatus() (map[string]*model.WarnMetricStatus, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.GetWarnMetricsStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.GetWarnMetricsStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.GetWarnMetricsStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.GetWarnMetricsStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9000,10 +11102,15 @@ func (a *OpenTracingAppLayer) GetWarnMetricsStatus() (map[string]*model.WarnMetr
 
 func (a *OpenTracingAppLayer) Handle404(w http.ResponseWriter, r *http.Request) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.Handle404")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.Handle404")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.Handle404")
+	segment := newrelic.StartSegment(nrtx, "nr.app.Handle404")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9015,10 +11122,15 @@ func (a *OpenTracingAppLayer) Handle404(w http.ResponseWriter, r *http.Request) 
 
 func (a *OpenTracingAppLayer) HandleCommandResponse(command *model.Command, args *model.CommandArgs, response *model.CommandResponse, builtIn bool) (*model.CommandResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleCommandResponse")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleCommandResponse")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleCommandResponse")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleCommandResponse")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9037,10 +11149,15 @@ func (a *OpenTracingAppLayer) HandleCommandResponse(command *model.Command, args
 
 func (a *OpenTracingAppLayer) HandleCommandResponsePost(command *model.Command, args *model.CommandArgs, response *model.CommandResponse, builtIn bool) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleCommandResponsePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleCommandResponsePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleCommandResponsePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleCommandResponsePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9059,10 +11176,15 @@ func (a *OpenTracingAppLayer) HandleCommandResponsePost(command *model.Command, 
 
 func (a *OpenTracingAppLayer) HandleCommandWebhook(hookId string, response *model.CommandResponse) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleCommandWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleCommandWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleCommandWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleCommandWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9081,10 +11203,15 @@ func (a *OpenTracingAppLayer) HandleCommandWebhook(hookId string, response *mode
 
 func (a *OpenTracingAppLayer) HandleImages(previewPathList []string, thumbnailPathList []string, fileData [][]byte) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleImages")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleImages")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleImages")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleImages")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9096,10 +11223,15 @@ func (a *OpenTracingAppLayer) HandleImages(previewPathList []string, thumbnailPa
 
 func (a *OpenTracingAppLayer) HandleIncomingWebhook(hookId string, req *model.IncomingWebhookRequest) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleIncomingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleIncomingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleIncomingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleIncomingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9118,10 +11250,15 @@ func (a *OpenTracingAppLayer) HandleIncomingWebhook(hookId string, req *model.In
 
 func (a *OpenTracingAppLayer) HandleMessageExportConfig(cfg *model.Config, appCfg *model.Config) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HandleMessageExportConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HandleMessageExportConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HandleMessageExportConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HandleMessageExportConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9133,10 +11270,15 @@ func (a *OpenTracingAppLayer) HandleMessageExportConfig(cfg *model.Config, appCf
 
 func (a *OpenTracingAppLayer) HasPermissionTo(askingUserId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HasPermissionTo")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HasPermissionTo")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HasPermissionTo")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HasPermissionTo")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9150,10 +11292,15 @@ func (a *OpenTracingAppLayer) HasPermissionTo(askingUserId string, permission *m
 
 func (a *OpenTracingAppLayer) HasPermissionToChannel(askingUserId string, channelId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HasPermissionToChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HasPermissionToChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HasPermissionToChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HasPermissionToChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9167,10 +11314,15 @@ func (a *OpenTracingAppLayer) HasPermissionToChannel(askingUserId string, channe
 
 func (a *OpenTracingAppLayer) HasPermissionToChannelByPost(askingUserId string, postId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HasPermissionToChannelByPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HasPermissionToChannelByPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HasPermissionToChannelByPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HasPermissionToChannelByPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9184,10 +11336,15 @@ func (a *OpenTracingAppLayer) HasPermissionToChannelByPost(askingUserId string, 
 
 func (a *OpenTracingAppLayer) HasPermissionToTeam(askingUserId string, teamId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HasPermissionToTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HasPermissionToTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HasPermissionToTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HasPermissionToTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9201,10 +11358,15 @@ func (a *OpenTracingAppLayer) HasPermissionToTeam(askingUserId string, teamId st
 
 func (a *OpenTracingAppLayer) HasPermissionToUser(askingUserId string, userId string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HasPermissionToUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HasPermissionToUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HasPermissionToUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HasPermissionToUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9218,10 +11380,15 @@ func (a *OpenTracingAppLayer) HasPermissionToUser(askingUserId string, userId st
 
 func (a *OpenTracingAppLayer) HubRegister(webConn *app.WebConn) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HubRegister")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HubRegister")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HubRegister")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HubRegister")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9233,10 +11400,15 @@ func (a *OpenTracingAppLayer) HubRegister(webConn *app.WebConn) {
 
 func (a *OpenTracingAppLayer) HubStart() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HubStart")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HubStart")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HubStart")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HubStart")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9248,10 +11420,15 @@ func (a *OpenTracingAppLayer) HubStart() {
 
 func (a *OpenTracingAppLayer) HubStop() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HubStop")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HubStop")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HubStop")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HubStop")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9263,10 +11440,15 @@ func (a *OpenTracingAppLayer) HubStop() {
 
 func (a *OpenTracingAppLayer) HubUnregister(webConn *app.WebConn) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.HubUnregister")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.HubUnregister")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.HubUnregister")
+	segment := newrelic.StartSegment(nrtx, "nr.app.HubUnregister")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9278,10 +11460,15 @@ func (a *OpenTracingAppLayer) HubUnregister(webConn *app.WebConn) {
 
 func (a *OpenTracingAppLayer) ImageProxyAdder() func(string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ImageProxyAdder")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ImageProxyAdder")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ImageProxyAdder")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ImageProxyAdder")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9295,10 +11482,15 @@ func (a *OpenTracingAppLayer) ImageProxyAdder() func(string) string {
 
 func (a *OpenTracingAppLayer) ImageProxyRemover() (f func(string) string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ImageProxyRemover")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ImageProxyRemover")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ImageProxyRemover")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ImageProxyRemover")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9312,10 +11504,15 @@ func (a *OpenTracingAppLayer) ImageProxyRemover() (f func(string) string) {
 
 func (a *OpenTracingAppLayer) ImportPermissions(jsonl io.Reader) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ImportPermissions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ImportPermissions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ImportPermissions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ImportPermissions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9334,10 +11531,15 @@ func (a *OpenTracingAppLayer) ImportPermissions(jsonl io.Reader) error {
 
 func (a *OpenTracingAppLayer) InitPlugins(pluginDir string, webappPluginDir string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InitPlugins")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InitPlugins")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InitPlugins")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InitPlugins")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9349,10 +11551,15 @@ func (a *OpenTracingAppLayer) InitPlugins(pluginDir string, webappPluginDir stri
 
 func (a *OpenTracingAppLayer) InitPostMetadata() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InitPostMetadata")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InitPostMetadata")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InitPostMetadata")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InitPostMetadata")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9364,10 +11571,15 @@ func (a *OpenTracingAppLayer) InitPostMetadata() {
 
 func (a *OpenTracingAppLayer) InitServer() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InitServer")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InitServer")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InitServer")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InitServer")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9379,10 +11591,15 @@ func (a *OpenTracingAppLayer) InitServer() {
 
 func (a *OpenTracingAppLayer) InstallMarketplacePlugin(request *model.InstallMarketplacePluginRequest) (*model.Manifest, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InstallMarketplacePlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InstallMarketplacePlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InstallMarketplacePlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InstallMarketplacePlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9401,10 +11618,15 @@ func (a *OpenTracingAppLayer) InstallMarketplacePlugin(request *model.InstallMar
 
 func (a *OpenTracingAppLayer) InstallPlugin(pluginFile io.ReadSeeker, replace bool) (*model.Manifest, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InstallPlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InstallPlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InstallPlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InstallPlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9423,10 +11645,15 @@ func (a *OpenTracingAppLayer) InstallPlugin(pluginFile io.ReadSeeker, replace bo
 
 func (a *OpenTracingAppLayer) InstallPluginFromData(data model.PluginEventData) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InstallPluginFromData")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InstallPluginFromData")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InstallPluginFromData")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InstallPluginFromData")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9438,10 +11665,15 @@ func (a *OpenTracingAppLayer) InstallPluginFromData(data model.PluginEventData) 
 
 func (a *OpenTracingAppLayer) InstallPluginWithSignature(pluginFile io.ReadSeeker, signature io.ReadSeeker) (*model.Manifest, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InstallPluginWithSignature")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InstallPluginWithSignature")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InstallPluginWithSignature")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InstallPluginWithSignature")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9460,10 +11692,15 @@ func (a *OpenTracingAppLayer) InstallPluginWithSignature(pluginFile io.ReadSeeke
 
 func (a *OpenTracingAppLayer) InvalidateAllEmailInvites() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InvalidateAllEmailInvites")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InvalidateAllEmailInvites")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InvalidateAllEmailInvites")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InvalidateAllEmailInvites")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9482,10 +11719,15 @@ func (a *OpenTracingAppLayer) InvalidateAllEmailInvites() *model.AppError {
 
 func (a *OpenTracingAppLayer) InvalidateCacheForUser(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InvalidateCacheForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InvalidateCacheForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InvalidateCacheForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InvalidateCacheForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9497,10 +11739,15 @@ func (a *OpenTracingAppLayer) InvalidateCacheForUser(userId string) {
 
 func (a *OpenTracingAppLayer) InvalidateWebConnSessionCacheForUser(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InvalidateWebConnSessionCacheForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InvalidateWebConnSessionCacheForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InvalidateWebConnSessionCacheForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InvalidateWebConnSessionCacheForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9512,10 +11759,15 @@ func (a *OpenTracingAppLayer) InvalidateWebConnSessionCacheForUser(userId string
 
 func (a *OpenTracingAppLayer) InviteGuestsToChannels(teamId string, guestsInvite *model.GuestsInvite, senderId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InviteGuestsToChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InviteGuestsToChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InviteGuestsToChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InviteGuestsToChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9534,10 +11786,15 @@ func (a *OpenTracingAppLayer) InviteGuestsToChannels(teamId string, guestsInvite
 
 func (a *OpenTracingAppLayer) InviteGuestsToChannelsGracefully(teamId string, guestsInvite *model.GuestsInvite, senderId string) ([]*model.EmailInviteWithError, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InviteGuestsToChannelsGracefully")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InviteGuestsToChannelsGracefully")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InviteGuestsToChannelsGracefully")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InviteGuestsToChannelsGracefully")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9556,10 +11813,15 @@ func (a *OpenTracingAppLayer) InviteGuestsToChannelsGracefully(teamId string, gu
 
 func (a *OpenTracingAppLayer) InviteNewUsersToTeam(emailList []string, teamId string, senderId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InviteNewUsersToTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InviteNewUsersToTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InviteNewUsersToTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InviteNewUsersToTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9578,10 +11840,15 @@ func (a *OpenTracingAppLayer) InviteNewUsersToTeam(emailList []string, teamId st
 
 func (a *OpenTracingAppLayer) InviteNewUsersToTeamGracefully(emailList []string, teamId string, senderId string) ([]*model.EmailInviteWithError, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.InviteNewUsersToTeamGracefully")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.InviteNewUsersToTeamGracefully")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.InviteNewUsersToTeamGracefully")
+	segment := newrelic.StartSegment(nrtx, "nr.app.InviteNewUsersToTeamGracefully")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9600,10 +11867,15 @@ func (a *OpenTracingAppLayer) InviteNewUsersToTeamGracefully(emailList []string,
 
 func (a *OpenTracingAppLayer) IsFirstUserAccount() bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsFirstUserAccount")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsFirstUserAccount")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsFirstUserAccount")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsFirstUserAccount")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9617,10 +11889,15 @@ func (a *OpenTracingAppLayer) IsFirstUserAccount() bool {
 
 func (a *OpenTracingAppLayer) IsLeader() bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsLeader")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsLeader")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsLeader")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsLeader")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9634,10 +11911,15 @@ func (a *OpenTracingAppLayer) IsLeader() bool {
 
 func (a *OpenTracingAppLayer) IsPasswordValid(password string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsPasswordValid")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsPasswordValid")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsPasswordValid")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsPasswordValid")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9656,10 +11938,15 @@ func (a *OpenTracingAppLayer) IsPasswordValid(password string) *model.AppError {
 
 func (a *OpenTracingAppLayer) IsPhase2MigrationCompleted() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsPhase2MigrationCompleted")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsPhase2MigrationCompleted")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsPhase2MigrationCompleted")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsPhase2MigrationCompleted")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9678,10 +11965,15 @@ func (a *OpenTracingAppLayer) IsPhase2MigrationCompleted() *model.AppError {
 
 func (a *OpenTracingAppLayer) IsUserAway(lastActivityAt int64) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsUserAway")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsUserAway")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsUserAway")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsUserAway")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9695,10 +11987,15 @@ func (a *OpenTracingAppLayer) IsUserAway(lastActivityAt int64) bool {
 
 func (a *OpenTracingAppLayer) IsUserSignUpAllowed() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsUserSignUpAllowed")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsUserSignUpAllowed")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsUserSignUpAllowed")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsUserSignUpAllowed")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9717,10 +12014,15 @@ func (a *OpenTracingAppLayer) IsUserSignUpAllowed() *model.AppError {
 
 func (a *OpenTracingAppLayer) IsUsernameTaken(name string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.IsUsernameTaken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.IsUsernameTaken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.IsUsernameTaken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.IsUsernameTaken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9734,10 +12036,15 @@ func (a *OpenTracingAppLayer) IsUsernameTaken(name string) bool {
 
 func (a *OpenTracingAppLayer) JoinChannel(channel *model.Channel, userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.JoinChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.JoinChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.JoinChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.JoinChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9756,10 +12063,15 @@ func (a *OpenTracingAppLayer) JoinChannel(channel *model.Channel, userId string)
 
 func (a *OpenTracingAppLayer) JoinDefaultChannels(teamId string, user *model.User, shouldBeAdmin bool, userRequestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.JoinDefaultChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.JoinDefaultChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.JoinDefaultChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.JoinDefaultChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9778,10 +12090,15 @@ func (a *OpenTracingAppLayer) JoinDefaultChannels(teamId string, user *model.Use
 
 func (a *OpenTracingAppLayer) JoinUserToTeam(team *model.Team, user *model.User, userRequestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.JoinUserToTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.JoinUserToTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.JoinUserToTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.JoinUserToTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9800,10 +12117,15 @@ func (a *OpenTracingAppLayer) JoinUserToTeam(team *model.Team, user *model.User,
 
 func (a *OpenTracingAppLayer) LeaveChannel(channelId string, userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LeaveChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LeaveChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LeaveChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LeaveChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9822,10 +12144,15 @@ func (a *OpenTracingAppLayer) LeaveChannel(channelId string, userId string) *mod
 
 func (a *OpenTracingAppLayer) LeaveTeam(team *model.Team, user *model.User, requestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LeaveTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LeaveTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LeaveTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LeaveTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9844,10 +12171,15 @@ func (a *OpenTracingAppLayer) LeaveTeam(team *model.Team, user *model.User, requ
 
 func (a *OpenTracingAppLayer) LimitedClientConfig() map[string]string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LimitedClientConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LimitedClientConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LimitedClientConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LimitedClientConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9861,10 +12193,15 @@ func (a *OpenTracingAppLayer) LimitedClientConfig() map[string]string {
 
 func (a *OpenTracingAppLayer) LimitedClientConfigWithComputed() map[string]string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LimitedClientConfigWithComputed")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LimitedClientConfigWithComputed")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LimitedClientConfigWithComputed")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LimitedClientConfigWithComputed")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9878,10 +12215,15 @@ func (a *OpenTracingAppLayer) LimitedClientConfigWithComputed() map[string]strin
 
 func (a *OpenTracingAppLayer) ListAllCommands(teamId string, T goi18n.TranslateFunc) ([]*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ListAllCommands")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ListAllCommands")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ListAllCommands")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ListAllCommands")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9900,10 +12242,15 @@ func (a *OpenTracingAppLayer) ListAllCommands(teamId string, T goi18n.TranslateF
 
 func (a *OpenTracingAppLayer) ListAutocompleteCommands(teamId string, T goi18n.TranslateFunc) ([]*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ListAutocompleteCommands")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ListAutocompleteCommands")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ListAutocompleteCommands")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ListAutocompleteCommands")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9924,10 +12271,15 @@ func (a *OpenTracingAppLayer) ListAutocompleteCommands(teamId string, T goi18n.T
 
 func (a *OpenTracingAppLayer) ListDirectory(path string) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ListDirectory")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ListDirectory")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ListDirectory")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ListDirectory")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9946,10 +12298,15 @@ func (a *OpenTracingAppLayer) ListDirectory(path string) ([]string, *model.AppEr
 
 func (a *OpenTracingAppLayer) ListPluginKeys(pluginId string, page int, perPage int) ([]string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ListPluginKeys")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ListPluginKeys")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ListPluginKeys")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ListPluginKeys")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9968,10 +12325,15 @@ func (a *OpenTracingAppLayer) ListPluginKeys(pluginId string, page int, perPage 
 
 func (a *OpenTracingAppLayer) ListTeamCommands(teamId string) ([]*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ListTeamCommands")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ListTeamCommands")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ListTeamCommands")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ListTeamCommands")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -9990,10 +12352,15 @@ func (a *OpenTracingAppLayer) ListTeamCommands(teamId string) ([]*model.Command,
 
 func (a *OpenTracingAppLayer) LogAuditRec(rec *audit.Record, err error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LogAuditRec")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LogAuditRec")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LogAuditRec")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LogAuditRec")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10005,10 +12372,15 @@ func (a *OpenTracingAppLayer) LogAuditRec(rec *audit.Record, err error) {
 
 func (a *OpenTracingAppLayer) LogAuditRecWithLevel(rec *audit.Record, level mlog.LogLevel, err error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LogAuditRecWithLevel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LogAuditRecWithLevel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LogAuditRecWithLevel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LogAuditRecWithLevel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10020,10 +12392,15 @@ func (a *OpenTracingAppLayer) LogAuditRecWithLevel(rec *audit.Record, level mlog
 
 func (a *OpenTracingAppLayer) LoginByOAuth(service string, userData io.Reader, teamId string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.LoginByOAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.LoginByOAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.LoginByOAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.LoginByOAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10042,10 +12419,15 @@ func (a *OpenTracingAppLayer) LoginByOAuth(service string, userData io.Reader, t
 
 func (a *OpenTracingAppLayer) MakeAuditRecord(event string, initialStatus string) *audit.Record {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MakeAuditRecord")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MakeAuditRecord")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MakeAuditRecord")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MakeAuditRecord")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10059,10 +12441,15 @@ func (a *OpenTracingAppLayer) MakeAuditRecord(event string, initialStatus string
 
 func (a *OpenTracingAppLayer) MakePermissionError(permissions []*model.Permission) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MakePermissionError")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MakePermissionError")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MakePermissionError")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MakePermissionError")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10081,10 +12468,15 @@ func (a *OpenTracingAppLayer) MakePermissionError(permissions []*model.Permissio
 
 func (a *OpenTracingAppLayer) MarkChannelAsUnreadFromPost(postID string, userID string) (*model.ChannelUnreadAt, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MarkChannelAsUnreadFromPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MarkChannelAsUnreadFromPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MarkChannelAsUnreadFromPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MarkChannelAsUnreadFromPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10103,10 +12495,15 @@ func (a *OpenTracingAppLayer) MarkChannelAsUnreadFromPost(postID string, userID 
 
 func (a *OpenTracingAppLayer) MarkChannelsAsViewed(channelIds []string, userId string, currentSessionId string) (map[string]int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MarkChannelsAsViewed")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MarkChannelsAsViewed")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MarkChannelsAsViewed")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MarkChannelsAsViewed")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10125,10 +12522,15 @@ func (a *OpenTracingAppLayer) MarkChannelsAsViewed(channelIds []string, userId s
 
 func (a *OpenTracingAppLayer) MaxPostSize() int {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MaxPostSize")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MaxPostSize")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MaxPostSize")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MaxPostSize")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10142,10 +12544,15 @@ func (a *OpenTracingAppLayer) MaxPostSize() int {
 
 func (a *OpenTracingAppLayer) MentionsToPublicChannels(message string, teamId string) model.ChannelMentionMap {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MentionsToPublicChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MentionsToPublicChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MentionsToPublicChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MentionsToPublicChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10159,10 +12566,15 @@ func (a *OpenTracingAppLayer) MentionsToPublicChannels(message string, teamId st
 
 func (a *OpenTracingAppLayer) MentionsToTeamMembers(message string, teamId string) model.UserMentionMap {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MentionsToTeamMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MentionsToTeamMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MentionsToTeamMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MentionsToTeamMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10176,10 +12588,15 @@ func (a *OpenTracingAppLayer) MentionsToTeamMembers(message string, teamId strin
 
 func (a *OpenTracingAppLayer) MigrateFilenamesToFileInfos(post *model.Post) []*model.FileInfo {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MigrateFilenamesToFileInfos")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MigrateFilenamesToFileInfos")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MigrateFilenamesToFileInfos")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MigrateFilenamesToFileInfos")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10193,10 +12610,15 @@ func (a *OpenTracingAppLayer) MigrateFilenamesToFileInfos(post *model.Post) []*m
 
 func (a *OpenTracingAppLayer) MigrateIdLDAP(toAttribute string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MigrateIdLDAP")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MigrateIdLDAP")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MigrateIdLDAP")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MigrateIdLDAP")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10215,10 +12637,15 @@ func (a *OpenTracingAppLayer) MigrateIdLDAP(toAttribute string) *model.AppError 
 
 func (a *OpenTracingAppLayer) MoveChannel(team *model.Team, channel *model.Channel, user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MoveChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MoveChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MoveChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MoveChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10237,10 +12664,15 @@ func (a *OpenTracingAppLayer) MoveChannel(team *model.Team, channel *model.Chann
 
 func (a *OpenTracingAppLayer) MoveCommand(team *model.Team, command *model.Command) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MoveCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MoveCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MoveCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MoveCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10259,10 +12691,15 @@ func (a *OpenTracingAppLayer) MoveCommand(team *model.Team, command *model.Comma
 
 func (a *OpenTracingAppLayer) MoveFile(oldPath string, newPath string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.MoveFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.MoveFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.MoveFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.MoveFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10281,10 +12718,15 @@ func (a *OpenTracingAppLayer) MoveFile(oldPath string, newPath string) *model.Ap
 
 func (a *OpenTracingAppLayer) NewClusterDiscoveryService() *app.ClusterDiscoveryService {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NewClusterDiscoveryService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NewClusterDiscoveryService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NewClusterDiscoveryService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NewClusterDiscoveryService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10298,10 +12740,15 @@ func (a *OpenTracingAppLayer) NewClusterDiscoveryService() *app.ClusterDiscovery
 
 func (a *OpenTracingAppLayer) NewPluginAPI(manifest *model.Manifest) plugin.API {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NewPluginAPI")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NewPluginAPI")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NewPluginAPI")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NewPluginAPI")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10315,10 +12762,15 @@ func (a *OpenTracingAppLayer) NewPluginAPI(manifest *model.Manifest) plugin.API 
 
 func (a *OpenTracingAppLayer) NewWebConn(ws *websocket.Conn, session model.Session, t goi18n.TranslateFunc, locale string) *app.WebConn {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NewWebConn")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NewWebConn")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NewWebConn")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NewWebConn")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10332,10 +12784,15 @@ func (a *OpenTracingAppLayer) NewWebConn(ws *websocket.Conn, session model.Sessi
 
 func (a *OpenTracingAppLayer) NewWebHub() *app.Hub {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NewWebHub")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NewWebHub")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NewWebHub")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NewWebHub")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10349,10 +12806,15 @@ func (a *OpenTracingAppLayer) NewWebHub() *app.Hub {
 
 func (a *OpenTracingAppLayer) NotifyAndSetWarnMetricAck(warnMetricId string, sender *model.User, forceAck bool, isBot bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NotifyAndSetWarnMetricAck")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NotifyAndSetWarnMetricAck")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NotifyAndSetWarnMetricAck")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NotifyAndSetWarnMetricAck")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10371,10 +12833,15 @@ func (a *OpenTracingAppLayer) NotifyAndSetWarnMetricAck(warnMetricId string, sen
 
 func (a *OpenTracingAppLayer) NotifySessionsExpired() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.NotifySessionsExpired")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.NotifySessionsExpired")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.NotifySessionsExpired")
+	segment := newrelic.StartSegment(nrtx, "nr.app.NotifySessionsExpired")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10393,10 +12860,15 @@ func (a *OpenTracingAppLayer) NotifySessionsExpired() *model.AppError {
 
 func (a *OpenTracingAppLayer) OpenInteractiveDialog(request model.OpenDialogRequest) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.OpenInteractiveDialog")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.OpenInteractiveDialog")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.OpenInteractiveDialog")
+	segment := newrelic.StartSegment(nrtx, "nr.app.OpenInteractiveDialog")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10415,10 +12887,15 @@ func (a *OpenTracingAppLayer) OpenInteractiveDialog(request model.OpenDialogRequ
 
 func (a *OpenTracingAppLayer) OriginChecker() func(*http.Request) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.OriginChecker")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.OriginChecker")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.OriginChecker")
+	segment := newrelic.StartSegment(nrtx, "nr.app.OriginChecker")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10432,10 +12909,15 @@ func (a *OpenTracingAppLayer) OriginChecker() func(*http.Request) bool {
 
 func (a *OpenTracingAppLayer) OverrideIconURLIfEmoji(post *model.Post) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.OverrideIconURLIfEmoji")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.OverrideIconURLIfEmoji")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.OverrideIconURLIfEmoji")
+	segment := newrelic.StartSegment(nrtx, "nr.app.OverrideIconURLIfEmoji")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10447,10 +12929,15 @@ func (a *OpenTracingAppLayer) OverrideIconURLIfEmoji(post *model.Post) {
 
 func (a *OpenTracingAppLayer) PatchBot(botUserId string, botPatch *model.BotPatch) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10469,10 +12956,15 @@ func (a *OpenTracingAppLayer) PatchBot(botUserId string, botPatch *model.BotPatc
 
 func (a *OpenTracingAppLayer) PatchChannel(channel *model.Channel, patch *model.ChannelPatch, userId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10491,10 +12983,15 @@ func (a *OpenTracingAppLayer) PatchChannel(channel *model.Channel, patch *model.
 
 func (a *OpenTracingAppLayer) PatchChannelModerationsForChannel(channel *model.Channel, channelModerationsPatch []*model.ChannelModerationPatch) ([]*model.ChannelModeration, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchChannelModerationsForChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchChannelModerationsForChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchChannelModerationsForChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchChannelModerationsForChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10513,10 +13010,15 @@ func (a *OpenTracingAppLayer) PatchChannelModerationsForChannel(channel *model.C
 
 func (a *OpenTracingAppLayer) PatchPost(postId string, patch *model.PostPatch) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10535,10 +13037,15 @@ func (a *OpenTracingAppLayer) PatchPost(postId string, patch *model.PostPatch) (
 
 func (a *OpenTracingAppLayer) PatchRole(role *model.Role, patch *model.RolePatch) (*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchRole")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchRole")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchRole")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchRole")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10557,10 +13064,15 @@ func (a *OpenTracingAppLayer) PatchRole(role *model.Role, patch *model.RolePatch
 
 func (a *OpenTracingAppLayer) PatchScheme(scheme *model.Scheme, patch *model.SchemePatch) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10579,10 +13091,15 @@ func (a *OpenTracingAppLayer) PatchScheme(scheme *model.Scheme, patch *model.Sch
 
 func (a *OpenTracingAppLayer) PatchTeam(teamId string, patch *model.TeamPatch) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10601,10 +13118,15 @@ func (a *OpenTracingAppLayer) PatchTeam(teamId string, patch *model.TeamPatch) (
 
 func (a *OpenTracingAppLayer) PatchUser(userId string, patch *model.UserPatch, asAdmin bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PatchUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PatchUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PatchUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PatchUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10623,10 +13145,15 @@ func (a *OpenTracingAppLayer) PatchUser(userId string, patch *model.UserPatch, a
 
 func (a *OpenTracingAppLayer) PermanentDeleteAllUsers() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteAllUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteAllUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteAllUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteAllUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10645,10 +13172,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteAllUsers() *model.AppError {
 
 func (a *OpenTracingAppLayer) PermanentDeleteBot(botUserId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10667,10 +13199,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteBot(botUserId string) *model.AppErr
 
 func (a *OpenTracingAppLayer) PermanentDeleteChannel(channel *model.Channel) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10689,10 +13226,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteChannel(channel *model.Channel) *mo
 
 func (a *OpenTracingAppLayer) PermanentDeleteTeam(team *model.Team) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10711,10 +13253,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteTeam(team *model.Team) *model.AppEr
 
 func (a *OpenTracingAppLayer) PermanentDeleteTeamId(teamId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteTeamId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteTeamId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteTeamId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteTeamId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10733,10 +13280,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteTeamId(teamId string) *model.AppErr
 
 func (a *OpenTracingAppLayer) PermanentDeleteUser(user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PermanentDeleteUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PermanentDeleteUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PermanentDeleteUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PermanentDeleteUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10755,10 +13307,15 @@ func (a *OpenTracingAppLayer) PermanentDeleteUser(user *model.User) *model.AppEr
 
 func (a *OpenTracingAppLayer) PluginCommandsForTeam(teamId string) []*model.Command {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PluginCommandsForTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PluginCommandsForTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PluginCommandsForTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PluginCommandsForTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10772,10 +13329,15 @@ func (a *OpenTracingAppLayer) PluginCommandsForTeam(teamId string) []*model.Comm
 
 func (a *OpenTracingAppLayer) PluginContext() *plugin.Context {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PluginContext")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PluginContext")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PluginContext")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PluginContext")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10789,10 +13351,15 @@ func (a *OpenTracingAppLayer) PluginContext() *plugin.Context {
 
 func (a *OpenTracingAppLayer) PostActionCookieSecret() []byte {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostActionCookieSecret")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostActionCookieSecret")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostActionCookieSecret")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostActionCookieSecret")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10806,10 +13373,15 @@ func (a *OpenTracingAppLayer) PostActionCookieSecret() []byte {
 
 func (a *OpenTracingAppLayer) PostAddToChannelMessage(user *model.User, addedUser *model.User, channel *model.Channel, postRootId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostAddToChannelMessage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostAddToChannelMessage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostAddToChannelMessage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostAddToChannelMessage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10828,10 +13400,15 @@ func (a *OpenTracingAppLayer) PostAddToChannelMessage(user *model.User, addedUse
 
 func (a *OpenTracingAppLayer) PostPatchWithProxyRemovedFromImageURLs(patch *model.PostPatch) *model.PostPatch {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostPatchWithProxyRemovedFromImageURLs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostPatchWithProxyRemovedFromImageURLs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostPatchWithProxyRemovedFromImageURLs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostPatchWithProxyRemovedFromImageURLs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10845,10 +13422,15 @@ func (a *OpenTracingAppLayer) PostPatchWithProxyRemovedFromImageURLs(patch *mode
 
 func (a *OpenTracingAppLayer) PostUpdateChannelDisplayNameMessage(userId string, channel *model.Channel, oldChannelDisplayName string, newChannelDisplayName string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostUpdateChannelDisplayNameMessage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostUpdateChannelDisplayNameMessage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostUpdateChannelDisplayNameMessage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostUpdateChannelDisplayNameMessage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10867,10 +13449,15 @@ func (a *OpenTracingAppLayer) PostUpdateChannelDisplayNameMessage(userId string,
 
 func (a *OpenTracingAppLayer) PostUpdateChannelHeaderMessage(userId string, channel *model.Channel, oldChannelHeader string, newChannelHeader string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostUpdateChannelHeaderMessage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostUpdateChannelHeaderMessage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostUpdateChannelHeaderMessage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostUpdateChannelHeaderMessage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10889,10 +13476,15 @@ func (a *OpenTracingAppLayer) PostUpdateChannelHeaderMessage(userId string, chan
 
 func (a *OpenTracingAppLayer) PostUpdateChannelPurposeMessage(userId string, channel *model.Channel, oldChannelPurpose string, newChannelPurpose string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostUpdateChannelPurposeMessage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostUpdateChannelPurposeMessage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostUpdateChannelPurposeMessage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostUpdateChannelPurposeMessage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10911,10 +13503,15 @@ func (a *OpenTracingAppLayer) PostUpdateChannelPurposeMessage(userId string, cha
 
 func (a *OpenTracingAppLayer) PostWithProxyAddedToImageURLs(post *model.Post) *model.Post {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostWithProxyAddedToImageURLs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostWithProxyAddedToImageURLs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostWithProxyAddedToImageURLs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostWithProxyAddedToImageURLs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10928,10 +13525,15 @@ func (a *OpenTracingAppLayer) PostWithProxyAddedToImageURLs(post *model.Post) *m
 
 func (a *OpenTracingAppLayer) PostWithProxyRemovedFromImageURLs(post *model.Post) *model.Post {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PostWithProxyRemovedFromImageURLs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PostWithProxyRemovedFromImageURLs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PostWithProxyRemovedFromImageURLs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PostWithProxyRemovedFromImageURLs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10945,10 +13547,15 @@ func (a *OpenTracingAppLayer) PostWithProxyRemovedFromImageURLs(post *model.Post
 
 func (a *OpenTracingAppLayer) PreparePostForClient(originalPost *model.Post, isNewPost bool, isEditPost bool) *model.Post {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PreparePostForClient")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PreparePostForClient")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PreparePostForClient")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PreparePostForClient")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10962,10 +13569,15 @@ func (a *OpenTracingAppLayer) PreparePostForClient(originalPost *model.Post, isN
 
 func (a *OpenTracingAppLayer) PreparePostListForClient(originalList *model.PostList) *model.PostList {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PreparePostListForClient")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PreparePostListForClient")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PreparePostListForClient")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PreparePostListForClient")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10979,10 +13591,15 @@ func (a *OpenTracingAppLayer) PreparePostListForClient(originalList *model.PostL
 
 func (a *OpenTracingAppLayer) ProcessSlackAttachments(attachments []*model.SlackAttachment) []*model.SlackAttachment {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ProcessSlackAttachments")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ProcessSlackAttachments")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ProcessSlackAttachments")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ProcessSlackAttachments")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -10996,10 +13613,15 @@ func (a *OpenTracingAppLayer) ProcessSlackAttachments(attachments []*model.Slack
 
 func (a *OpenTracingAppLayer) ProcessSlackText(text string) string {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ProcessSlackText")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ProcessSlackText")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ProcessSlackText")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ProcessSlackText")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11013,10 +13635,15 @@ func (a *OpenTracingAppLayer) ProcessSlackText(text string) string {
 
 func (a *OpenTracingAppLayer) PromoteGuestToUser(user *model.User, requestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PromoteGuestToUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PromoteGuestToUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PromoteGuestToUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PromoteGuestToUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11035,10 +13662,15 @@ func (a *OpenTracingAppLayer) PromoteGuestToUser(user *model.User, requestorId s
 
 func (a *OpenTracingAppLayer) Publish(message *model.WebSocketEvent) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.Publish")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.Publish")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.Publish")
+	segment := newrelic.StartSegment(nrtx, "nr.app.Publish")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11050,10 +13682,15 @@ func (a *OpenTracingAppLayer) Publish(message *model.WebSocketEvent) {
 
 func (a *OpenTracingAppLayer) PublishSkipClusterSend(message *model.WebSocketEvent) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PublishSkipClusterSend")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PublishSkipClusterSend")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PublishSkipClusterSend")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PublishSkipClusterSend")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11065,10 +13702,15 @@ func (a *OpenTracingAppLayer) PublishSkipClusterSend(message *model.WebSocketEve
 
 func (a *OpenTracingAppLayer) PublishUserTyping(userId string, channelId string, parentId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PublishUserTyping")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PublishUserTyping")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PublishUserTyping")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PublishUserTyping")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11087,10 +13729,15 @@ func (a *OpenTracingAppLayer) PublishUserTyping(userId string, channelId string,
 
 func (a *OpenTracingAppLayer) PurgeBleveIndexes() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PurgeBleveIndexes")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PurgeBleveIndexes")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PurgeBleveIndexes")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PurgeBleveIndexes")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11109,10 +13756,15 @@ func (a *OpenTracingAppLayer) PurgeBleveIndexes() *model.AppError {
 
 func (a *OpenTracingAppLayer) PurgeElasticsearchIndexes() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.PurgeElasticsearchIndexes")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.PurgeElasticsearchIndexes")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.PurgeElasticsearchIndexes")
+	segment := newrelic.StartSegment(nrtx, "nr.app.PurgeElasticsearchIndexes")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11131,10 +13783,15 @@ func (a *OpenTracingAppLayer) PurgeElasticsearchIndexes() *model.AppError {
 
 func (a *OpenTracingAppLayer) ReadFile(path string) ([]byte, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ReadFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ReadFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ReadFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ReadFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11153,10 +13810,15 @@ func (a *OpenTracingAppLayer) ReadFile(path string) ([]byte, *model.AppError) {
 
 func (a *OpenTracingAppLayer) RecycleDatabaseConnection() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RecycleDatabaseConnection")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RecycleDatabaseConnection")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RecycleDatabaseConnection")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RecycleDatabaseConnection")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11168,10 +13830,15 @@ func (a *OpenTracingAppLayer) RecycleDatabaseConnection() {
 
 func (a *OpenTracingAppLayer) RegenCommandToken(cmd *model.Command) (*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RegenCommandToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RegenCommandToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RegenCommandToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RegenCommandToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11190,10 +13857,15 @@ func (a *OpenTracingAppLayer) RegenCommandToken(cmd *model.Command) (*model.Comm
 
 func (a *OpenTracingAppLayer) RegenOutgoingWebhookToken(hook *model.OutgoingWebhook) (*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RegenOutgoingWebhookToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RegenOutgoingWebhookToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RegenOutgoingWebhookToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RegenOutgoingWebhookToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11212,10 +13884,15 @@ func (a *OpenTracingAppLayer) RegenOutgoingWebhookToken(hook *model.OutgoingWebh
 
 func (a *OpenTracingAppLayer) RegenerateOAuthAppSecret(app *model.OAuthApp) (*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RegenerateOAuthAppSecret")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RegenerateOAuthAppSecret")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RegenerateOAuthAppSecret")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RegenerateOAuthAppSecret")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11234,10 +13911,15 @@ func (a *OpenTracingAppLayer) RegenerateOAuthAppSecret(app *model.OAuthApp) (*mo
 
 func (a *OpenTracingAppLayer) RegenerateTeamInviteId(teamId string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RegenerateTeamInviteId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RegenerateTeamInviteId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RegenerateTeamInviteId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RegenerateTeamInviteId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11256,10 +13938,15 @@ func (a *OpenTracingAppLayer) RegenerateTeamInviteId(teamId string) (*model.Team
 
 func (a *OpenTracingAppLayer) RegisterPluginCommand(pluginId string, command *model.Command) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RegisterPluginCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RegisterPluginCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RegisterPluginCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RegisterPluginCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11278,10 +13965,15 @@ func (a *OpenTracingAppLayer) RegisterPluginCommand(pluginId string, command *mo
 
 func (a *OpenTracingAppLayer) ReloadConfig() error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ReloadConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ReloadConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ReloadConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ReloadConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11300,10 +13992,15 @@ func (a *OpenTracingAppLayer) ReloadConfig() error {
 
 func (a *OpenTracingAppLayer) RemoveAllDeactivatedMembersFromChannel(channel *model.Channel) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveAllDeactivatedMembersFromChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveAllDeactivatedMembersFromChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveAllDeactivatedMembersFromChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveAllDeactivatedMembersFromChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11322,10 +14019,15 @@ func (a *OpenTracingAppLayer) RemoveAllDeactivatedMembersFromChannel(channel *mo
 
 func (a *OpenTracingAppLayer) RemoveConfigListener(id string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveConfigListener")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveConfigListener")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveConfigListener")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveConfigListener")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11337,10 +14039,15 @@ func (a *OpenTracingAppLayer) RemoveConfigListener(id string) {
 
 func (a *OpenTracingAppLayer) RemoveFile(path string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11359,10 +14066,15 @@ func (a *OpenTracingAppLayer) RemoveFile(path string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RemovePlugin(id string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemovePlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemovePlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemovePlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemovePlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11381,10 +14093,15 @@ func (a *OpenTracingAppLayer) RemovePlugin(id string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RemovePluginFromData(data model.PluginEventData) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemovePluginFromData")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemovePluginFromData")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemovePluginFromData")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemovePluginFromData")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11396,10 +14113,15 @@ func (a *OpenTracingAppLayer) RemovePluginFromData(data model.PluginEventData) {
 
 func (a *OpenTracingAppLayer) RemoveSamlIdpCertificate() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveSamlIdpCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveSamlIdpCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveSamlIdpCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveSamlIdpCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11418,10 +14140,15 @@ func (a *OpenTracingAppLayer) RemoveSamlIdpCertificate() *model.AppError {
 
 func (a *OpenTracingAppLayer) RemoveSamlPrivateCertificate() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveSamlPrivateCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveSamlPrivateCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveSamlPrivateCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveSamlPrivateCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11440,10 +14167,15 @@ func (a *OpenTracingAppLayer) RemoveSamlPrivateCertificate() *model.AppError {
 
 func (a *OpenTracingAppLayer) RemoveSamlPublicCertificate() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveSamlPublicCertificate")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveSamlPublicCertificate")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveSamlPublicCertificate")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveSamlPublicCertificate")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11462,10 +14194,15 @@ func (a *OpenTracingAppLayer) RemoveSamlPublicCertificate() *model.AppError {
 
 func (a *OpenTracingAppLayer) RemoveTeamIcon(teamId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveTeamIcon")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveTeamIcon")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveTeamIcon")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveTeamIcon")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11484,10 +14221,15 @@ func (a *OpenTracingAppLayer) RemoveTeamIcon(teamId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RemoveTeamMemberFromTeam(teamMember *model.TeamMember, requestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveTeamMemberFromTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveTeamMemberFromTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveTeamMemberFromTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveTeamMemberFromTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11506,10 +14248,15 @@ func (a *OpenTracingAppLayer) RemoveTeamMemberFromTeam(teamMember *model.TeamMem
 
 func (a *OpenTracingAppLayer) RemoveUserFromChannel(userIdToRemove string, removerUserId string, channel *model.Channel) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveUserFromChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveUserFromChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveUserFromChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveUserFromChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11528,10 +14275,15 @@ func (a *OpenTracingAppLayer) RemoveUserFromChannel(userIdToRemove string, remov
 
 func (a *OpenTracingAppLayer) RemoveUserFromTeam(teamId string, userId string, requestorId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveUserFromTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveUserFromTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveUserFromTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveUserFromTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11550,10 +14302,15 @@ func (a *OpenTracingAppLayer) RemoveUserFromTeam(teamId string, userId string, r
 
 func (a *OpenTracingAppLayer) RemoveUsersFromChannelNotMemberOfTeam(remover *model.User, channel *model.Channel, team *model.Team) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RemoveUsersFromChannelNotMemberOfTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RemoveUsersFromChannelNotMemberOfTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RemoveUsersFromChannelNotMemberOfTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RemoveUsersFromChannelNotMemberOfTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11572,10 +14329,15 @@ func (a *OpenTracingAppLayer) RemoveUsersFromChannelNotMemberOfTeam(remover *mod
 
 func (a *OpenTracingAppLayer) RenameChannel(channel *model.Channel, newChannelName string, newDisplayName string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RenameChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RenameChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RenameChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RenameChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11594,10 +14356,15 @@ func (a *OpenTracingAppLayer) RenameChannel(channel *model.Channel, newChannelNa
 
 func (a *OpenTracingAppLayer) RenameTeam(team *model.Team, newTeamName string, newDisplayName string) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RenameTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RenameTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RenameTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RenameTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11616,10 +14383,15 @@ func (a *OpenTracingAppLayer) RenameTeam(team *model.Team, newTeamName string, n
 
 func (a *OpenTracingAppLayer) ResetPasswordFromToken(userSuppliedTokenString string, newPassword string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ResetPasswordFromToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ResetPasswordFromToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ResetPasswordFromToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ResetPasswordFromToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11638,10 +14410,15 @@ func (a *OpenTracingAppLayer) ResetPasswordFromToken(userSuppliedTokenString str
 
 func (a *OpenTracingAppLayer) ResetPermissionsSystem() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ResetPermissionsSystem")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ResetPermissionsSystem")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ResetPermissionsSystem")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ResetPermissionsSystem")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11660,10 +14437,15 @@ func (a *OpenTracingAppLayer) ResetPermissionsSystem() *model.AppError {
 
 func (a *OpenTracingAppLayer) RestoreChannel(channel *model.Channel, userId string) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RestoreChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RestoreChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RestoreChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RestoreChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11682,10 +14464,15 @@ func (a *OpenTracingAppLayer) RestoreChannel(channel *model.Channel, userId stri
 
 func (a *OpenTracingAppLayer) RestoreTeam(teamId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RestoreTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RestoreTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RestoreTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RestoreTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11704,10 +14491,15 @@ func (a *OpenTracingAppLayer) RestoreTeam(teamId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RestrictUsersGetByPermissions(userId string, options *model.UserGetOptions) (*model.UserGetOptions, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RestrictUsersGetByPermissions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RestrictUsersGetByPermissions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RestrictUsersGetByPermissions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RestrictUsersGetByPermissions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11726,10 +14518,15 @@ func (a *OpenTracingAppLayer) RestrictUsersGetByPermissions(userId string, optio
 
 func (a *OpenTracingAppLayer) RestrictUsersSearchByPermissions(userId string, options *model.UserSearchOptions) (*model.UserSearchOptions, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RestrictUsersSearchByPermissions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RestrictUsersSearchByPermissions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RestrictUsersSearchByPermissions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RestrictUsersSearchByPermissions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11748,10 +14545,15 @@ func (a *OpenTracingAppLayer) RestrictUsersSearchByPermissions(userId string, op
 
 func (a *OpenTracingAppLayer) RevokeAccessToken(token string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11770,10 +14572,15 @@ func (a *OpenTracingAppLayer) RevokeAccessToken(token string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RevokeAllSessions(userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeAllSessions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeAllSessions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeAllSessions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeAllSessions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11792,10 +14599,15 @@ func (a *OpenTracingAppLayer) RevokeAllSessions(userId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) RevokeSession(session *model.Session) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeSession")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeSession")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeSession")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeSession")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11814,10 +14626,15 @@ func (a *OpenTracingAppLayer) RevokeSession(session *model.Session) *model.AppEr
 
 func (a *OpenTracingAppLayer) RevokeSessionById(sessionId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeSessionById")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeSessionById")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeSessionById")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeSessionById")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11836,10 +14653,15 @@ func (a *OpenTracingAppLayer) RevokeSessionById(sessionId string) *model.AppErro
 
 func (a *OpenTracingAppLayer) RevokeSessionsForDeviceId(userId string, deviceId string, currentSessionId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeSessionsForDeviceId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeSessionsForDeviceId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeSessionsForDeviceId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeSessionsForDeviceId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11858,10 +14680,15 @@ func (a *OpenTracingAppLayer) RevokeSessionsForDeviceId(userId string, deviceId 
 
 func (a *OpenTracingAppLayer) RevokeSessionsFromAllUsers() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeSessionsFromAllUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeSessionsFromAllUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeSessionsFromAllUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeSessionsFromAllUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11880,10 +14707,15 @@ func (a *OpenTracingAppLayer) RevokeSessionsFromAllUsers() *model.AppError {
 
 func (a *OpenTracingAppLayer) RevokeUserAccessToken(token *model.UserAccessToken) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RevokeUserAccessToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RevokeUserAccessToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RevokeUserAccessToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RevokeUserAccessToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11902,10 +14734,15 @@ func (a *OpenTracingAppLayer) RevokeUserAccessToken(token *model.UserAccessToken
 
 func (a *OpenTracingAppLayer) RolesGrantPermission(roleNames []string, permissionId string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.RolesGrantPermission")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.RolesGrantPermission")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.RolesGrantPermission")
+	segment := newrelic.StartSegment(nrtx, "nr.app.RolesGrantPermission")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11919,10 +14756,15 @@ func (a *OpenTracingAppLayer) RolesGrantPermission(roleNames []string, permissio
 
 func (a *OpenTracingAppLayer) SanitizeProfile(user *model.User, asAdmin bool) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SanitizeProfile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SanitizeProfile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SanitizeProfile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SanitizeProfile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11934,10 +14776,15 @@ func (a *OpenTracingAppLayer) SanitizeProfile(user *model.User, asAdmin bool) {
 
 func (a *OpenTracingAppLayer) SanitizeTeam(session model.Session, team *model.Team) *model.Team {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SanitizeTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SanitizeTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SanitizeTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SanitizeTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11951,10 +14798,15 @@ func (a *OpenTracingAppLayer) SanitizeTeam(session model.Session, team *model.Te
 
 func (a *OpenTracingAppLayer) SanitizeTeams(session model.Session, teams []*model.Team) []*model.Team {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SanitizeTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SanitizeTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SanitizeTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SanitizeTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11968,10 +14820,15 @@ func (a *OpenTracingAppLayer) SanitizeTeams(session model.Session, teams []*mode
 
 func (a *OpenTracingAppLayer) SaveAndBroadcastStatus(status *model.Status) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveAndBroadcastStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveAndBroadcastStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveAndBroadcastStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveAndBroadcastStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -11983,10 +14840,15 @@ func (a *OpenTracingAppLayer) SaveAndBroadcastStatus(status *model.Status) {
 
 func (a *OpenTracingAppLayer) SaveBrandImage(imageData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveBrandImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveBrandImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveBrandImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveBrandImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12005,10 +14867,15 @@ func (a *OpenTracingAppLayer) SaveBrandImage(imageData *multipart.FileHeader) *m
 
 func (a *OpenTracingAppLayer) SaveComplianceReport(job *model.Compliance) (*model.Compliance, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveComplianceReport")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveComplianceReport")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveComplianceReport")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveComplianceReport")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12027,10 +14894,15 @@ func (a *OpenTracingAppLayer) SaveComplianceReport(job *model.Compliance) (*mode
 
 func (a *OpenTracingAppLayer) SaveConfig(newCfg *model.Config, sendConfigChangeClusterMessage bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12049,10 +14921,15 @@ func (a *OpenTracingAppLayer) SaveConfig(newCfg *model.Config, sendConfigChangeC
 
 func (a *OpenTracingAppLayer) SaveReactionForPost(reaction *model.Reaction) (*model.Reaction, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveReactionForPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveReactionForPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveReactionForPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveReactionForPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12071,10 +14948,15 @@ func (a *OpenTracingAppLayer) SaveReactionForPost(reaction *model.Reaction) (*mo
 
 func (a *OpenTracingAppLayer) SaveUserTermsOfService(userId string, termsOfServiceId string, accepted bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SaveUserTermsOfService")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SaveUserTermsOfService")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SaveUserTermsOfService")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SaveUserTermsOfService")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12093,10 +14975,15 @@ func (a *OpenTracingAppLayer) SaveUserTermsOfService(userId string, termsOfServi
 
 func (a *OpenTracingAppLayer) SchemesIterator(scope string, batchSize int) func() []*model.Scheme {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SchemesIterator")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SchemesIterator")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SchemesIterator")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SchemesIterator")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12110,10 +14997,15 @@ func (a *OpenTracingAppLayer) SchemesIterator(scope string, batchSize int) func(
 
 func (a *OpenTracingAppLayer) SearchAllChannels(term string, opts model.ChannelSearchOpts) (*model.ChannelListWithTeamData, int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchAllChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchAllChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchAllChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchAllChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12132,10 +15024,15 @@ func (a *OpenTracingAppLayer) SearchAllChannels(term string, opts model.ChannelS
 
 func (a *OpenTracingAppLayer) SearchAllTeams(searchOpts *model.TeamSearch) ([]*model.Team, int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchAllTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchAllTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchAllTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchAllTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12154,10 +15051,15 @@ func (a *OpenTracingAppLayer) SearchAllTeams(searchOpts *model.TeamSearch) ([]*m
 
 func (a *OpenTracingAppLayer) SearchArchivedChannels(teamId string, term string, userId string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchArchivedChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchArchivedChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchArchivedChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchArchivedChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12176,10 +15078,15 @@ func (a *OpenTracingAppLayer) SearchArchivedChannels(teamId string, term string,
 
 func (a *OpenTracingAppLayer) SearchChannels(teamId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12198,10 +15105,15 @@ func (a *OpenTracingAppLayer) SearchChannels(teamId string, term string) (*model
 
 func (a *OpenTracingAppLayer) SearchChannelsForUser(userId string, teamId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchChannelsForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchChannelsForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchChannelsForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchChannelsForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12220,10 +15132,15 @@ func (a *OpenTracingAppLayer) SearchChannelsForUser(userId string, teamId string
 
 func (a *OpenTracingAppLayer) SearchChannelsUserNotIn(teamId string, userId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchChannelsUserNotIn")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchChannelsUserNotIn")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchChannelsUserNotIn")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchChannelsUserNotIn")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12242,10 +15159,15 @@ func (a *OpenTracingAppLayer) SearchChannelsUserNotIn(teamId string, userId stri
 
 func (a *OpenTracingAppLayer) SearchEmoji(name string, prefixOnly bool, limit int) ([]*model.Emoji, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchEmoji")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchEmoji")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchEmoji")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchEmoji")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12264,10 +15186,15 @@ func (a *OpenTracingAppLayer) SearchEmoji(name string, prefixOnly bool, limit in
 
 func (a *OpenTracingAppLayer) SearchEngine() *searchengine.Broker {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchEngine")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchEngine")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchEngine")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchEngine")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12281,10 +15208,15 @@ func (a *OpenTracingAppLayer) SearchEngine() *searchengine.Broker {
 
 func (a *OpenTracingAppLayer) SearchGroupChannels(userId string, term string) (*model.ChannelList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchGroupChannels")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchGroupChannels")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchGroupChannels")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchGroupChannels")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12303,10 +15235,15 @@ func (a *OpenTracingAppLayer) SearchGroupChannels(userId string, term string) (*
 
 func (a *OpenTracingAppLayer) SearchPostsInTeam(teamId string, paramsList []*model.SearchParams) (*model.PostList, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchPostsInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchPostsInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchPostsInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchPostsInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12325,10 +15262,15 @@ func (a *OpenTracingAppLayer) SearchPostsInTeam(teamId string, paramsList []*mod
 
 func (a *OpenTracingAppLayer) SearchPostsInTeamForUser(terms string, userId string, teamId string, isOrSearch bool, includeDeletedChannels bool, timeZoneOffset int, page int, perPage int) (*model.PostSearchResults, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchPostsInTeamForUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchPostsInTeamForUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchPostsInTeamForUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchPostsInTeamForUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12347,10 +15289,15 @@ func (a *OpenTracingAppLayer) SearchPostsInTeamForUser(terms string, userId stri
 
 func (a *OpenTracingAppLayer) SearchPrivateTeams(term string) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchPrivateTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchPrivateTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchPrivateTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchPrivateTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12369,10 +15316,15 @@ func (a *OpenTracingAppLayer) SearchPrivateTeams(term string) ([]*model.Team, *m
 
 func (a *OpenTracingAppLayer) SearchPublicTeams(term string) ([]*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchPublicTeams")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchPublicTeams")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchPublicTeams")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchPublicTeams")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12391,10 +15343,15 @@ func (a *OpenTracingAppLayer) SearchPublicTeams(term string) ([]*model.Team, *mo
 
 func (a *OpenTracingAppLayer) SearchUserAccessTokens(term string) ([]*model.UserAccessToken, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUserAccessTokens")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUserAccessTokens")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUserAccessTokens")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUserAccessTokens")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12413,10 +15370,15 @@ func (a *OpenTracingAppLayer) SearchUserAccessTokens(term string) ([]*model.User
 
 func (a *OpenTracingAppLayer) SearchUsers(props *model.UserSearch, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12435,10 +15397,15 @@ func (a *OpenTracingAppLayer) SearchUsers(props *model.UserSearch, options *mode
 
 func (a *OpenTracingAppLayer) SearchUsersInChannel(channelId string, term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersInChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersInChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersInChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersInChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12457,10 +15424,15 @@ func (a *OpenTracingAppLayer) SearchUsersInChannel(channelId string, term string
 
 func (a *OpenTracingAppLayer) SearchUsersInGroup(groupID string, term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersInGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersInGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersInGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersInGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12479,10 +15451,15 @@ func (a *OpenTracingAppLayer) SearchUsersInGroup(groupID string, term string, op
 
 func (a *OpenTracingAppLayer) SearchUsersInTeam(teamId string, term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12501,10 +15478,15 @@ func (a *OpenTracingAppLayer) SearchUsersInTeam(teamId string, term string, opti
 
 func (a *OpenTracingAppLayer) SearchUsersNotInChannel(teamId string, channelId string, term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersNotInChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersNotInChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersNotInChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersNotInChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12523,10 +15505,15 @@ func (a *OpenTracingAppLayer) SearchUsersNotInChannel(teamId string, channelId s
 
 func (a *OpenTracingAppLayer) SearchUsersNotInTeam(notInTeamId string, term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersNotInTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersNotInTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersNotInTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersNotInTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12545,10 +15532,15 @@ func (a *OpenTracingAppLayer) SearchUsersNotInTeam(notInTeamId string, term stri
 
 func (a *OpenTracingAppLayer) SearchUsersWithoutTeam(term string, options *model.UserSearchOptions) ([]*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SearchUsersWithoutTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SearchUsersWithoutTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SearchUsersWithoutTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SearchUsersWithoutTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12567,10 +15559,15 @@ func (a *OpenTracingAppLayer) SearchUsersWithoutTeam(term string, options *model
 
 func (a *OpenTracingAppLayer) SendAckToPushProxy(ack *model.PushNotificationAck) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendAckToPushProxy")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendAckToPushProxy")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendAckToPushProxy")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendAckToPushProxy")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12589,10 +15586,15 @@ func (a *OpenTracingAppLayer) SendAckToPushProxy(ack *model.PushNotificationAck)
 
 func (a *OpenTracingAppLayer) SendAutoResponse(channel *model.Channel, receiver *model.User) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendAutoResponse")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendAutoResponse")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendAutoResponse")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendAutoResponse")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12611,10 +15613,15 @@ func (a *OpenTracingAppLayer) SendAutoResponse(channel *model.Channel, receiver 
 
 func (a *OpenTracingAppLayer) SendAutoResponseIfNecessary(channel *model.Channel, sender *model.User) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendAutoResponseIfNecessary")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendAutoResponseIfNecessary")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendAutoResponseIfNecessary")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendAutoResponseIfNecessary")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12633,10 +15640,15 @@ func (a *OpenTracingAppLayer) SendAutoResponseIfNecessary(channel *model.Channel
 
 func (a *OpenTracingAppLayer) SendEmailVerification(user *model.User, newEmail string, redirect string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendEmailVerification")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendEmailVerification")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendEmailVerification")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendEmailVerification")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12655,10 +15667,15 @@ func (a *OpenTracingAppLayer) SendEmailVerification(user *model.User, newEmail s
 
 func (a *OpenTracingAppLayer) SendEphemeralPost(userId string, post *model.Post) *model.Post {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendEphemeralPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendEphemeralPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendEphemeralPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendEphemeralPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12672,10 +15689,15 @@ func (a *OpenTracingAppLayer) SendEphemeralPost(userId string, post *model.Post)
 
 func (a *OpenTracingAppLayer) SendNotifications(post *model.Post, team *model.Team, channel *model.Channel, sender *model.User, parentPostList *model.PostList, setOnline bool) ([]string, error) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendNotifications")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendNotifications")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendNotifications")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendNotifications")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12694,10 +15716,15 @@ func (a *OpenTracingAppLayer) SendNotifications(post *model.Post, team *model.Te
 
 func (a *OpenTracingAppLayer) SendPasswordReset(email string, siteURL string) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SendPasswordReset")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SendPasswordReset")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SendPasswordReset")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SendPasswordReset")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12716,10 +15743,15 @@ func (a *OpenTracingAppLayer) SendPasswordReset(email string, siteURL string) (b
 
 func (a *OpenTracingAppLayer) ServeInterPluginRequest(w http.ResponseWriter, r *http.Request, sourcePluginId string, destinationPluginId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ServeInterPluginRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ServeInterPluginRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ServeInterPluginRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ServeInterPluginRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12731,10 +15763,15 @@ func (a *OpenTracingAppLayer) ServeInterPluginRequest(w http.ResponseWriter, r *
 
 func (a *OpenTracingAppLayer) ServePluginPublicRequest(w http.ResponseWriter, r *http.Request) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ServePluginPublicRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ServePluginPublicRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ServePluginPublicRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ServePluginPublicRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12746,10 +15783,15 @@ func (a *OpenTracingAppLayer) ServePluginPublicRequest(w http.ResponseWriter, r 
 
 func (a *OpenTracingAppLayer) ServePluginRequest(w http.ResponseWriter, r *http.Request) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ServePluginRequest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ServePluginRequest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ServePluginRequest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ServePluginRequest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12761,10 +15803,15 @@ func (a *OpenTracingAppLayer) ServePluginRequest(w http.ResponseWriter, r *http.
 
 func (a *OpenTracingAppLayer) ServerBusyStateChanged(sbs *model.ServerBusyState) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ServerBusyStateChanged")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ServerBusyStateChanged")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ServerBusyStateChanged")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ServerBusyStateChanged")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12776,10 +15823,15 @@ func (a *OpenTracingAppLayer) ServerBusyStateChanged(sbs *model.ServerBusyState)
 
 func (a *OpenTracingAppLayer) SessionCacheLength() int {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionCacheLength")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionCacheLength")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionCacheLength")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionCacheLength")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12793,10 +15845,15 @@ func (a *OpenTracingAppLayer) SessionCacheLength() int {
 
 func (a *OpenTracingAppLayer) SessionHasPermissionTo(session model.Session, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionTo")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionTo")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionTo")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionTo")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12810,10 +15867,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionTo(session model.Session, perm
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToAny(session model.Session, permissions []*model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToAny")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToAny")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToAny")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToAny")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12827,10 +15889,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToAny(session model.Session, p
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToCategory(session model.Session, userId string, teamId string, categoryId string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToCategory")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToCategory")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToCategory")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToCategory")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12844,10 +15911,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToCategory(session model.Sessi
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToChannel(session model.Session, channelId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12861,10 +15933,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToChannel(session model.Sessio
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToChannelByPost(session model.Session, postId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToChannelByPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToChannelByPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToChannelByPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToChannelByPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12878,10 +15955,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToChannelByPost(session model.
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToManageBot(session model.Session, botUserId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToManageBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToManageBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToManageBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToManageBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12900,10 +15982,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToManageBot(session model.Sess
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToTeam(session model.Session, teamId string, permission *model.Permission) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12917,10 +16004,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToTeam(session model.Session, 
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToUser(session model.Session, userId string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12934,10 +16026,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToUser(session model.Session, 
 
 func (a *OpenTracingAppLayer) SessionHasPermissionToUserOrBot(session model.Session, userId string) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionHasPermissionToUserOrBot")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionHasPermissionToUserOrBot")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionHasPermissionToUserOrBot")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionHasPermissionToUserOrBot")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12951,10 +16048,15 @@ func (a *OpenTracingAppLayer) SessionHasPermissionToUserOrBot(session model.Sess
 
 func (a *OpenTracingAppLayer) SessionIsRegistered(session model.Session) bool {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SessionIsRegistered")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SessionIsRegistered")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SessionIsRegistered")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SessionIsRegistered")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12968,10 +16070,15 @@ func (a *OpenTracingAppLayer) SessionIsRegistered(session model.Session) bool {
 
 func (a *OpenTracingAppLayer) SetActiveChannel(userId string, channelId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetActiveChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetActiveChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetActiveChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetActiveChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -12990,10 +16097,15 @@ func (a *OpenTracingAppLayer) SetActiveChannel(userId string, channelId string) 
 
 func (a *OpenTracingAppLayer) SetAutoResponderStatus(user *model.User, oldNotifyProps model.StringMap) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetAutoResponderStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetAutoResponderStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetAutoResponderStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetAutoResponderStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13005,10 +16117,15 @@ func (a *OpenTracingAppLayer) SetAutoResponderStatus(user *model.User, oldNotify
 
 func (a *OpenTracingAppLayer) SetBotIconImage(botUserId string, file io.ReadSeeker) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetBotIconImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetBotIconImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetBotIconImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetBotIconImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13027,10 +16144,15 @@ func (a *OpenTracingAppLayer) SetBotIconImage(botUserId string, file io.ReadSeek
 
 func (a *OpenTracingAppLayer) SetBotIconImageFromMultiPartFile(botUserId string, imageData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetBotIconImageFromMultiPartFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetBotIconImageFromMultiPartFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetBotIconImageFromMultiPartFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetBotIconImageFromMultiPartFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13049,10 +16171,15 @@ func (a *OpenTracingAppLayer) SetBotIconImageFromMultiPartFile(botUserId string,
 
 func (a *OpenTracingAppLayer) SetDefaultProfileImage(user *model.User) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetDefaultProfileImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetDefaultProfileImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetDefaultProfileImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetDefaultProfileImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13071,10 +16198,15 @@ func (a *OpenTracingAppLayer) SetDefaultProfileImage(user *model.User) *model.Ap
 
 func (a *OpenTracingAppLayer) SetDiagnosticId(id string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetDiagnosticId")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetDiagnosticId")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetDiagnosticId")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetDiagnosticId")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13086,10 +16218,15 @@ func (a *OpenTracingAppLayer) SetDiagnosticId(id string) {
 
 func (a *OpenTracingAppLayer) SetLog(l *mlog.Logger) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetLog")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetLog")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetLog")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetLog")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13101,10 +16238,15 @@ func (a *OpenTracingAppLayer) SetLog(l *mlog.Logger) {
 
 func (a *OpenTracingAppLayer) SetPhase2PermissionsMigrationStatus(isComplete bool) error {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetPhase2PermissionsMigrationStatus")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetPhase2PermissionsMigrationStatus")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetPhase2PermissionsMigrationStatus")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetPhase2PermissionsMigrationStatus")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13123,10 +16265,15 @@ func (a *OpenTracingAppLayer) SetPhase2PermissionsMigrationStatus(isComplete boo
 
 func (a *OpenTracingAppLayer) SetPluginKey(pluginId string, key string, value []byte) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetPluginKey")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetPluginKey")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetPluginKey")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetPluginKey")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13145,10 +16292,15 @@ func (a *OpenTracingAppLayer) SetPluginKey(pluginId string, key string, value []
 
 func (a *OpenTracingAppLayer) SetPluginKeyWithExpiry(pluginId string, key string, value []byte, expireInSeconds int64) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetPluginKeyWithExpiry")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetPluginKeyWithExpiry")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetPluginKeyWithExpiry")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetPluginKeyWithExpiry")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13167,10 +16319,15 @@ func (a *OpenTracingAppLayer) SetPluginKeyWithExpiry(pluginId string, key string
 
 func (a *OpenTracingAppLayer) SetPluginKeyWithOptions(pluginId string, key string, value []byte, options model.PluginKVSetOptions) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetPluginKeyWithOptions")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetPluginKeyWithOptions")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetPluginKeyWithOptions")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetPluginKeyWithOptions")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13189,10 +16346,15 @@ func (a *OpenTracingAppLayer) SetPluginKeyWithOptions(pluginId string, key strin
 
 func (a *OpenTracingAppLayer) SetPluginsEnvironment(pluginsEnvironment *plugin.Environment) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetPluginsEnvironment")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetPluginsEnvironment")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetPluginsEnvironment")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetPluginsEnvironment")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13204,10 +16366,15 @@ func (a *OpenTracingAppLayer) SetPluginsEnvironment(pluginsEnvironment *plugin.E
 
 func (a *OpenTracingAppLayer) SetProfileImage(userId string, imageData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetProfileImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetProfileImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetProfileImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetProfileImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13226,10 +16393,15 @@ func (a *OpenTracingAppLayer) SetProfileImage(userId string, imageData *multipar
 
 func (a *OpenTracingAppLayer) SetProfileImageFromFile(userId string, file io.Reader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetProfileImageFromFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetProfileImageFromFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetProfileImageFromFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetProfileImageFromFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13248,10 +16420,15 @@ func (a *OpenTracingAppLayer) SetProfileImageFromFile(userId string, file io.Rea
 
 func (a *OpenTracingAppLayer) SetProfileImageFromMultiPartFile(userId string, file multipart.File) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetProfileImageFromMultiPartFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetProfileImageFromMultiPartFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetProfileImageFromMultiPartFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetProfileImageFromMultiPartFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13270,10 +16447,15 @@ func (a *OpenTracingAppLayer) SetProfileImageFromMultiPartFile(userId string, fi
 
 func (a *OpenTracingAppLayer) SetSamlIdpCertificateFromMetadata(data []byte) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetSamlIdpCertificateFromMetadata")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetSamlIdpCertificateFromMetadata")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetSamlIdpCertificateFromMetadata")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetSamlIdpCertificateFromMetadata")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13292,10 +16474,15 @@ func (a *OpenTracingAppLayer) SetSamlIdpCertificateFromMetadata(data []byte) *mo
 
 func (a *OpenTracingAppLayer) SetSearchEngine(se *searchengine.Broker) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetSearchEngine")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetSearchEngine")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetSearchEngine")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetSearchEngine")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13307,10 +16494,15 @@ func (a *OpenTracingAppLayer) SetSearchEngine(se *searchengine.Broker) {
 
 func (a *OpenTracingAppLayer) SetSessionExpireInDays(session *model.Session, days int) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetSessionExpireInDays")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetSessionExpireInDays")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetSessionExpireInDays")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetSessionExpireInDays")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13322,10 +16514,15 @@ func (a *OpenTracingAppLayer) SetSessionExpireInDays(session *model.Session, day
 
 func (a *OpenTracingAppLayer) SetStatusAwayIfNeeded(userId string, manual bool) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusAwayIfNeeded")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusAwayIfNeeded")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusAwayIfNeeded")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusAwayIfNeeded")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13337,10 +16534,15 @@ func (a *OpenTracingAppLayer) SetStatusAwayIfNeeded(userId string, manual bool) 
 
 func (a *OpenTracingAppLayer) SetStatusDoNotDisturb(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusDoNotDisturb")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusDoNotDisturb")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusDoNotDisturb")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusDoNotDisturb")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13352,10 +16554,15 @@ func (a *OpenTracingAppLayer) SetStatusDoNotDisturb(userId string) {
 
 func (a *OpenTracingAppLayer) SetStatusLastActivityAt(userId string, activityAt int64) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusLastActivityAt")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusLastActivityAt")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusLastActivityAt")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusLastActivityAt")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13367,10 +16574,15 @@ func (a *OpenTracingAppLayer) SetStatusLastActivityAt(userId string, activityAt 
 
 func (a *OpenTracingAppLayer) SetStatusOffline(userId string, manual bool) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusOffline")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusOffline")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusOffline")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusOffline")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13382,10 +16594,15 @@ func (a *OpenTracingAppLayer) SetStatusOffline(userId string, manual bool) {
 
 func (a *OpenTracingAppLayer) SetStatusOnline(userId string, manual bool) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusOnline")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusOnline")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusOnline")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusOnline")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13397,10 +16614,15 @@ func (a *OpenTracingAppLayer) SetStatusOnline(userId string, manual bool) {
 
 func (a *OpenTracingAppLayer) SetStatusOutOfOffice(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetStatusOutOfOffice")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetStatusOutOfOffice")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetStatusOutOfOffice")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetStatusOutOfOffice")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13412,10 +16634,15 @@ func (a *OpenTracingAppLayer) SetStatusOutOfOffice(userId string) {
 
 func (a *OpenTracingAppLayer) SetTeamIcon(teamId string, imageData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetTeamIcon")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetTeamIcon")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetTeamIcon")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetTeamIcon")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13434,10 +16661,15 @@ func (a *OpenTracingAppLayer) SetTeamIcon(teamId string, imageData *multipart.Fi
 
 func (a *OpenTracingAppLayer) SetTeamIconFromFile(team *model.Team, file io.Reader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetTeamIconFromFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetTeamIconFromFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetTeamIconFromFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetTeamIconFromFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13456,10 +16688,15 @@ func (a *OpenTracingAppLayer) SetTeamIconFromFile(team *model.Team, file io.Read
 
 func (a *OpenTracingAppLayer) SetTeamIconFromMultiPartFile(teamId string, file multipart.File) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SetTeamIconFromMultiPartFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SetTeamIconFromMultiPartFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SetTeamIconFromMultiPartFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SetTeamIconFromMultiPartFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13478,10 +16715,15 @@ func (a *OpenTracingAppLayer) SetTeamIconFromMultiPartFile(teamId string, file m
 
 func (a *OpenTracingAppLayer) SlackImport(fileData multipart.File, fileSize int64, teamID string) (*model.AppError, *bytes.Buffer) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SlackImport")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SlackImport")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SlackImport")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SlackImport")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13500,10 +16742,15 @@ func (a *OpenTracingAppLayer) SlackImport(fileData multipart.File, fileSize int6
 
 func (a *OpenTracingAppLayer) SoftDeleteTeam(teamId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SoftDeleteTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SoftDeleteTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SoftDeleteTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SoftDeleteTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13522,10 +16769,15 @@ func (a *OpenTracingAppLayer) SoftDeleteTeam(teamId string) *model.AppError {
 
 func (a *OpenTracingAppLayer) SubmitInteractiveDialog(request model.SubmitDialogRequest) (*model.SubmitDialogResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SubmitInteractiveDialog")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SubmitInteractiveDialog")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SubmitInteractiveDialog")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SubmitInteractiveDialog")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13544,10 +16796,15 @@ func (a *OpenTracingAppLayer) SubmitInteractiveDialog(request model.SubmitDialog
 
 func (a *OpenTracingAppLayer) SwitchEmailToLdap(email string, password string, code string, ldapLoginId string, ldapPassword string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SwitchEmailToLdap")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SwitchEmailToLdap")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SwitchEmailToLdap")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SwitchEmailToLdap")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13566,10 +16823,15 @@ func (a *OpenTracingAppLayer) SwitchEmailToLdap(email string, password string, c
 
 func (a *OpenTracingAppLayer) SwitchEmailToOAuth(w http.ResponseWriter, r *http.Request, email string, password string, code string, service string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SwitchEmailToOAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SwitchEmailToOAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SwitchEmailToOAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SwitchEmailToOAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13588,10 +16850,15 @@ func (a *OpenTracingAppLayer) SwitchEmailToOAuth(w http.ResponseWriter, r *http.
 
 func (a *OpenTracingAppLayer) SwitchLdapToEmail(ldapPassword string, code string, email string, newPassword string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SwitchLdapToEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SwitchLdapToEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SwitchLdapToEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SwitchLdapToEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13610,10 +16877,15 @@ func (a *OpenTracingAppLayer) SwitchLdapToEmail(ldapPassword string, code string
 
 func (a *OpenTracingAppLayer) SwitchOAuthToEmail(email string, password string, requesterId string) (string, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SwitchOAuthToEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SwitchOAuthToEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SwitchOAuthToEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SwitchOAuthToEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13632,10 +16904,15 @@ func (a *OpenTracingAppLayer) SwitchOAuthToEmail(email string, password string, 
 
 func (a *OpenTracingAppLayer) SyncLdap() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SyncLdap")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SyncLdap")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SyncLdap")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SyncLdap")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13647,10 +16924,15 @@ func (a *OpenTracingAppLayer) SyncLdap() {
 
 func (a *OpenTracingAppLayer) SyncPlugins() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SyncPlugins")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SyncPlugins")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SyncPlugins")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SyncPlugins")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13669,10 +16951,15 @@ func (a *OpenTracingAppLayer) SyncPlugins() *model.AppError {
 
 func (a *OpenTracingAppLayer) SyncPluginsActiveState() {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SyncPluginsActiveState")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SyncPluginsActiveState")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SyncPluginsActiveState")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SyncPluginsActiveState")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13684,10 +16971,15 @@ func (a *OpenTracingAppLayer) SyncPluginsActiveState() {
 
 func (a *OpenTracingAppLayer) SyncRolesAndMembership(syncableID string, syncableType model.GroupSyncableType) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SyncRolesAndMembership")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SyncRolesAndMembership")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SyncRolesAndMembership")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SyncRolesAndMembership")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13699,10 +16991,15 @@ func (a *OpenTracingAppLayer) SyncRolesAndMembership(syncableID string, syncable
 
 func (a *OpenTracingAppLayer) SyncSyncableRoles(syncableID string, syncableType model.GroupSyncableType) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.SyncSyncableRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.SyncSyncableRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.SyncSyncableRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.SyncSyncableRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13721,10 +17018,15 @@ func (a *OpenTracingAppLayer) SyncSyncableRoles(syncableID string, syncableType 
 
 func (a *OpenTracingAppLayer) TeamMembersMinusGroupMembers(teamID string, groupIDs []string, page int, perPage int) ([]*model.UserWithGroups, int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TeamMembersMinusGroupMembers")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TeamMembersMinusGroupMembers")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TeamMembersMinusGroupMembers")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TeamMembersMinusGroupMembers")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13743,10 +17045,15 @@ func (a *OpenTracingAppLayer) TeamMembersMinusGroupMembers(teamID string, groupI
 
 func (a *OpenTracingAppLayer) TeamMembersToAdd(since int64, teamID *string) ([]*model.UserTeamIDPair, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TeamMembersToAdd")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TeamMembersToAdd")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TeamMembersToAdd")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TeamMembersToAdd")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13765,10 +17072,15 @@ func (a *OpenTracingAppLayer) TeamMembersToAdd(since int64, teamID *string) ([]*
 
 func (a *OpenTracingAppLayer) TeamMembersToRemove(teamID *string) ([]*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TeamMembersToRemove")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TeamMembersToRemove")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TeamMembersToRemove")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TeamMembersToRemove")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13787,10 +17099,15 @@ func (a *OpenTracingAppLayer) TeamMembersToRemove(teamID *string) ([]*model.Team
 
 func (a *OpenTracingAppLayer) TestElasticsearch(cfg *model.Config) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TestElasticsearch")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TestElasticsearch")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TestElasticsearch")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TestElasticsearch")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13809,10 +17126,15 @@ func (a *OpenTracingAppLayer) TestElasticsearch(cfg *model.Config) *model.AppErr
 
 func (a *OpenTracingAppLayer) TestEmail(userId string, cfg *model.Config) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TestEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TestEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TestEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TestEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13831,10 +17153,15 @@ func (a *OpenTracingAppLayer) TestEmail(userId string, cfg *model.Config) *model
 
 func (a *OpenTracingAppLayer) TestLdap() *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TestLdap")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TestLdap")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TestLdap")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TestLdap")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13853,10 +17180,15 @@ func (a *OpenTracingAppLayer) TestLdap() *model.AppError {
 
 func (a *OpenTracingAppLayer) TestSiteURL(siteURL string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TestSiteURL")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TestSiteURL")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TestSiteURL")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TestSiteURL")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13875,10 +17207,15 @@ func (a *OpenTracingAppLayer) TestSiteURL(siteURL string) *model.AppError {
 
 func (a *OpenTracingAppLayer) ToggleMuteChannel(channelId string, userId string) *model.ChannelMember {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ToggleMuteChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ToggleMuteChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ToggleMuteChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ToggleMuteChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13892,10 +17229,15 @@ func (a *OpenTracingAppLayer) ToggleMuteChannel(channelId string, userId string)
 
 func (a *OpenTracingAppLayer) TotalWebsocketConnections() int {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TotalWebsocketConnections")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TotalWebsocketConnections")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TotalWebsocketConnections")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TotalWebsocketConnections")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13909,10 +17251,15 @@ func (a *OpenTracingAppLayer) TotalWebsocketConnections() int {
 
 func (a *OpenTracingAppLayer) TriggerWebhook(payload *model.OutgoingWebhookPayload, hook *model.OutgoingWebhook, post *model.Post, channel *model.Channel) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.TriggerWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.TriggerWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.TriggerWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.TriggerWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13924,10 +17271,15 @@ func (a *OpenTracingAppLayer) TriggerWebhook(payload *model.OutgoingWebhookPaylo
 
 func (a *OpenTracingAppLayer) UnregisterPluginCommand(pluginId string, teamId string, trigger string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UnregisterPluginCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UnregisterPluginCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UnregisterPluginCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UnregisterPluginCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13939,10 +17291,15 @@ func (a *OpenTracingAppLayer) UnregisterPluginCommand(pluginId string, teamId st
 
 func (a *OpenTracingAppLayer) UnregisterPluginCommands(pluginId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UnregisterPluginCommands")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UnregisterPluginCommands")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UnregisterPluginCommands")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UnregisterPluginCommands")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13954,10 +17311,15 @@ func (a *OpenTracingAppLayer) UnregisterPluginCommands(pluginId string) {
 
 func (a *OpenTracingAppLayer) UpdateActive(user *model.User, active bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateActive")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateActive")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateActive")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateActive")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13976,10 +17338,15 @@ func (a *OpenTracingAppLayer) UpdateActive(user *model.User, active bool) (*mode
 
 func (a *OpenTracingAppLayer) UpdateBotActive(botUserId string, active bool) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateBotActive")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateBotActive")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateBotActive")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateBotActive")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -13998,10 +17365,15 @@ func (a *OpenTracingAppLayer) UpdateBotActive(botUserId string, active bool) (*m
 
 func (a *OpenTracingAppLayer) UpdateBotOwner(botUserId string, newOwnerId string) (*model.Bot, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateBotOwner")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateBotOwner")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateBotOwner")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateBotOwner")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14020,10 +17392,15 @@ func (a *OpenTracingAppLayer) UpdateBotOwner(botUserId string, newOwnerId string
 
 func (a *OpenTracingAppLayer) UpdateChannel(channel *model.Channel) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14042,10 +17419,15 @@ func (a *OpenTracingAppLayer) UpdateChannel(channel *model.Channel) (*model.Chan
 
 func (a *OpenTracingAppLayer) UpdateChannelLastViewedAt(channelIds []string, userId string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelLastViewedAt")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelLastViewedAt")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelLastViewedAt")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelLastViewedAt")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14064,10 +17446,15 @@ func (a *OpenTracingAppLayer) UpdateChannelLastViewedAt(channelIds []string, use
 
 func (a *OpenTracingAppLayer) UpdateChannelMemberNotifyProps(data map[string]string, channelId string, userId string) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelMemberNotifyProps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelMemberNotifyProps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelMemberNotifyProps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelMemberNotifyProps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14086,10 +17473,15 @@ func (a *OpenTracingAppLayer) UpdateChannelMemberNotifyProps(data map[string]str
 
 func (a *OpenTracingAppLayer) UpdateChannelMemberRoles(channelId string, userId string, newRoles string) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelMemberRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelMemberRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelMemberRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelMemberRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14108,10 +17500,15 @@ func (a *OpenTracingAppLayer) UpdateChannelMemberRoles(channelId string, userId 
 
 func (a *OpenTracingAppLayer) UpdateChannelMemberSchemeRoles(channelId string, userId string, isSchemeGuest bool, isSchemeUser bool, isSchemeAdmin bool) (*model.ChannelMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelMemberSchemeRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelMemberSchemeRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelMemberSchemeRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelMemberSchemeRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14130,10 +17527,15 @@ func (a *OpenTracingAppLayer) UpdateChannelMemberSchemeRoles(channelId string, u
 
 func (a *OpenTracingAppLayer) UpdateChannelPrivacy(oldChannel *model.Channel, user *model.User) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelPrivacy")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelPrivacy")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelPrivacy")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelPrivacy")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14152,10 +17554,15 @@ func (a *OpenTracingAppLayer) UpdateChannelPrivacy(oldChannel *model.Channel, us
 
 func (a *OpenTracingAppLayer) UpdateChannelScheme(channel *model.Channel) (*model.Channel, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateChannelScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateChannelScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateChannelScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateChannelScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14174,10 +17581,15 @@ func (a *OpenTracingAppLayer) UpdateChannelScheme(channel *model.Channel) (*mode
 
 func (a *OpenTracingAppLayer) UpdateCommand(oldCmd *model.Command, updatedCmd *model.Command) (*model.Command, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateCommand")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateCommand")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateCommand")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateCommand")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14196,10 +17608,15 @@ func (a *OpenTracingAppLayer) UpdateCommand(oldCmd *model.Command, updatedCmd *m
 
 func (a *OpenTracingAppLayer) UpdateConfig(f func(*model.Config)) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateConfig")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateConfig")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateConfig")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateConfig")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14211,10 +17628,15 @@ func (a *OpenTracingAppLayer) UpdateConfig(f func(*model.Config)) {
 
 func (a *OpenTracingAppLayer) UpdateEphemeralPost(userId string, post *model.Post) *model.Post {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateEphemeralPost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateEphemeralPost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateEphemeralPost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateEphemeralPost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14228,10 +17650,15 @@ func (a *OpenTracingAppLayer) UpdateEphemeralPost(userId string, post *model.Pos
 
 func (a *OpenTracingAppLayer) UpdateGroup(group *model.Group) (*model.Group, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14250,10 +17677,15 @@ func (a *OpenTracingAppLayer) UpdateGroup(group *model.Group) (*model.Group, *mo
 
 func (a *OpenTracingAppLayer) UpdateGroupSyncable(groupSyncable *model.GroupSyncable) (*model.GroupSyncable, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateGroupSyncable")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateGroupSyncable")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateGroupSyncable")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateGroupSyncable")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14272,10 +17704,15 @@ func (a *OpenTracingAppLayer) UpdateGroupSyncable(groupSyncable *model.GroupSync
 
 func (a *OpenTracingAppLayer) UpdateIncomingWebhook(oldHook *model.IncomingWebhook, updatedHook *model.IncomingWebhook) (*model.IncomingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateIncomingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateIncomingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateIncomingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateIncomingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14294,10 +17731,15 @@ func (a *OpenTracingAppLayer) UpdateIncomingWebhook(oldHook *model.IncomingWebho
 
 func (a *OpenTracingAppLayer) UpdateLastActivityAtIfNeeded(session model.Session) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateLastActivityAtIfNeeded")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateLastActivityAtIfNeeded")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateLastActivityAtIfNeeded")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateLastActivityAtIfNeeded")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14309,10 +17751,15 @@ func (a *OpenTracingAppLayer) UpdateLastActivityAtIfNeeded(session model.Session
 
 func (a *OpenTracingAppLayer) UpdateMfa(activate bool, userId string, token string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateMfa")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateMfa")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateMfa")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateMfa")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14331,10 +17778,15 @@ func (a *OpenTracingAppLayer) UpdateMfa(activate bool, userId string, token stri
 
 func (a *OpenTracingAppLayer) UpdateMobileAppBadge(userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateMobileAppBadge")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateMobileAppBadge")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateMobileAppBadge")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateMobileAppBadge")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14346,10 +17798,15 @@ func (a *OpenTracingAppLayer) UpdateMobileAppBadge(userId string) {
 
 func (a *OpenTracingAppLayer) UpdateOAuthUserAttrs(userData io.Reader, user *model.User, provider einterfaces.OauthProvider, service string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateOAuthUserAttrs")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateOAuthUserAttrs")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateOAuthUserAttrs")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateOAuthUserAttrs")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14368,10 +17825,15 @@ func (a *OpenTracingAppLayer) UpdateOAuthUserAttrs(userData io.Reader, user *mod
 
 func (a *OpenTracingAppLayer) UpdateOauthApp(oldApp *model.OAuthApp, updatedApp *model.OAuthApp) (*model.OAuthApp, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateOauthApp")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateOauthApp")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateOauthApp")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateOauthApp")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14390,10 +17852,15 @@ func (a *OpenTracingAppLayer) UpdateOauthApp(oldApp *model.OAuthApp, updatedApp 
 
 func (a *OpenTracingAppLayer) UpdateOutgoingWebhook(oldHook *model.OutgoingWebhook, updatedHook *model.OutgoingWebhook) (*model.OutgoingWebhook, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateOutgoingWebhook")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateOutgoingWebhook")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateOutgoingWebhook")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateOutgoingWebhook")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14412,10 +17879,15 @@ func (a *OpenTracingAppLayer) UpdateOutgoingWebhook(oldHook *model.OutgoingWebho
 
 func (a *OpenTracingAppLayer) UpdatePassword(user *model.User, newPassword string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePassword")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePassword")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePassword")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePassword")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14434,10 +17906,15 @@ func (a *OpenTracingAppLayer) UpdatePassword(user *model.User, newPassword strin
 
 func (a *OpenTracingAppLayer) UpdatePasswordAsUser(userId string, currentPassword string, newPassword string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePasswordAsUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePasswordAsUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePasswordAsUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePasswordAsUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14456,10 +17933,15 @@ func (a *OpenTracingAppLayer) UpdatePasswordAsUser(userId string, currentPasswor
 
 func (a *OpenTracingAppLayer) UpdatePasswordByUserIdSendEmail(userId string, newPassword string, method string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePasswordByUserIdSendEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePasswordByUserIdSendEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePasswordByUserIdSendEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePasswordByUserIdSendEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14478,10 +17960,15 @@ func (a *OpenTracingAppLayer) UpdatePasswordByUserIdSendEmail(userId string, new
 
 func (a *OpenTracingAppLayer) UpdatePasswordSendEmail(user *model.User, newPassword string, method string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePasswordSendEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePasswordSendEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePasswordSendEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePasswordSendEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14500,10 +17987,15 @@ func (a *OpenTracingAppLayer) UpdatePasswordSendEmail(user *model.User, newPassw
 
 func (a *OpenTracingAppLayer) UpdatePost(post *model.Post, safeUpdate bool) (*model.Post, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePost")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePost")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePost")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePost")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14522,10 +18014,15 @@ func (a *OpenTracingAppLayer) UpdatePost(post *model.Post, safeUpdate bool) (*mo
 
 func (a *OpenTracingAppLayer) UpdatePreferences(userId string, preferences model.Preferences) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdatePreferences")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdatePreferences")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdatePreferences")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdatePreferences")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14544,10 +18041,15 @@ func (a *OpenTracingAppLayer) UpdatePreferences(userId string, preferences model
 
 func (a *OpenTracingAppLayer) UpdateRole(role *model.Role) (*model.Role, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateRole")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateRole")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateRole")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateRole")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14566,10 +18068,15 @@ func (a *OpenTracingAppLayer) UpdateRole(role *model.Role) (*model.Role, *model.
 
 func (a *OpenTracingAppLayer) UpdateScheme(scheme *model.Scheme) (*model.Scheme, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14588,10 +18095,15 @@ func (a *OpenTracingAppLayer) UpdateScheme(scheme *model.Scheme) (*model.Scheme,
 
 func (a *OpenTracingAppLayer) UpdateSessionsIsGuest(userId string, isGuest bool) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateSessionsIsGuest")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateSessionsIsGuest")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateSessionsIsGuest")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateSessionsIsGuest")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14603,10 +18115,15 @@ func (a *OpenTracingAppLayer) UpdateSessionsIsGuest(userId string, isGuest bool)
 
 func (a *OpenTracingAppLayer) UpdateSidebarCategories(userId string, teamId string, categories []*model.SidebarCategoryWithChannels) ([]*model.SidebarCategoryWithChannels, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateSidebarCategories")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateSidebarCategories")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateSidebarCategories")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateSidebarCategories")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14625,10 +18142,15 @@ func (a *OpenTracingAppLayer) UpdateSidebarCategories(userId string, teamId stri
 
 func (a *OpenTracingAppLayer) UpdateSidebarCategoryOrder(userId string, teamId string, categoryOrder []string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateSidebarCategoryOrder")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateSidebarCategoryOrder")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateSidebarCategoryOrder")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateSidebarCategoryOrder")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14647,10 +18169,15 @@ func (a *OpenTracingAppLayer) UpdateSidebarCategoryOrder(userId string, teamId s
 
 func (a *OpenTracingAppLayer) UpdateTeam(team *model.Team) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateTeam")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateTeam")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateTeam")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateTeam")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14669,10 +18196,15 @@ func (a *OpenTracingAppLayer) UpdateTeam(team *model.Team) (*model.Team, *model.
 
 func (a *OpenTracingAppLayer) UpdateTeamMemberRoles(teamId string, userId string, newRoles string) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateTeamMemberRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateTeamMemberRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateTeamMemberRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateTeamMemberRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14691,10 +18223,15 @@ func (a *OpenTracingAppLayer) UpdateTeamMemberRoles(teamId string, userId string
 
 func (a *OpenTracingAppLayer) UpdateTeamMemberSchemeRoles(teamId string, userId string, isSchemeGuest bool, isSchemeUser bool, isSchemeAdmin bool) (*model.TeamMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateTeamMemberSchemeRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateTeamMemberSchemeRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateTeamMemberSchemeRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateTeamMemberSchemeRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14713,10 +18250,15 @@ func (a *OpenTracingAppLayer) UpdateTeamMemberSchemeRoles(teamId string, userId 
 
 func (a *OpenTracingAppLayer) UpdateTeamPrivacy(teamId string, teamType string, allowOpenInvite bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateTeamPrivacy")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateTeamPrivacy")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateTeamPrivacy")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateTeamPrivacy")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14735,10 +18277,15 @@ func (a *OpenTracingAppLayer) UpdateTeamPrivacy(teamId string, teamType string, 
 
 func (a *OpenTracingAppLayer) UpdateTeamScheme(team *model.Team) (*model.Team, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateTeamScheme")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateTeamScheme")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateTeamScheme")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateTeamScheme")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14757,10 +18304,15 @@ func (a *OpenTracingAppLayer) UpdateTeamScheme(team *model.Team) (*model.Team, *
 
 func (a *OpenTracingAppLayer) UpdateUser(user *model.User, sendNotifications bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14779,10 +18331,15 @@ func (a *OpenTracingAppLayer) UpdateUser(user *model.User, sendNotifications boo
 
 func (a *OpenTracingAppLayer) UpdateUserActive(userId string, active bool) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUserActive")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUserActive")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUserActive")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUserActive")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14801,10 +18358,15 @@ func (a *OpenTracingAppLayer) UpdateUserActive(userId string, active bool) *mode
 
 func (a *OpenTracingAppLayer) UpdateUserAsUser(user *model.User, asAdmin bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUserAsUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUserAsUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUserAsUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUserAsUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14823,10 +18385,15 @@ func (a *OpenTracingAppLayer) UpdateUserAsUser(user *model.User, asAdmin bool) (
 
 func (a *OpenTracingAppLayer) UpdateUserAuth(userId string, userAuth *model.UserAuth) (*model.UserAuth, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUserAuth")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUserAuth")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUserAuth")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUserAuth")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14845,10 +18412,15 @@ func (a *OpenTracingAppLayer) UpdateUserAuth(userId string, userAuth *model.User
 
 func (a *OpenTracingAppLayer) UpdateUserNotifyProps(userId string, props map[string]string) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUserNotifyProps")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUserNotifyProps")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUserNotifyProps")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUserNotifyProps")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14867,10 +18439,15 @@ func (a *OpenTracingAppLayer) UpdateUserNotifyProps(userId string, props map[str
 
 func (a *OpenTracingAppLayer) UpdateUserRoles(userId string, newRoles string, sendWebSocketEvent bool) (*model.User, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateUserRoles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateUserRoles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateUserRoles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateUserRoles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14889,10 +18466,15 @@ func (a *OpenTracingAppLayer) UpdateUserRoles(userId string, newRoles string, se
 
 func (a *OpenTracingAppLayer) UpdateWebConnUserActivity(session model.Session, activityAt int64) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpdateWebConnUserActivity")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpdateWebConnUserActivity")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpdateWebConnUserActivity")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpdateWebConnUserActivity")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14904,10 +18486,15 @@ func (a *OpenTracingAppLayer) UpdateWebConnUserActivity(session model.Session, a
 
 func (a *OpenTracingAppLayer) UploadEmojiImage(id string, imageData *multipart.FileHeader) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UploadEmojiImage")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UploadEmojiImage")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UploadEmojiImage")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UploadEmojiImage")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14926,10 +18513,15 @@ func (a *OpenTracingAppLayer) UploadEmojiImage(id string, imageData *multipart.F
 
 func (a *OpenTracingAppLayer) UploadFile(data []byte, channelId string, filename string) (*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UploadFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UploadFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UploadFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UploadFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14948,10 +18540,15 @@ func (a *OpenTracingAppLayer) UploadFile(data []byte, channelId string, filename
 
 func (a *OpenTracingAppLayer) UploadFileX(channelId string, name string, input io.Reader, opts ...func(*app.UploadFileTask)) (*model.FileInfo, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UploadFileX")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UploadFileX")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UploadFileX")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UploadFileX")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14970,10 +18567,15 @@ func (a *OpenTracingAppLayer) UploadFileX(channelId string, name string, input i
 
 func (a *OpenTracingAppLayer) UploadFiles(teamId string, channelId string, userId string, files []io.ReadCloser, filenames []string, clientIds []string, now time.Time) (*model.FileUploadResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UploadFiles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UploadFiles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UploadFiles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UploadFiles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -14992,10 +18594,15 @@ func (a *OpenTracingAppLayer) UploadFiles(teamId string, channelId string, userI
 
 func (a *OpenTracingAppLayer) UploadMultipartFiles(teamId string, channelId string, userId string, fileHeaders []*multipart.FileHeader, clientIds []string, now time.Time) (*model.FileUploadResponse, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UploadMultipartFiles")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UploadMultipartFiles")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UploadMultipartFiles")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UploadMultipartFiles")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15014,10 +18621,15 @@ func (a *OpenTracingAppLayer) UploadMultipartFiles(teamId string, channelId stri
 
 func (a *OpenTracingAppLayer) UpsertGroupMember(groupID string, userID string) (*model.GroupMember, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpsertGroupMember")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpsertGroupMember")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpsertGroupMember")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpsertGroupMember")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15036,10 +18648,15 @@ func (a *OpenTracingAppLayer) UpsertGroupMember(groupID string, userID string) (
 
 func (a *OpenTracingAppLayer) UpsertGroupSyncable(groupSyncable *model.GroupSyncable) (*model.GroupSyncable, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UpsertGroupSyncable")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UpsertGroupSyncable")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UpsertGroupSyncable")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UpsertGroupSyncable")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15058,10 +18675,15 @@ func (a *OpenTracingAppLayer) UpsertGroupSyncable(groupSyncable *model.GroupSync
 
 func (a *OpenTracingAppLayer) UserCanSeeOtherUser(userId string, otherUserId string) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UserCanSeeOtherUser")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UserCanSeeOtherUser")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UserCanSeeOtherUser")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UserCanSeeOtherUser")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15080,10 +18702,15 @@ func (a *OpenTracingAppLayer) UserCanSeeOtherUser(userId string, otherUserId str
 
 func (a *OpenTracingAppLayer) UserIsInAdminRoleGroup(userID string, syncableID string, syncableType model.GroupSyncableType) (bool, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.UserIsInAdminRoleGroup")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.UserIsInAdminRoleGroup")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.UserIsInAdminRoleGroup")
+	segment := newrelic.StartSegment(nrtx, "nr.app.UserIsInAdminRoleGroup")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15102,10 +18729,15 @@ func (a *OpenTracingAppLayer) UserIsInAdminRoleGroup(userID string, syncableID s
 
 func (a *OpenTracingAppLayer) VerifyEmailFromToken(userSuppliedTokenString string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.VerifyEmailFromToken")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.VerifyEmailFromToken")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.VerifyEmailFromToken")
+	segment := newrelic.StartSegment(nrtx, "nr.app.VerifyEmailFromToken")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15124,10 +18756,15 @@ func (a *OpenTracingAppLayer) VerifyEmailFromToken(userSuppliedTokenString strin
 
 func (a *OpenTracingAppLayer) VerifyPlugin(plugin io.ReadSeeker, signature io.ReadSeeker) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.VerifyPlugin")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.VerifyPlugin")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.VerifyPlugin")
+	segment := newrelic.StartSegment(nrtx, "nr.app.VerifyPlugin")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15146,10 +18783,15 @@ func (a *OpenTracingAppLayer) VerifyPlugin(plugin io.ReadSeeker, signature io.Re
 
 func (a *OpenTracingAppLayer) VerifyUserEmail(userId string, email string) *model.AppError {
 	origCtx := a.ctx
+	a.log.Info("nr.app.VerifyUserEmail")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.VerifyUserEmail")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.VerifyUserEmail")
+	segment := newrelic.StartSegment(nrtx, "nr.app.VerifyUserEmail")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15168,10 +18810,15 @@ func (a *OpenTracingAppLayer) VerifyUserEmail(userId string, email string) *mode
 
 func (a *OpenTracingAppLayer) ViewChannel(view *model.ChannelView, userId string, currentSessionId string) (map[string]int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.ViewChannel")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.ViewChannel")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.ViewChannel")
+	segment := newrelic.StartSegment(nrtx, "nr.app.ViewChannel")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15190,10 +18837,15 @@ func (a *OpenTracingAppLayer) ViewChannel(view *model.ChannelView, userId string
 
 func (a *OpenTracingAppLayer) WaitForChannelMembership(channelId string, userId string) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.WaitForChannelMembership")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.WaitForChannelMembership")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.WaitForChannelMembership")
+	segment := newrelic.StartSegment(nrtx, "nr.app.WaitForChannelMembership")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx
@@ -15205,10 +18857,15 @@ func (a *OpenTracingAppLayer) WaitForChannelMembership(channelId string, userId 
 
 func (a *OpenTracingAppLayer) WriteFile(fr io.Reader, path string) (int64, *model.AppError) {
 	origCtx := a.ctx
+	a.log.Info("nr.app.WriteFile")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.WriteFile")
-
+	nrtx := newrelic.FromContext(a.ctx)
+	a.log.Info("end.nr.app.WriteFile")
+	segment := newrelic.StartSegment(nrtx, "nr.app.WriteFile")
+	defer segment.End()
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+	logtime.Sleep(100 * logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx

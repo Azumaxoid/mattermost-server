@@ -14,8 +14,10 @@ import (
 	"strings"
 	"time"
 
+       
 	"github.com/NYTimes/gziphandler"
 	"github.com/mattermost/mattermost-server/v5/app"
+
 	app_opentracing "github.com/mattermost/mattermost-server/v5/app/opentracing"
 	"github.com/mattermost/mattermost-server/v5/mlog"
 	"github.com/mattermost/mattermost-server/v5/model"
@@ -25,6 +27,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	spanlog "github.com/opentracing/opentracing-go/log"
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
 )
 
 func GetHandlerName(h func(*Context, http.ResponseWriter, *http.Request)) string {
@@ -37,6 +40,7 @@ func GetHandlerName(h func(*Context, http.ResponseWriter, *http.Request)) string
 }
 
 func (w *Web) NewHandler(h func(*Context, http.ResponseWriter, *http.Request)) http.Handler {
+        
 	return &Handler{
 		GetGlobalAppOptions: w.GetGlobalAppOptions,
 		HandleFunc:          h,
@@ -76,6 +80,7 @@ type Handler struct {
 	RequireMfa          bool
 	IsStatic            bool
 	IsLocal             bool
+        NRApp               *newrelic.Application
 	DisableWhenBusy     bool
 
 	cspShaDirective string
@@ -115,9 +120,15 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c.App.SetPath(r.URL.Path)
 	c.Params = ParamsFromRequest(r)
 	c.Log = c.App.Log()
+        mlog.Info("Request", mlog.String("path", r.URL.Path))
 
 	if *c.App.Config().ServiceSettings.EnableOpenTracing {
+                if nil == h.NRApp {
+                  mlog.Error("APP is nil")
+                }
+                mlog.Info("Tracing Enabled", mlog.String("Handler", h.HandlerName))
 		span, ctx := tracing.StartRootSpanByContext(context.Background(), "web:ServeHTTP")
+                ctx = newrelic.NewContext(ctx, newrelic.FromContext(r.Context()))
 		carrier := opentracing.HTTPHeadersCarrier(r.Header)
 		_ = opentracing.GlobalTracer().Inject(span.Context(), opentracing.HTTPHeaders, carrier)
 		ext.HTTPMethod.Set(span, r.Method)
@@ -374,6 +385,7 @@ func (w *Web) ApiHandlerTrustRequester(h func(*Context, http.ResponseWriter, *ht
 	if *w.ConfigService.Config().ServiceSettings.WebserverMode == "gzip" {
 		return gziphandler.GzipHandler(handler)
 	}
+
 	return handler
 }
 
@@ -390,8 +402,10 @@ func (w *Web) ApiSessionRequired(h func(*Context, http.ResponseWriter, *http.Req
 		IsStatic:            false,
 		IsLocal:             false,
 	}
+        
 	if *w.ConfigService.Config().ServiceSettings.WebserverMode == "gzip" {
 		return gziphandler.GzipHandler(handler)
 	}
 	return handler
 }
+

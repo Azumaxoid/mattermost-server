@@ -9,7 +9,9 @@ package opentracing
 import (
 	"github.com/opentracing/opentracing-go/ext"
 	spanlog "github.com/opentracing/opentracing-go/log"
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
 	goi18n "github.com/mattermost/go-i18n/i18n"
+        logtime "time"
 )
 
 type {{.Name}} struct {
@@ -50,10 +52,15 @@ type {{.Name}} struct {
 {{range $index, $element := .Methods}}
 func (a *{{$.Name}}) {{$index}}({{$element.Params | joinParamsWithType}}) {{$element.Results | joinResultsForSignature}} {
 	origCtx := a.ctx
+        a.log.Info("nr.app.{{$index}}")
 	span, newCtx := tracing.StartSpanWithParentByContext(a.ctx, "app.{{$index}}")
-
+        nrtx := newrelic.FromContext(a.ctx);
+        a.log.Info("end.nr.app.{{$index}}")
+        segment := newrelic.StartSegment(nrtx, "nr.app.{{$index}}")
+        defer segment.End();
 	a.ctx = newCtx
 	a.app.Srv().Store.SetContext(newCtx)
+        logtime.Sleep(100*logtime.Millisecond)
 	defer func() {
 		a.app.Srv().Store.SetContext(origCtx)
 		a.ctx = origCtx

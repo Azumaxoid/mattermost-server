@@ -13,6 +13,8 @@ import (
 
 	"github.com/NYTimes/gziphandler"
 
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
+
 	"github.com/mattermost/mattermost-server/v5/app"
 	"github.com/mattermost/mattermost-server/v5/mlog"
 	"github.com/mattermost/mattermost-server/v5/model"
@@ -87,6 +89,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c.App.AcceptLanguage = r.Header.Get("Accept-Language")
 	c.Params = ParamsFromRequest(r)
 	c.App.Path = r.URL.Path
+        c.App.NRTxn = newrelic.FromContext(r.Context())
 	c.Log = c.App.Log
 
 	subpath, _ := utils.GetSubpathFromConfig(c.App.Config())

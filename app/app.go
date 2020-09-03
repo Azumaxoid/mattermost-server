@@ -17,6 +17,8 @@ import (
 	"github.com/mattermost/mattermost-server/v5/services/imageproxy"
 	"github.com/mattermost/mattermost-server/v5/services/timezones"
 	"github.com/mattermost/mattermost-server/v5/utils"
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
+        
 )
 
 type App struct {
@@ -47,6 +49,7 @@ type App struct {
 	HTTPService httpservice.HTTPService
 	ImageProxy  *imageproxy.ImageProxy
 	Timezones   *timezones.Timezones
+        NRTxn       *newrelic.Transaction
 }
 
 func New(options ...AppOption) *App {

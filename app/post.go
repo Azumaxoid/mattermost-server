@@ -16,6 +16,7 @@ import (
 	"github.com/mattermost/mattermost-server/v5/plugin"
 	"github.com/mattermost/mattermost-server/v5/store"
 	"github.com/mattermost/mattermost-server/v5/utils"
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
 )
 
 const (
@@ -25,6 +26,8 @@ const (
 )
 
 func (a *App) CreatePostAsUser(post *model.Post, currentSessionId string) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"CreatePostAsUser").End()
+
 	// Check that channel has not been deleted
 	channel, errCh := a.Srv.Store.Channel().Get(post.ChannelId, true)
 	if errCh != nil {
@@ -88,6 +91,8 @@ func (a *App) CreatePostAsUser(post *model.Post, currentSessionId string) (*mode
 }
 
 func (a *App) CreatePostMissingChannel(post *model.Post, triggerWebhooks bool) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"CreatePostMissingChannel").End()
+
 	channel, err := a.Srv.Store.Channel().Get(post.ChannelId, true)
 	if err != nil {
 		return nil, err
@@ -98,6 +103,8 @@ func (a *App) CreatePostMissingChannel(post *model.Post, triggerWebhooks bool) (
 
 // deduplicateCreatePost attempts to make posting idempotent within a caching window.
 func (a *App) deduplicateCreatePost(post *model.Post) (foundPost *model.Post, err *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"deduplicateCreatePost").End()
+
 	// We rely on the client sending the pending post id across "duplicate" requests. If there
 	// isn't one, we can't deduplicate, so allow creation normally.
 	if post.PendingPostId == "" {
@@ -138,6 +145,8 @@ func (a *App) deduplicateCreatePost(post *model.Post) (foundPost *model.Post, er
 }
 
 func (a *App) CreatePost(post *model.Post, channel *model.Channel, triggerWebhooks bool) (savedPost *model.Post, err *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"CreatePost").End()
+
 	foundPost, err := a.deduplicateCreatePost(post)
 	if err != nil {
 		return nil, err
@@ -315,6 +324,8 @@ func (a *App) CreatePost(post *model.Post, channel *model.Channel, triggerWebhoo
 }
 
 func (a *App) attachFilesToPost(post *model.Post) *model.AppError {
+	defer newrelic.StartSegment(a.NRTxn,"attachFilesToPost").End()
+
 	var attachedIds []string
 	for _, fileId := range post.FileIds {
 		err := a.Srv.Store.FileInfo().AttachToPost(fileId, post.Id, post.UserId)
@@ -343,6 +354,8 @@ func (a *App) attachFilesToPost(post *model.Post) *model.AppError {
 //
 // If channel is nil, FillInPostProps will look up the channel corresponding to the post.
 func (a *App) FillInPostProps(post *model.Post, channel *model.Channel) *model.AppError {
+	defer newrelic.StartSegment(a.NRTxn,"FillInPostProps").End()
+
 	channelMentions := post.ChannelMentions()
 	channelMentionsProp := make(map[string]interface{})
 
@@ -379,6 +392,8 @@ func (a *App) FillInPostProps(post *model.Post, channel *model.Channel) *model.A
 }
 
 func (a *App) handlePostEvents(post *model.Post, user *model.User, channel *model.Channel, triggerWebhooks bool, parentPostList *model.PostList) error {
+	defer newrelic.StartSegment(a.NRTxn,"handlePostEvents").End()
+
 	var team *model.Team
 	if len(channel.TeamId) > 0 {
 		t, err := a.Srv.Store.Team().Get(channel.TeamId)
@@ -417,6 +432,8 @@ func (a *App) handlePostEvents(post *model.Post, user *model.User, channel *mode
 }
 
 func (a *App) SendEphemeralPost(userId string, post *model.Post) *model.Post {
+	defer newrelic.StartSegment(a.NRTxn,"SendEphemeralPost").End()
+
 	post.Type = model.POST_EPHEMERAL
 
 	// fill in fields which haven't been specified which have sensible defaults
@@ -441,6 +458,8 @@ func (a *App) SendEphemeralPost(userId string, post *model.Post) *model.Post {
 }
 
 func (a *App) UpdateEphemeralPost(userId string, post *model.Post) *model.Post {
+	defer newrelic.StartSegment(a.NRTxn,"UpdateEphemeralPost").End()
+
 	post.Type = model.POST_EPHEMERAL
 
 	post.UpdateAt = model.GetMillis()
@@ -459,6 +478,8 @@ func (a *App) UpdateEphemeralPost(userId string, post *model.Post) *model.Post {
 }
 
 func (a *App) DeleteEphemeralPost(userId, postId string) {
+	defer newrelic.StartSegment(a.NRTxn,"DeleteEphemeralPost").End()
+
 	post := &model.Post{
 		Id:       postId,
 		UserId:   userId,
@@ -473,6 +494,8 @@ func (a *App) DeleteEphemeralPost(userId, postId string) {
 }
 
 func (a *App) UpdatePost(post *model.Post, safeUpdate bool) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"UpdatePost").End()
+
 	post.SanitizeProps()
 
 	postLists, err := a.Srv.Store.Post().Get(post.Id)
@@ -589,6 +612,8 @@ func (a *App) UpdatePost(post *model.Post, safeUpdate bool) (*model.Post, *model
 }
 
 func (a *App) PatchPost(postId string, patch *model.PostPatch) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"PatchPost").End()
+
 	post, err := a.GetSinglePost(postId)
 	if err != nil {
 		return nil, err
@@ -615,42 +640,62 @@ func (a *App) PatchPost(postId string, patch *model.PostPatch) (*model.Post, *mo
 }
 
 func (a *App) GetPostsPage(channelId string, page int, perPage int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsPage").End()
+
 	return a.Srv.Store.Post().GetPosts(channelId, page*perPage, perPage, true)
 }
 
 func (a *App) GetPosts(channelId string, offset int, limit int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPosts").End()
+
 	return a.Srv.Store.Post().GetPosts(channelId, offset, limit, true)
 }
 
 func (a *App) GetPostsEtag(channelId string) string {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsEtag").End()
+
 	return a.Srv.Store.Post().GetEtag(channelId, true)
 }
 
 func (a *App) GetPostsSince(channelId string, time int64) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsSince").End()
+
 	return a.Srv.Store.Post().GetPostsSince(channelId, time, true)
 }
 
 func (a *App) GetSinglePost(postId string) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetSinglePost").End()
+
 	return a.Srv.Store.Post().GetSingle(postId)
 }
 
 func (a *App) GetPostThread(postId string) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostThread").End()
+
 	return a.Srv.Store.Post().Get(postId)
 }
 
 func (a *App) GetFlaggedPosts(userId string, offset int, limit int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetFlaggedPosts").End()
+
 	return a.Srv.Store.Post().GetFlaggedPosts(userId, offset, limit)
 }
 
 func (a *App) GetFlaggedPostsForTeam(userId, teamId string, offset int, limit int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetFlaggedPostsForTeam").End()
+
 	return a.Srv.Store.Post().GetFlaggedPostsForTeam(userId, teamId, offset, limit)
 }
 
 func (a *App) GetFlaggedPostsForChannel(userId, channelId string, offset int, limit int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetFlaggedPostsForChannel").End()
+
 	return a.Srv.Store.Post().GetFlaggedPostsForChannel(userId, channelId, offset, limit)
 }
 
 func (a *App) GetPermalinkPost(postId string, userId string) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPermalinkPost").End()
+
 	list, err := a.Srv.Store.Post().Get(postId)
 	if err != nil {
 		return nil, err
@@ -674,14 +719,20 @@ func (a *App) GetPermalinkPost(postId string, userId string) (*model.PostList, *
 }
 
 func (a *App) GetPostsBeforePost(channelId, postId string, page, perPage int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsBeforePost").End()
+
 	return a.Srv.Store.Post().GetPostsBefore(channelId, postId, perPage, page*perPage)
 }
 
 func (a *App) GetPostsAfterPost(channelId, postId string, page, perPage int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsAfterPost").End()
+
 	return a.Srv.Store.Post().GetPostsAfter(channelId, postId, perPage, page*perPage)
 }
 
 func (a *App) GetPostsAroundPost(postId, channelId string, offset, limit int, before bool) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsAroundPost").End()
+
 	if before {
 		return a.Srv.Store.Post().GetPostsBefore(channelId, postId, limit, offset)
 	}
@@ -689,18 +740,26 @@ func (a *App) GetPostsAroundPost(postId, channelId string, offset, limit int, be
 }
 
 func (a *App) GetPostAfterTime(channelId string, time int64) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostAfterTime").End()
+
 	return a.Srv.Store.Post().GetPostAfterTime(channelId, time)
 }
 
 func (a *App) GetPostIdAfterTime(channelId string, time int64) (string, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostIdAfterTime").End()
+
 	return a.Srv.Store.Post().GetPostIdAfterTime(channelId, time)
 }
 
 func (a *App) GetPostIdBeforeTime(channelId string, time int64) (string, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostIdBeforeTime").End()
+
 	return a.Srv.Store.Post().GetPostIdBeforeTime(channelId, time)
 }
 
 func (a *App) GetNextPostIdFromPostList(postList *model.PostList) string {
+	defer newrelic.StartSegment(a.NRTxn,"GetNextPostIdFromPostList").End()
+
 	if len(postList.Order) > 0 {
 		firstPostId := postList.Order[0]
 		firstPost := postList.Posts[firstPostId]
@@ -716,6 +775,8 @@ func (a *App) GetNextPostIdFromPostList(postList *model.PostList) string {
 }
 
 func (a *App) GetPrevPostIdFromPostList(postList *model.PostList) string {
+	defer newrelic.StartSegment(a.NRTxn,"GetPrevPostIdFromPostList").End()
+
 	if len(postList.Order) > 0 {
 		lastPostId := postList.Order[len(postList.Order)-1]
 		lastPost := postList.Posts[lastPostId]
@@ -734,6 +795,8 @@ func (a *App) GetPrevPostIdFromPostList(postList *model.PostList) string {
 // The conditional blocks ensure that it sets those cursor IDs immediately as afterPost, beforePost or empty,
 // and only query to database whenever necessary.
 func (a *App) AddCursorIdsForPostList(originalList *model.PostList, afterPost, beforePost string, since int64, page, perPage int) {
+	defer newrelic.StartSegment(a.NRTxn,"AddCursorIdsForPostList").End()
+
 	prevPostIdSet := false
 	prevPostId := ""
 	nextPostIdSet := false
@@ -775,6 +838,8 @@ func (a *App) AddCursorIdsForPostList(originalList *model.PostList, afterPost, b
 }
 
 func (a *App) GetPostsForChannelAroundLastUnread(channelId, userId string, limitBefore, limitAfter int) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetPostsForChannelAroundLastUnread").End()
+
 	var member *model.ChannelMember
 	var err *model.AppError
 	if member, err = a.GetChannelMember(channelId, userId); err != nil {
@@ -815,6 +880,8 @@ func (a *App) GetPostsForChannelAroundLastUnread(channelId, userId string, limit
 }
 
 func (a *App) DeletePost(postId, deleteByID string) (*model.Post, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"DeletePost").End()
+
 	post, err := a.Srv.Store.Post().GetSingle(postId)
 	if err != nil {
 		err.StatusCode = http.StatusBadRequest
@@ -860,6 +927,8 @@ func (a *App) DeletePost(postId, deleteByID string) (*model.Post, *model.AppErro
 }
 
 func (a *App) DeleteFlaggedPosts(postId string) {
+	defer newrelic.StartSegment(a.NRTxn,"DeleteFlaggedPosts").End()
+
 	if err := a.Srv.Store.Preference().DeleteCategoryAndName(model.PREFERENCE_CATEGORY_FLAGGED_POST, postId); err != nil {
 		mlog.Warn("Unable to delete flagged post preference when deleting post.", mlog.Err(err))
 		return
@@ -867,6 +936,8 @@ func (a *App) DeleteFlaggedPosts(postId string) {
 }
 
 func (a *App) DeletePostFiles(post *model.Post) {
+	defer newrelic.StartSegment(a.NRTxn,"DeletePostFiles").End()
+
 	if len(post.FileIds) == 0 {
 		return
 	}
@@ -877,6 +948,8 @@ func (a *App) DeletePostFiles(post *model.Post) {
 }
 
 func (a *App) parseAndFetchChannelIdByNameFromInFilter(channelName, userId, teamId string, includeDeleted bool) (*model.Channel, error) {
+	defer newrelic.StartSegment(a.NRTxn,"parseAndFetchChannelIdByNameFromInFilter").End()
+
 	if strings.HasPrefix(channelName, "@") && strings.Contains(channelName, ",") {
 		var userIds []string
 		users, err := a.GetUsersByUsernames(strings.Split(channelName[1:], ","), false, nil)
@@ -914,6 +987,8 @@ func (a *App) parseAndFetchChannelIdByNameFromInFilter(channelName, userId, team
 }
 
 func (a *App) searchPostsInTeam(teamId string, userId string, paramsList []*model.SearchParams, modifierFun func(*model.SearchParams)) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"searchPostsInTeam").End()
+
 	var wg sync.WaitGroup
 
 	pchan := make(chan store.StoreResult, len(paramsList))
@@ -951,6 +1026,8 @@ func (a *App) searchPostsInTeam(teamId string, userId string, paramsList []*mode
 }
 
 func (a *App) convertChannelNamesToChannelIds(channels []string, userId string, teamId string, includeDeletedChannels bool) []string {
+	defer newrelic.StartSegment(a.NRTxn,"convertChannelNamesToChannelIds").End()
+
 	for idx, channelName := range channels {
 		channel, err := a.parseAndFetchChannelIdByNameFromInFilter(channelName, userId, teamId, includeDeletedChannels)
 		if err != nil {
@@ -963,6 +1040,8 @@ func (a *App) convertChannelNamesToChannelIds(channels []string, userId string, 
 }
 
 func (a *App) convertUserNameToUserIds(usernames []string) []string {
+	defer newrelic.StartSegment(a.NRTxn,"convertUserNameToUserIds").End()
+
 	for idx, username := range usernames {
 		if user, err := a.GetUserByUsername(username); err != nil {
 			mlog.Error("error getting user by username", mlog.String("user_name", username), mlog.Err(err))
@@ -974,6 +1053,8 @@ func (a *App) convertUserNameToUserIds(usernames []string) []string {
 }
 
 func (a *App) SearchPostsInTeam(teamId string, paramsList []*model.SearchParams) (*model.PostList, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"SearchPostsInTeam").End()
+
 	if !*a.Config().ServiceSettings.EnablePostSearch {
 		return nil, model.NewAppError("SearchPostsInTeam", "store.sql_post.search.disabled", nil, fmt.Sprintf("teamId=%v", teamId), http.StatusNotImplemented)
 	}
@@ -983,6 +1064,8 @@ func (a *App) SearchPostsInTeam(teamId string, paramsList []*model.SearchParams)
 }
 
 func (a *App) esSearchPostsInTeamForUser(paramsList []*model.SearchParams, userId, teamId string, isOrSearch, includeDeletedChannels bool, page, perPage int) (*model.PostSearchResults, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"esSearchPostsInTeamForUser").End()
+
 	finalParamsList := []*model.SearchParams{}
 	includeDeleted := includeDeletedChannels && *a.Config().TeamSettings.ExperimentalViewArchivedChannels
 
@@ -1038,6 +1121,8 @@ func (a *App) esSearchPostsInTeamForUser(paramsList []*model.SearchParams, userI
 }
 
 func (a *App) SearchPostsInTeamForUser(terms string, userId string, teamId string, isOrSearch bool, includeDeletedChannels bool, timeZoneOffset int, page, perPage int) (*model.PostSearchResults, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"SearchPostsInTeamForUser").End()
+
 	var postSearchResults *model.PostSearchResults
 	var err *model.AppError
 	paramsList := model.ParseSearchParams(strings.TrimSpace(terms), timeZoneOffset)
@@ -1095,6 +1180,8 @@ func (a *App) SearchPostsInTeamForUser(terms string, userId string, teamId strin
 }
 
 func (a *App) GetFileInfosForPostWithMigration(postId string) ([]*model.FileInfo, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetFileInfosForPostWithMigration").End()
+
 
 	pchan := make(chan store.StoreResult, 1)
 	go func() {
@@ -1127,10 +1214,14 @@ func (a *App) GetFileInfosForPostWithMigration(postId string) ([]*model.FileInfo
 }
 
 func (a *App) GetFileInfosForPost(postId string, fromMaster bool) ([]*model.FileInfo, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"GetFileInfosForPost").End()
+
 	return a.Srv.Store.FileInfo().GetForPost(postId, fromMaster, false, true)
 }
 
 func (a *App) PostWithProxyAddedToImageURLs(post *model.Post) *model.Post {
+	defer newrelic.StartSegment(a.NRTxn,"PostWithProxyAddedToImageURLs").End()
+
 	if f := a.ImageProxyAdder(); f != nil {
 		return post.WithRewrittenImageURLs(f)
 	}
@@ -1138,6 +1229,8 @@ func (a *App) PostWithProxyAddedToImageURLs(post *model.Post) *model.Post {
 }
 
 func (a *App) PostWithProxyRemovedFromImageURLs(post *model.Post) *model.Post {
+	defer newrelic.StartSegment(a.NRTxn,"PostWithProxyRemovedFromImageURLs").End()
+
 	if f := a.ImageProxyRemover(); f != nil {
 		return post.WithRewrittenImageURLs(f)
 	}
@@ -1145,6 +1238,8 @@ func (a *App) PostWithProxyRemovedFromImageURLs(post *model.Post) *model.Post {
 }
 
 func (a *App) PostPatchWithProxyRemovedFromImageURLs(patch *model.PostPatch) *model.PostPatch {
+	defer newrelic.StartSegment(a.NRTxn,"PostPatchWithProxyRemovedFromImageURLs").End()
+
 	if f := a.ImageProxyRemover(); f != nil {
 		return patch.WithRewrittenImageURLs(f)
 	}
@@ -1152,6 +1247,8 @@ func (a *App) PostPatchWithProxyRemovedFromImageURLs(patch *model.PostPatch) *mo
 }
 
 func (a *App) ImageProxyAdder() func(string) string {
+	defer newrelic.StartSegment(a.NRTxn,"ImageProxyAdder").End()
+
 	if !*a.Config().ImageProxySettings.Enable {
 		return nil
 	}
@@ -1162,6 +1259,8 @@ func (a *App) ImageProxyAdder() func(string) string {
 }
 
 func (a *App) ImageProxyRemover() (f func(string) string) {
+	defer newrelic.StartSegment(a.NRTxn,"ImageProxyRemover").End()
+
 	if !*a.Config().ImageProxySettings.Enable {
 		return nil
 	}
@@ -1172,6 +1271,8 @@ func (a *App) ImageProxyRemover() (f func(string) string) {
 }
 
 func (a *App) MaxPostSize() int {
+	defer newrelic.StartSegment(a.NRTxn,"MaxPostSize").End()
+
 	maxPostSize := a.Srv.Store.Post().GetMaxPostSize()
 	if maxPostSize == 0 {
 		return model.POST_MESSAGE_MAX_RUNES_V1
@@ -1183,6 +1284,8 @@ func (a *App) MaxPostSize() int {
 // countMentionsFromPost returns the number of posts in the post's channel that mention the user after and including the
 // given post.
 func (a *App) countMentionsFromPost(user *model.User, post *model.Post) (int, *model.AppError) {
+	defer newrelic.StartSegment(a.NRTxn,"countMentionsFromPost").End()
+
 	channel, err := a.GetChannel(post.ChannelId)
 	if err != nil {
 		return 0, err

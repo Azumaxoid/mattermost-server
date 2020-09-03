@@ -4,6 +4,7 @@
 package api4
 
 import (
+        "os"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -13,6 +14,11 @@ import (
 	"github.com/mattermost/mattermost-server/v5/web"
 
 	_ "github.com/mattermost/go-i18n/i18n"
+
+        newrelic "github.com/newrelic/go-agent/v3/newrelic"
+        nrgorilla "github.com/newrelic/go-agent/v3/integrations/nrgorilla"
+        logrus "github.com/sirupsen/logrus"
+        nrlogrus "github.com/newrelic/go-agent/v3/integrations/nrlogrus"
 )
 
 type Routes struct {
@@ -157,7 +163,16 @@ func Init(configservice configservice.ConfigService, globalOptionsFunc app.AppOp
 	api.BaseRoutes.ChannelMember = api.BaseRoutes.ChannelMembers.PathPrefix("/{user_id:[A-Za-z0-9]+}").Subrouter()
 	api.BaseRoutes.ChannelMembersForUser = api.BaseRoutes.User.PathPrefix("/teams/{team_id:[A-Za-z0-9]+}/channels/members").Subrouter()
 
-	api.BaseRoutes.Posts = api.BaseRoutes.ApiRoot.PathPrefix("/posts").Subrouter()
+        nrApp,_  := newrelic.NewApplication(
+                newrelic.ConfigAppName(os.Getenv("NEW_RELIC_APP_NAME")),
+                newrelic.ConfigLicense(os.Getenv("NEW_RELIC_LICENSE_KEY")),
+                func(config *newrelic.Config) {
+                     logrus.SetLevel(logrus.DebugLevel)
+                     config.Logger = nrlogrus.StandardLogger()
+                },
+        )
+        api.BaseRoutes.Posts = api.BaseRoutes.ApiRoot.PathPrefix("/posts").Subrouter()
+        api.BaseRoutes.Posts.Use(nrgorilla.Middleware(nrApp))
 	api.BaseRoutes.Post = api.BaseRoutes.Posts.PathPrefix("/{post_id:[A-Za-z0-9]+}").Subrouter()
 	api.BaseRoutes.PostsForChannel = api.BaseRoutes.Channel.PathPrefix("/posts").Subrouter()
 	api.BaseRoutes.PostsForUser = api.BaseRoutes.User.PathPrefix("/posts").Subrouter()

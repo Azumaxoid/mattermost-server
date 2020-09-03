@@ -370,3 +370,7 @@ willnorris.com/go/gifresize
 # willnorris.com/go/imageproxy v0.9.0
 willnorris.com/go/imageproxy
 willnorris.com/go/imageproxy/third_party/http
+# New Relic
+github.com/newrelic/go-agent v3.4.0
+## explicit
+github.com/newrelic/go-agent/v3/integrations/nrgorilla
